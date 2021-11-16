@@ -1,11 +1,9 @@
 ---
 title: An Express Start
+layout: post
 categories: [blog/development]
 tags: [express, node, development]
 ---
-
-# An Express Start
-
 When starting a new application. It's important to make an informed decision
 about which application framework to use. Not using one would add a lot of
 additional development for no reason. Accepting that one *should* be used, which
