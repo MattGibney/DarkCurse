@@ -1,6 +1,6 @@
 # DarkCurse
 
-This project is an open source re-creation of the once populat MMO Dark Throne.
+This project is an open source re-creation of the once popular MMO Dark Throne.
 The name Dark Curse originally belonged to another game from the same company
 Lazarus Software. I never had the pleasure of playing that game, but as far as I
 can tell, it's basically the same as DarkThrone with a different theme.
@@ -11,6 +11,24 @@ Dark Curse was never as popular and so is not as well known. Secondly, at the
 time of writing DarkThrone itself is still live and playable (sort of). Finally,
 Dark Throne is the name of a Norwegian metal band and they play havoc with the
 SEO.
+
+## Quick Start
+
+In order to get the development environment up and running you need the
+following:
+
+* NodeJs (v16.x)
+* NPM (v8.x)
+
+Follow the instructions below to download the code, install dependancies and run
+the server.
+
+```bash
+git clone git@github.com:Moppler/DarkCurse.git
+cd DarkCurse
+npm install
+npm start
+```
 
 ## Project scope
 
