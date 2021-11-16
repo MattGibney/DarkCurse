@@ -8,7 +8,8 @@
     "declaration": false,
     "removeComments": false,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "dist"
   },
   "lib": ["ES2020"],
   "include": ["src/**/*"],
