@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import { Config } from '../config/environment';
 
 export default (config: Config): express.Application => {
