@@ -12,6 +12,7 @@
     "outDir": "dist"
   },
   "lib": ["ES2020"],
+  "files": ["index.ts"],
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
