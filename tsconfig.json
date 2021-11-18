@@ -9,10 +9,13 @@
     "removeComments": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "typeRoots": [
+      "types",
+      "node_modules/@types"
+    ],
   },
   "lib": ["ES2020"],
-  "files": ["index.ts"],
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
