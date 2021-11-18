@@ -1,7 +1,7 @@
 ---
 title: An Express Start
 layout: post
-categories: [blog/development]
+categories: [development]
 tags: [express, node, development]
 ---
 When starting a new application. It's important to make an informed decision
