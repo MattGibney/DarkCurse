@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-echo "+-----------------+"
-echo "| Build DarkCurse |"
-echo "+-----------------+"
+echo "+------------------+"
+echo "| Build Dark Curse |"
+echo "+------------------+"
 
 if [ -d "dist" ]
 then

@@ -1,11 +1,11 @@
-# DarkCurse
+# Dark Curse
 
 This project is an open source re-creation of the once popular MMO Dark Throne.
 The name Dark Curse originally belonged to another game from the same company
 Lazarus Software. I never had the pleasure of playing that game, but as far as I
 can tell, it's basically the same as DarkThrone with a different theme.
 
-So, why purposefully name the project DarkCurse, and not DarkThrone? It's
+So, why purposefully name the project Dark Curse, and not DarkThrone? It's
 certainly a little confusing but I picked this for two main reasons. Firstly,
 Dark Curse was never as popular and so is not as well known. Secondly, at the
 time of writing DarkThrone itself is still live and playable (sort of). Finally,
