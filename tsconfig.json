@@ -10,10 +10,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "typeRoots": [
-      "types",
-      "node_modules/@types"
-    ],
+    "typeRoots": ["./types"],
   },
   "lib": ["ES2020"],
   "include": ["src/**/*"],

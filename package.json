@@ -17,7 +17,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "types": "index.d.ts",
+  "types": "types/typings.d.ts",
   "bugs": {
     "url": "https://github.com/Moppler/DarkCurse/issues"
   },

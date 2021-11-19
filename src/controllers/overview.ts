@@ -1,7 +1,7 @@
-import * as express from 'express';
+import { Request, Response } from 'express';
 
 export default {
-  async overviewPage(req: express.Request, res: express.Response) {
+  async overviewPage(req: Request, res: Response) {
 
     const user = await req.modelFactory.user.fetchById(
       req.modelFactory,
