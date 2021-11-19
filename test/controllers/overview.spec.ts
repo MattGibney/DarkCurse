@@ -56,7 +56,22 @@ describe('Controller: Overview', () => {
       await Controller.overviewPage(mockReq, mockRes);
 
       expect(mockRes.render).toHaveBeenCalledWith('overview', {
-        layout: 'main'
+        layout: 'main',
+        armySize: "2",
+        class: "FIGHTER",
+        displayName: "Test Name",
+        fortHealth: {
+          current: "5",
+          max: "6",
+          percentage: 7,
+        },
+        gold: "8",
+        goldInBank: "10",
+        goldPerTurn: "9",
+        level: "3",
+        population: "1",
+        race: "UNDEAD",
+        xpToNextLevel: "4",
       });
     });
   });
