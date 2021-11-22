@@ -3,6 +3,8 @@ import { ArmyUnit, CivilianUnit, PlayerClass, PlayerRace } from '../../types/typ
 export interface UserData {
   id: number;
   displayName: string;
+  email: string;
+  passwordHash: string;
   race: PlayerRace;
   class: PlayerClass;
   units: (ArmyUnit | CivilianUnit)[];
@@ -17,6 +19,8 @@ const mockUserData: UserData[] = [
   {
     id: 1,
     displayName: 'John Doe',
+    email: 'moppler@email.com',
+    passwordHash: '$2b$10$Zdf/HbQm4.CzYUoj1FoY5O9ng0GxJumavLpgPCqMDaTL4gc7Ntc0S', // password
     race: 'UNDEAD',
     class: 'FIGHTER',
     units: [
@@ -38,6 +42,10 @@ const mockUserData: UserData[] = [
 class UserDao {
   async fetchById(id: number): Promise<UserData> {
     return mockUserData.find(user => user.id === id);
+  }
+
+  async fetchByEmail(email: string): Promise<UserData> {
+    return mockUserData.find(user => user.email === email);
   }
 }
 

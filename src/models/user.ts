@@ -1,3 +1,5 @@
+import * as bcrypt from 'bcrypt';
+
 import DaoFactory from '../daoFactory';
 import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
@@ -12,6 +14,8 @@ class UserModel {
 
   public id: number;
   public displayName: string;
+  public email: string;
+  public passwordHash: string;
   public race: PlayerRace;
   public class: PlayerClass;
   public experience: number;
@@ -32,6 +36,8 @@ class UserModel {
 
     this.id = userData.id;
     this.displayName = userData.displayName;
+    this.email = userData.email;
+    this.passwordHash = userData.passwordHash;
     this.race = userData.race;
     this.class = userData.class;
     this.experience = userData.experience;
@@ -87,6 +93,10 @@ class UserModel {
     }
   }
 
+  async validatePassword(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.passwordHash);
+  }
+
   // get attackLogs(): WarHistoryModel[] {
   //   return [];
   // }
@@ -105,6 +115,12 @@ class UserModel {
 
   static async fetchById(modelFactory: ModelFactory, daoFactory: DaoFactory, id: number): Promise<UserModel> {
     const user = await daoFactory.user.fetchById(id);
+    if (!user) return null;
+    return new UserModel(modelFactory, daoFactory, user);
+  }
+
+  static async fetchByEmail(modelFactory: ModelFactory, daoFactory: DaoFactory, email: string): Promise<UserModel> {
+    const user = await daoFactory.user.fetchByEmail(email);
     if (!user) return null;
     return new UserModel(modelFactory, daoFactory, user);
   }

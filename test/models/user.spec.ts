@@ -113,6 +113,30 @@ describe('Model: User', () => {
         });
       });
     });
+    describe('validatePassword', () => {
+      test('it returns false when the provided password is not valid', async () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {} as DaoFactory;
+        const mockData = {
+          passwordHash: 'password',
+        } as unknown as UserData;
+
+        const user = new UserModel(mockModelFactory, mockDaoFactory, mockData);
+
+        expect(await user.validatePassword('wrong password')).toBe(false);
+      });
+      test('it returns true when the provided password is valid', async () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {} as DaoFactory;
+        const mockData = {
+          passwordHash: '$2b$10$Zdf/HbQm4.CzYUoj1FoY5O9ng0GxJumavLpgPCqMDaTL4gc7Ntc0S',
+        } as unknown as UserData;
+
+        const user = new UserModel(mockModelFactory, mockDaoFactory, mockData);
+
+        expect(await user.validatePassword('password')).toBe(true);
+      });
+    });
   });
   describe('Static methods', () => {
     describe('fetchById', () => {
@@ -122,7 +146,7 @@ describe('Model: User', () => {
           user: {
             fetchById: jest.fn().mockResolvedValue({}),
           }
-        } as DaoFactory;
+        } as unknown as DaoFactory;
 
         const user = await UserModel.fetchById(
           mockModelFactory,
@@ -137,7 +161,7 @@ describe('Model: User', () => {
           user: {
             fetchById: jest.fn().mockResolvedValue(null),
           }
-        } as DaoFactory;
+        } as unknown as DaoFactory;
 
         const user = await UserModel.fetchById(
           mockModelFactory,
