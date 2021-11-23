@@ -17,8 +17,9 @@ describe('Controller: Auth', () => {
       await LoginController.loginAction(mockRequest, mockResponse);
 
       expect(mockResponse.render)
-        .toHaveBeenCalledWith('login', {
-          layout: 'auth',
+        .toHaveBeenCalledWith('page/marketing/login', {
+          layout: 'marketing',
+          pageTitle: 'Login',
           errorMessage: 'Email and password are mandatory'
         });
     });
@@ -35,8 +36,9 @@ describe('Controller: Auth', () => {
       await LoginController.loginAction(mockRequest, mockResponse);
 
       expect(mockResponse.render)
-        .toHaveBeenCalledWith('login', {
-          layout: 'auth',
+        .toHaveBeenCalledWith('page/marketing/login', {
+          layout: 'marketing',
+          pageTitle: 'Login',
           errorMessage: 'Email and password are mandatory'
         });
     });
@@ -59,8 +61,9 @@ describe('Controller: Auth', () => {
       await LoginController.loginAction(mockRequest, mockResponse);
 
       expect(mockResponse.render)
-        .toHaveBeenCalledWith('login', {
-          layout: 'auth',
+        .toHaveBeenCalledWith('page/marketing/login', {
+          layout: 'marketing',
+          pageTitle: 'Login',
           errorMessage: 'Email or password not recognised'
         });
     });
@@ -86,8 +89,9 @@ describe('Controller: Auth', () => {
       await LoginController.loginAction(mockRequest, mockResponse);
 
       expect(mockResponse.render)
-        .toHaveBeenCalledWith('login', {
-          layout: 'auth',
+        .toHaveBeenCalledWith('page/marketing/login', {
+          layout: 'marketing',
+          pageTitle: 'Login',
           errorMessage: 'Email or password not recognised'
         });
     });

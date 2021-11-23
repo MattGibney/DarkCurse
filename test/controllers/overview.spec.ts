@@ -1,7 +1,7 @@
 import * as express from 'express';
 
 import UserModel from '../../src/models/user';
-import Controller from '../../src/controllers/overview'
+import Controller from '../../src/controllers/main/overview'
 
 describe('Controller: Overview', () => {
   describe('overviewPage', () => {
@@ -29,6 +29,8 @@ describe('Controller: Overview', () => {
         class: 'FIGHTER',
         population: 1,
         armySize: 2,
+        citizens: 11,
+        experience: 12,
         level: 3,
         xpToNextLevel: 4,
         fortHealth: {
@@ -38,7 +40,8 @@ describe('Controller: Overview', () => {
         },
         gold: 8,
         goldPerTurn: 9,
-        goldInBank: 10
+        goldInBank: 10,
+        attackTurns: 13,
       } as UserModel;
 
       const mockReq = {
@@ -55,10 +58,14 @@ describe('Controller: Overview', () => {
 
       await Controller.overviewPage(mockReq, mockRes);
 
-      expect(mockRes.render).toHaveBeenCalledWith('overview', {
+      expect(mockRes.render).toHaveBeenCalledWith('page/main/overview', {
         layout: 'main',
+        pageTitle: "Overview",
+
         armySize: "2",
+        citizens: "11",
         class: "FIGHTER",
+        attackTurns: "13",
         displayName: "Test Name",
         fortHealth: {
           current: "5",
@@ -68,10 +75,28 @@ describe('Controller: Overview', () => {
         gold: "8",
         goldInBank: "10",
         goldPerTurn: "9",
+        experience: "12",
         level: "3",
         population: "1",
         race: "UNDEAD",
         xpToNextLevel: "4",
+
+        offense: 0,
+        defense: 0,
+        spyOffense: 0,
+        spyDefense: 0,
+        attacks: {
+          won: 0,
+          total: 0,
+          percentage: 0
+        },
+        defends: {
+          won: 0,
+          total: 0,
+          percentage: 0
+        },
+        spyVictories: 0,
+        sentryVictories: 0,
       });
     });
   });

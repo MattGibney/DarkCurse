@@ -45,6 +45,26 @@ describe('Model: User', () => {
         expect(user.armySize).toBe(18);
       });
     });
+    describe('get citizens', () => {
+      test('it calculates correctly', () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {} as DaoFactory;
+        const mockData = {
+          units: [
+            { unitType: 'CITIZEN', quantity: 1 },
+            { unitType: 'WORKER',  quantity: 2 },
+            { unitLevel: 1, unitType: 'OFFENSE', quantity: 3 },
+            { unitLevel: 1, unitType: 'DEFENSE', quantity: 4 },
+            { unitLevel: 1, unitType: 'SPY',     quantity: 5 },
+            { unitLevel: 1, unitType: 'SENTRY',  quantity: 6 }
+          ]
+        } as UserData;
+
+        const user = new UserModel(mockModelFactory, mockDaoFactory, mockData);
+
+        expect(user.citizens).toBe(1);
+      });
+    });
     describe('get goldPerTurn', () => {
       test('it calculates correctly', () => {
         const mockModelFactory = {} as ModelFactory;
@@ -167,6 +187,38 @@ describe('Model: User', () => {
           mockModelFactory,
           mockDaoFactory,
           999
+        );
+        expect(user).toBeNull();
+      })
+    });
+    describe('fetchByEmail', () => {
+      test('it resolves an instance of UserModel', async () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {
+          user: {
+            fetchByEmail: jest.fn().mockResolvedValue({}),
+          }
+        } as unknown as DaoFactory;
+
+        const user = await UserModel.fetchByEmail(
+          mockModelFactory,
+          mockDaoFactory,
+          'email@example.com'
+        );
+        expect(user).toBeInstanceOf(UserModel);
+      });
+      test('it returns null when the requested user does not exist', async () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {
+          user: {
+            fetchByEmail: jest.fn().mockResolvedValue(null),
+          }
+        } as unknown as DaoFactory;
+
+        const user = await UserModel.fetchByEmail(
+          mockModelFactory,
+          mockDaoFactory,
+          'email@example.com'
         );
         expect(user).toBeNull();
       })

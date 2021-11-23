@@ -1,0 +1,98 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+
+      <div class="card">
+        <div class="card-body">
+          <h6>Advisor</h6>
+          <p class="small">This is a hint, it will rotate out.</p>
+
+          <h6>Stats</h6>
+          <ul class="list-unstyled">
+            <li>Gold: {{gold}}</li>
+            <li>Citizens: {{citizens}}</li>
+            <li>Level: {{level}}</li>
+            <li>Experience: {{experience}} (next level in {{xpToNextLevel}})</li>
+            <li>Turns Available: {{attackTurns}}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-10">
+      <h1>Overview</h1>
+      <p class="text-center">
+        <strong>{{displayName}}</strong> is an <strong>{{race}} {{class}}</strong>
+      </p>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <td colspan="4">Statistics</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Population</td>
+            <td>{{population}}</td>
+            <td>Fort Health</td>
+            <td>{{fortHealth.current}}/{{fortHealth.max}}({{fortHealth.percentage}}%)</td>
+          </tr>
+          <tr>
+            <td>Army Size</td>
+            <td>{{armySize}}</td>
+            <td>Gold</td>
+            <td>{{gold}}</td>
+          </tr>
+          <tr>
+            <td>Level</td>
+            <td>{{level}}</td>
+            <td>Gold Per Turn</td>
+            <td>{{goldPerTurn}}</td>
+          </tr>
+          <tr>
+            <td>XP to Next Level</td>
+            <td>{{xpToNextLevel}}</td>
+            <td>Gold in Bank</td>
+            <td>{{goldInBank}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <td colspan="4">War Statistics</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Offense</td>
+            <td>{{offense}}</td>
+            <td>Attacks Won</td>
+            <td>{{attacks.won}}/{{attacks.total}}({{attacks.percentage}}%)</td>
+          </tr>
+          <tr>
+            <td>Defense</td>
+            <td>{{defense}}</td>
+            <td>Defends Won</td>
+            <td>{{defends.won}}/{{defends.total}}({{defends.percentage}}%)</td>
+          </tr>
+          <tr>
+            <td>Spy Offense</td>
+            <td>{{spyOffense}}</td>
+            <td>Spy Victories</td>
+            <td>{{spyVictories}}</td>
+          </tr>
+          <tr>
+            <td>Spy Defense</td>
+            <td>{{spyDefense}}</td>
+            <td>Sentry Victories</td>
+            <td>{{sentryVictories}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 
 export default {
   async renderLoginPage(req: Request, res: Response) {
-    return res.render('marketing/login', {
+    return res.render('page/marketing/login', {
       layout: 'marketing',
       pageTitle: 'Login',
     });
@@ -14,7 +14,7 @@ export default {
     const password = req.body?.password;
     
     if (!email || !password) {
-      return res.render('marketing/login', {
+      return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
         errorMessage: 'Email and password are mandatory'
@@ -28,7 +28,7 @@ export default {
     );
 
     if (!user) {
-      return res.render('marketing/login', {
+      return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
         errorMessage: 'Email or password not recognised'
@@ -37,7 +37,7 @@ export default {
 
     const isPasswordValid = await user.validatePassword(password);
     if (!isPasswordValid) {
-      return res.render('marketing/login', {
+      return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
         errorMessage: 'Email or password not recognised'

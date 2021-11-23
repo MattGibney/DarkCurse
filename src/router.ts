@@ -3,7 +3,7 @@ import * as express from 'express';
 import marketingHomeController from './controllers/marketing/home';
 import marketingLoginController from './controllers/marketing/login';
 
-import overviewController from './controllers/overview';
+import overviewController from './controllers/main/overview';
 
 const router = express.Router();
 

@@ -24,6 +24,8 @@ class UserModel {
   public fortLevel: number;
   public fortHitpoints: number;
 
+  public attackTurns: number;
+
   public units: (ArmyUnit | CivilianUnit)[];
 
   constructor(
@@ -47,6 +49,8 @@ class UserModel {
     this.fortLevel = userData.fortLevel;
     this.fortHitpoints = userData.fortHitpoints;
 
+    this.attackTurns = userData.attackTurns;
+
     this.units = userData.units;
   }
 
@@ -60,6 +64,11 @@ class UserModel {
         (unit) => unit.unitType !== 'CITIZEN' && unit.unitType !== 'WORKER'
       )
       .reduce((acc, unit) => acc + unit.quantity, 0);
+  }
+
+  get citizens(): number {
+    return this.units
+      .find((unit) => unit.unitType === 'CITIZEN').quantity;
   }
 
   get goldPerTurn(): number {

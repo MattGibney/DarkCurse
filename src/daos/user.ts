@@ -13,6 +13,7 @@ export interface UserData {
   goldInBank: number;
   fortLevel: number;
   fortHitpoints: number;
+  attackTurns: number;
 }
 
 const mockUserData: UserData[] = [
@@ -35,7 +36,8 @@ const mockUserData: UserData[] = [
     gold: 1000,
     goldInBank: 2000,
     fortLevel: 1,
-    fortHitpoints: 90
+    fortHitpoints: 90,
+    attackTurns: 300
   }
 ];
 

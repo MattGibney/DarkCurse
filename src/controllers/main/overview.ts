@@ -14,15 +14,19 @@ export default {
       return;
     }
 
-    res.render('overview', {
+    res.render('page/main/overview', {
       layout: 'main',
+      pageTitle: 'Overview',
 
       displayName: user.displayName,
       race: user.race,
       class: user.class,
+      attackTurns: new Intl.NumberFormat('en-GB').format(user.attackTurns),
 
       population: new Intl.NumberFormat('en-GB').format(user.population),
       armySize: new Intl.NumberFormat('en-GB').format(user.armySize),
+      citizens: new Intl.NumberFormat('en-GB').format(user.citizens),
+      experience: new Intl.NumberFormat('en-GB').format(user.experience),
       level: new Intl.NumberFormat('en-GB').format(user.level),
       xpToNextLevel: new Intl.NumberFormat('en-GB').format(user.xpToNextLevel),
       fortHealth: {
@@ -33,6 +37,23 @@ export default {
       gold: new Intl.NumberFormat('en-GB').format(user.gold),
       goldPerTurn: new Intl.NumberFormat('en-GB').format(user.goldPerTurn),
       goldInBank: new Intl.NumberFormat('en-GB').format(user.goldInBank),
+
+      offense: 0,
+      defense: 0,
+      spyOffense: 0,
+      spyDefense: 0,
+      attacks: {
+        won: 0,
+        total: 0,
+        percentage: 0
+      },
+      defends: {
+        won: 0,
+        total: 0,
+        percentage: 0
+      },
+      spyVictories: 0,
+      sentryVictories: 0,
     });
     return;
   }
