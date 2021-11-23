@@ -1,3 +1,4 @@
+import { Knex } from 'knex';
 import { ArmyUnit, CivilianUnit, PlayerClass, PlayerRace } from '../../types/typings';
 
 export interface UserData {
@@ -42,6 +43,12 @@ const mockUserData: UserData[] = [
 ];
 
 class UserDao {
+  private database: Knex;
+
+  constructor(database: Knex) {
+    this.database = database;
+  }
+  
   async fetchById(id: number): Promise<UserData> {
     return mockUserData.find(user => user.id === id);
   }

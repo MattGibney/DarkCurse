@@ -5,6 +5,7 @@ export interface Config {
   passwordHashingSaltRounds: number;
   jwtSecret: string;
   loggingLevel: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'silent';
+  PGConnectionString: string;
 }
 
 const Config: Config = {
@@ -12,6 +13,7 @@ const Config: Config = {
   passwordHashingSaltRounds: 10,
   jwtSecret: process.env.JWT_SECRET || 'TOKENSECRET',
   loggingLevel: 'info',
+  PGConnectionString: process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/darkcurse',
 };
 
 // ----- Below this point is ONLY environment specific config changes. -----
