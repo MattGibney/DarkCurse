@@ -4,12 +4,14 @@ export interface Config {
   port: number;
   passwordHashingSaltRounds: number;
   jwtSecret: string;
+  loggingLevel: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'silent';
 }
 
 const Config: Config = {
   port: Number(process.env.PORT) || 3000,
   passwordHashingSaltRounds: 10,
   jwtSecret: process.env.JWT_SECRET || 'TOKENSECRET',
+  loggingLevel: 'info',
 };
 
 // ----- Below this point is ONLY environment specific config changes. -----

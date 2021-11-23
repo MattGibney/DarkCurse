@@ -1,3 +1,4 @@
+import pino from 'pino';
 import { Config } from '../../config/environment';
 import DaoFactory from '../../src/daoFactory';
 import ModelFactory from '../../src/modelFactory';
@@ -10,6 +11,8 @@ declare global {
       daoFactory?: DaoFactory;
       config?: Config;
       user?: UserModel;
+      logger: pino.Logger;
+      requestId?: string;
     }
   }
 }
