@@ -18,10 +18,10 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Dark Curse Development
+title: Dark Curse
 email: findmoppler@gmail.com
 description: >-
-  Documentation and development blog for the Dark Curse project.
+  An open source, community lead re-creation of Dark Throne
 domain: moppler.github.io
 baseurl: "/DarkCurse" # the subpath of your site, e.g. /blog
 url: "https://moppler.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
@@ -38,8 +38,9 @@ plugins:
 
 header_pages:
  - index.md
- - developmentPlan.md
- - posts.md
+ - about.md
+#  - developmentPlan.md
+#  - posts.md
 
 # Exclude from processing.
 # The following items will not be processed, by default.
