@@ -72,8 +72,10 @@ class UserModel {
   }
 
   get goldPerTurn(): number {
-    return this.units
-      .find((units) => units.unitType === 'WORKER').quantity * WorkerProduction;
+    const workerUnits = this.units
+      .find((units) => units.unitType === 'WORKER');
+    if(!workerUnits) return 0;
+    return workerUnits.quantity * WorkerProduction;
   }
 
   get offense(): number {
@@ -81,6 +83,8 @@ class UserModel {
   }
 
   get level(): number {
+    if (this.experience === 0) return 1;
+
     const possibleLevels = Object.values(Levels)
       .filter((levelXp) => this.experience > levelXp)
       .sort((a, b) => b - a);

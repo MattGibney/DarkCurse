@@ -33,6 +33,8 @@
     "@types/node": "^16.11.9",
     "babel-jest": "^27.3.1",
     "chalk": "^4.1.2",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
     "eslint": "^8.2.0",
     "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.1",

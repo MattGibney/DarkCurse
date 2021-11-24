@@ -77,6 +77,17 @@ describe('Model: User', () => {
 
         expect(user.goldPerTurn).toBe(100);
       });
+      test('it works correctly if there are no WORKER units', () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {} as DaoFactory;
+        const mockData = {
+          units: []
+        } as UserData;
+
+        const user = new UserModel(mockModelFactory, mockDaoFactory, mockData);
+
+        expect(user.goldPerTurn).toBe(0);
+      });
     });
     describe('get level', () => {
       test('it calculates correctly', () => {
@@ -100,6 +111,17 @@ describe('Model: User', () => {
         const user = new UserModel(mockModelFactory, mockDaoFactory, mockData);
 
         expect(user.level).toBe(2);
+      });
+      test('does not return an error with 0 experience', () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {} as DaoFactory;
+        const mockData = {
+          experience: 0,
+        } as UserData;
+
+        const user = new UserModel(mockModelFactory, mockDaoFactory, mockData);
+
+        expect(user.level).toBe(1);
       });
     });
     describe('get xpToNextLevel', () => {

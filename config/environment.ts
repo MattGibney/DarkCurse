@@ -13,7 +13,7 @@ const Config: Config = {
   passwordHashingSaltRounds: 10,
   jwtSecret: process.env.JWT_SECRET || 'TOKENSECRET',
   loggingLevel: 'info',
-  PGConnectionString: process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/darkcurse',
+  PGConnectionString: process.env.DATABASE_URL,
 };
 
 // ----- Below this point is ONLY environment specific config changes. -----

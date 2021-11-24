@@ -2,13 +2,19 @@ import { Knex } from 'knex';
 
 const { v4: uuidv4 } = require('uuid');
 
+interface UserSessionRow {
+  id: number;
+  external_id: string;
+  user_id: number;
+  created_date: Date;
+  updated_date: Date;
+}
+
 export interface UserSessionData {
+  id: number;
   externalId: string;
   userId: number;
 }
-
-const mockSessionData: UserSessionData[] = [
-];
 
 class UserSessionDao {
   private database: Knex;
@@ -18,19 +24,32 @@ class UserSessionDao {
   }
   
   async fetchByExternalId(externalId: string): Promise<UserSessionData | null> {
-    return mockSessionData
-      .find(session => session.externalId === externalId) || null;
+    const userSessionRow = await this.database<UserSessionRow>('user_sessions')
+      .select('*')
+      .where({ external_id: externalId })
+      .first();
+    if (!userSessionRow) return null;
+
+    return this.mapUserSessionRowToUserSessionData(userSessionRow);
   }
 
   async createSession(userId: number): Promise<UserSessionData> {
-    const session = {
-      externalId: uuidv4(),
-      userId,
+    const externalId = uuidv4();
+    const newSessionRow = await this.database<UserSessionRow>('user_sessions')
+      .insert({
+        external_id: externalId,
+        user_id: userId,
+      })
+      .returning('*');
+    return this.mapUserSessionRowToUserSessionData(newSessionRow[0]);
+  }
+
+  mapUserSessionRowToUserSessionData(userRow: UserSessionRow): UserSessionData {
+    return {
+      id: userRow.id,
+      externalId: userRow.external_id,
+      userId: userRow.user_id,
     };
-
-    mockSessionData.push(session);
-
-    return session;
   }
 }
 
