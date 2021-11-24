@@ -12,4 +12,4 @@ once the basics are understood.
 
 ## Storing Passwords
 
-
+## Handling Sessions

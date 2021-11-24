@@ -33,6 +33,7 @@ export default (config: Config): express.Application => {
     req.logger = logger.child({ requestId });
 
     res.setHeader('X-Request-Id', requestId);
+    res.setHeader('X-Powered-By', `Dark Curse ${config.version}`);
     res.on('finish', () => {
       req.logger.info({
         method: req.method,

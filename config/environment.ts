@@ -1,7 +1,9 @@
 import { env } from 'process';
+import * as pkg from '../package.json';
 
 export interface Config {
   port: number;
+  version: string;
   passwordHashingSaltRounds: number;
   jwtSecret: string;
   loggingLevel: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'silent';
@@ -10,6 +12,7 @@ export interface Config {
 
 const Config: Config = {
   port: Number(process.env.PORT) || 3000,
+  version: pkg.version,
   passwordHashingSaltRounds: 10,
   jwtSecret: process.env.JWT_SECRET || 'TOKENSECRET',
   loggingLevel: 'info',
