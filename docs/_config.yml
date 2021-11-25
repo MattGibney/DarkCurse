@@ -32,6 +32,7 @@ github_username:  moppler
 theme: minima
 
 show_excerpts: true
+google_analytics: 'G-940QSK27C9'
 
 plugins:
   - jekyll-feed
