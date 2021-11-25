@@ -58,6 +58,11 @@ class UserDao {
     return this.mapUserRowToUserData(userRow);
   }
 
+  async fetchAll(): Promise<UserData[]> {
+    const userRows = await this.database<UserRow>('users').select();
+    return userRows.map(this.mapUserRowToUserData);
+  }
+
   mapUserRowToUserData(userRow: UserRow): UserData {
     return {
       id: userRow.id,

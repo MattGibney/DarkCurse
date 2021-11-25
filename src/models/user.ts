@@ -137,6 +137,11 @@ class UserModel {
     if (!user) return null;
     return new UserModel(modelFactory, daoFactory, user);
   }
+
+  static async fetchAll(modelFactory: ModelFactory, daoFactory: DaoFactory): Promise<UserModel[]> {
+    const users = await daoFactory.user.fetchAll();
+    return users.map((user) => new UserModel(modelFactory, daoFactory, user));
+  }
 }
 
 export default UserModel;
