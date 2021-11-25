@@ -23,8 +23,8 @@ email: findmoppler@gmail.com
 description: >-
   An open source, community lead re-creation of Dark Throne
 domain: moppler.github.io
-baseurl: "/DarkCurse" # the subpath of your site, e.g. /blog
-url: "https://moppler.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://darkcurse.co.uk" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: findmoppler
 github_username:  moppler
 
