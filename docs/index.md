@@ -10,5 +10,3 @@ to charity.
 
 If you want to stay up-to-date with progress, please consider subscribing to the
 mailing list. You will not be spammed and can un-subscribe at any time.
-
-{% include mailchimp.html %}
