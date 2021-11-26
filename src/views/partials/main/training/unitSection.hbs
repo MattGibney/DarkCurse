@@ -1,0 +1,24 @@
+<table class="table my-5">
+  <thead>
+    <tr>
+      <th class="col-4">{{heading}}</th>
+      <th class="col-2">Bonus</th>
+      <th class="col-2">You Have</th>
+      <th class="col-2">Cost</th>
+      <th class="col-2">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each units as |unit|}}
+      <tr>
+        <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
+        <td class="align-middle">+{{unit.bonus}} Gold</td>
+        <td class="align-middle">{{unit.ownedUnits}}</td>
+        <td class="align-middle">{{unit.cost}}</td>
+        <td>
+          <input type="number" aria-labelledby={{unit.id}} class="form-control">
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
