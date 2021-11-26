@@ -22,7 +22,7 @@
           {{#each players as |player|}}
             <tr>
               <td></td>
-              <td>{{player.displayName}}</td>
+              <td><a href="/userprofile/{{player.id}}">{{player.displayName}}</a></td>
               <td>{{player.gold}}</td>
               <td>{{player.armySize}}</td>
               <td>{{player.level}}</td>

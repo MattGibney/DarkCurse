@@ -6,6 +6,7 @@ export interface Config {
   version: string;
   passwordHashingSaltRounds: number;
   jwtSecret: string;
+  jwtExpiry: number;
   loggingLevel: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' | 'silent';
   PGConnectionString: string;
 }
@@ -15,6 +16,7 @@ const Config: Config = {
   version: pkg.version,
   passwordHashingSaltRounds: 10,
   jwtSecret: process.env.JWT_SECRET || 'TOKENSECRET',
+  jwtExpiry: 7 * 24 * 60 * 60 * 1000,
   loggingLevel: 'info',
   PGConnectionString: process.env.DATABASE_URL,
 };

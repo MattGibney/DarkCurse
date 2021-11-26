@@ -57,6 +57,7 @@ export default {
     res.cookie('DCT', newToken, {
       httpOnly: true,
       sameSite: 'strict',
+      expires: new Date(Date.now() + req.config.jwtExpiry),
     });
     
     return res.redirect('/overview');
