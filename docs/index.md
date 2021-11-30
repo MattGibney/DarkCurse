@@ -1,6 +1,6 @@
 ---
 title: "Home"
-layout: page
+layout: home
 permalink: /
 ---
 **TL;DR** - I am a web developer. I love Dark Throne, probably a little too

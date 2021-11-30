@@ -139,7 +139,7 @@ describe('Middleware', () => {
 
       expect(mockRequest.user).toEqual(mockUser);
     });
-    it('should catch errors thrown by JWT decode', async () => {
+    it('should catch errors thrown by JWT decode and clear the offending cookie', async () => {
       const mockRequest = {
         config: {
           jwtSecret: 'TOKENSECRET'
@@ -151,10 +151,14 @@ describe('Middleware', () => {
           error: jest.fn(),
         } as unknown as pino.Logger,
       } as unknown as Request;
-      const mockResponse = {} as Response;
+      const mockResponse = {
+        clearCookie: jest.fn().mockReturnThis(),
+      } as unknown as Response;
       const mockNext = jest.fn();
 
       await middleware.authenticate(mockRequest, mockResponse, mockNext);
+
+      expect(mockResponse.clearCookie).toHaveBeenCalledWith('DCT');
 
       expect(mockRequest.logger.error)
         .toHaveBeenCalledWith('Request JWT invalid', {

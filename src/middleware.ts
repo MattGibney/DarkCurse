@@ -46,61 +46,8 @@ export default {
       return next();
     } catch (error) {
       req.logger.error('Request JWT invalid', { error: error.message });
+      res.clearCookie('DCT');
       return next();
     }
-  
-    // let sessionId;
-    // try {
-    //   const decodedToken = jsonwebtoken.verify(JWTCookie, req.config.jwtSecret);
-    //   sessionId = decodedToken.valueOf()['id'];
-    // } catch (error) {
-    //   req.logger.error('Request JWT invalid', { error: error.message });
-    //   // console.log('Request JWT invalid', { error: error.message });
-      
-    //   next();
-    //   return;
-    // }
-  
-    // // console.log('SessionId', sessionId);
-
-    // const session = await req.modelFactory.userSession.fetchByExternalId(
-    //   req.modelFactory,
-    //   req.daoFactory,
-    //   sessionId
-    // );
-    // if (!session) {
-    //   // req.Logger.error('No valid session found for JWT', {
-    //   //   sessionId: sessionId,
-    //   // });
-    //   next();
-    //   return;
-    // }
-  
-    // // if (session.sessionExpires < new Date()) {
-    // //   // req.Logger.error('Session expired', {
-    // //   //   sessionId: sessionId,
-    // //   // });
-    // //   next();
-    // //   return;
-    // // }
-  
-    // const user = await session.user;
-    // if (!user) {
-    //   // req.Logger.error('Unable to fetch client for session', {
-    //   //   sessionId: sessionId,
-    //   // });
-    //   next();
-    //   return;
-    // }
-  
-    // // req.Logger.debug('Found client for session', {
-    // //   sessionId: sessionId,
-    // //   clientId: client.id,
-    // // });
-  
-    // req.user = user;
-    // // console.log('Authenticated: ', user.id);
-    
-    // next();
   }
 }
