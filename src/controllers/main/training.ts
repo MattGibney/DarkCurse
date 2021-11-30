@@ -6,7 +6,7 @@ export default {
 
     const unitMapFunction = (unit, idPrefix: string) => {
       return {
-        id: `${idPrefix}${unit.level}`,
+        id: `${idPrefix}_${unit.level}`,
         name: unit.name,
         bonus: unit.bonus,
         ownedUnits: req.user.units.find(u => u.unitType === unit.type)?.quantity || 0,
@@ -42,5 +42,20 @@ export default {
         .filter(unit => unit.type === 'SENTRY')
         .map(unit => unitMapFunction(unit, 'SENTRY')),
     });
+  },
+
+  async trainUnitsAction(req: Request, res: Response) {
+    const body = req.body;
+
+    const uniqueKeys = Object.keys(body)
+      .map((unitKey) => unitKey.split('_')[0])
+      .filter((v, i, a) => a.indexOf(v) === i);
+    const mappedData = uniqueKeys
+      .map((keyPrefix) => Object.entries(body)
+        .filter((dataEntry) => dataEntry[0].split('_')[0] === keyPrefix)
+      );
+    
+    console.log(mappedData);
+    
   }
 }

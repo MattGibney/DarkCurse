@@ -29,6 +29,7 @@ authedRouter.use((req, res, next) => {
 
 authedRouter.get('/overview', overviewController.overviewPage);
 authedRouter.get('/training', trainingController.trainingPage);
+authedRouter.post('/training', trainingController.trainUnitsAction);
 authedRouter.get('/attack', attackController.renderAttackList);
 authedRouter.get('/userprofile/:userId', userProfileController.renderUserProfile);
 router.use(authedRouter);
