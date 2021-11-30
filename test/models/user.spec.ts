@@ -142,16 +142,16 @@ describe('Model: User', () => {
         const mockModelFactory = {} as ModelFactory;
         const mockDaoFactory = {} as DaoFactory;
         const mockData = {
-          fortHitpoints: 80,
+          fortHitpoints: 50,
           fortLevel: 1
         } as UserData;
 
         const user = new UserModel(mockModelFactory, mockDaoFactory, mockData);
 
         expect(user.fortHealth).toMatchObject({
-          current: 80,
-          max: 100,
-          percentage: 80
+          current: 50,
+          max: 50,
+          percentage: 100
         });
       });
     });
