@@ -32,16 +32,15 @@ github_username:  moppler
 theme: minima
 
 show_excerpts: true
-google_analytics: 'G-940QSK27C9'
+google_analytics: 'UA-195287442-1'
 
 plugins:
   - jekyll-feed
 
 header_pages:
  - index.md
+ - updates.md
  - about.md
-#  - developmentPlan.md
-#  - posts.md
 
 # Exclude from processing.
 # The following items will not be processed, by default.

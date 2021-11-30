@@ -1,0 +1,31 @@
+---
+layout: default
+---
+
+<div class="home">
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
+
+  {{ content }}
+
+
+
+  {%- assign latest_post = site.posts | sort: "date" | last -%}
+
+  {%- if latest_post -%}
+    <div class="latest-post">
+      <h2 class="latest-post-title">
+        <a href="{{ latest_post.url }}">{{ latest_post.title }}</a>
+      </h2>
+      <div class="latest-post-meta">
+        <span class="latest-post-date">{{ latest_post.date | date: '%B %d, %Y' }}</span>
+        <span class="latest-post-author">by {{ latest_post.author }}</span>
+      </div>
+      <div class="latest-post-content">
+        {{ latest_post.excerpt }}
+      </div>
+    </div>
+  {%- endif -%}
+
+</div>
