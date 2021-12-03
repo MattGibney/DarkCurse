@@ -1,16 +1,18 @@
 import * as bcrypt from 'bcrypt';
+import pino from 'pino';
 
 import DaoFactory from '../daoFactory';
 import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
 import WarHistoryModel from './warHistory';
 
-import { PlayerRace, PlayerClass, ArmyUnit, CivilianUnit, FortHealth } from '../../types/typings';
-import { Fortifications, WorkerProduction, Levels } from '../constants';
+import { PlayerRace, PlayerClass, ArmyUnit, CivilianUnit, FortHealth, UnitType } from '../../types/typings';
+import { Fortifications, WorkerProduction, Levels, UnitTypes } from '../constants';
 
 class UserModel {
   private modelFactory: ModelFactory;
   private daoFactory: DaoFactory;
+  private logger: pino.Logger;
 
   public id: number;
   public displayName: string;
@@ -31,10 +33,12 @@ class UserModel {
   constructor(
     modelFactory: ModelFactory,
     daoFactory: DaoFactory,
+    logger: pino.Logger,
     userData: UserData
   ) {
     this.modelFactory = modelFactory;
     this.daoFactory = daoFactory;
+    this.logger = logger;
 
     this.id = userData.id;
     this.displayName = userData.displayName;
@@ -106,8 +110,21 @@ class UserModel {
     }
   }
 
+  /**
+   * Limited to level one units only for now, until the upgrade system is
+   * implemented.
+   */
+  get availableUnitTypes(): UnitType[] {
+    return UnitTypes.filter((unitType) => unitType.level === 1);
+  }
+
   async validatePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.passwordHash);
+  }
+
+  async subtractGold(amount: number): Promise<void> {
+    this.gold -= amount;
+    await this.daoFactory.user.setGold(this.id, this.gold);
   }
 
   // get attackLogs(): WarHistoryModel[] {
@@ -126,21 +143,21 @@ class UserModel {
   //   return [];
   // }
 
-  static async fetchById(modelFactory: ModelFactory, daoFactory: DaoFactory, id: number): Promise<UserModel> {
+  static async fetchById(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger, id: number): Promise<UserModel> {
     const user = await daoFactory.user.fetchById(id);
     if (!user) return null;
-    return new UserModel(modelFactory, daoFactory, user);
+    return new UserModel(modelFactory, daoFactory, logger, user);
   }
 
-  static async fetchByEmail(modelFactory: ModelFactory, daoFactory: DaoFactory, email: string): Promise<UserModel> {
+  static async fetchByEmail(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger, email: string): Promise<UserModel> {
     const user = await daoFactory.user.fetchByEmail(email);
     if (!user) return null;
-    return new UserModel(modelFactory, daoFactory, user);
+    return new UserModel(modelFactory, daoFactory, logger, user);
   }
 
-  static async fetchAll(modelFactory: ModelFactory, daoFactory: DaoFactory): Promise<UserModel[]> {
+  static async fetchAll(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger): Promise<UserModel[]> {
     const users = await daoFactory.user.fetchAll();
-    return users.map((user) => new UserModel(modelFactory, daoFactory, user));
+    return users.map((user) => new UserModel(modelFactory, daoFactory, logger, user));
   }
 }
 

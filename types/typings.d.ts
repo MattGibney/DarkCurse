@@ -14,3 +14,10 @@ export type FortHealth = {
   max: number;
   percentage: number;
 };
+export type UnitType = {
+  name: string;
+  type: 'CITIZEN' | 'WORKER' | 'OFFENSE' | 'DEFENSE' | 'SPY' | 'SENTRY';
+  level: number;
+  bonus: number;
+  cost: number;
+};

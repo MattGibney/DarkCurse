@@ -63,6 +63,10 @@ class UserDao {
     return userRows.map(this.mapUserRowToUserData);
   }
 
+  async setGold(userId: number, gold: number): Promise<void> {
+    await this.database('users').where({ id: userId }).update({ gold: gold });
+  }
+
   mapUserRowToUserData(userRow: UserRow): UserData {
     return {
       id: userRow.id,

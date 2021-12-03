@@ -1,7 +1,7 @@
 import * as express from 'express';
 
-import UserModel from '../../src/models/user';
-import Controller from '../../src/controllers/main/overview'
+import UserModel from '../../../src/models/user';
+import Controller from '../../../src/controllers/main/overview'
 
 describe('Controller: Overview', () => {
   describe('overviewPage', () => {
