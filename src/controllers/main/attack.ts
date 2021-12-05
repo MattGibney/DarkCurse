@@ -5,7 +5,8 @@ export default {
 
     const players = await req.modelFactory.user.fetchAll(
       req.modelFactory,
-      req.daoFactory
+      req.daoFactory,
+      req.logger
     );
 
     res.render('page/main/attack/list', {

@@ -18,6 +18,7 @@ export default {
       const session = await req.modelFactory.userSession.fetchByExternalId(
         req.modelFactory,
         req.daoFactory,
+        req.logger,
         sessionId
       );
 

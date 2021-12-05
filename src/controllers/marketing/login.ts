@@ -24,6 +24,7 @@ export default {
     const user = await req.modelFactory.user.fetchByEmail(
       req.modelFactory,
       req.daoFactory,
+      req.logger,
       email
     );
 
@@ -47,6 +48,7 @@ export default {
     const newSession = await req.modelFactory.userSession.createSession(
       req.modelFactory,
       req.daoFactory,
+      req.logger,
       user.id
     );
 
