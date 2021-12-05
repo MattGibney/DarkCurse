@@ -6,7 +6,7 @@ import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
 import WarHistoryModel from './warHistory';
 
-import { PlayerRace, PlayerClass, ArmyUnit, CivilianUnit, FortHealth, UnitType } from '../../types/typings';
+import { PlayerRace, PlayerClass, FortHealth, PlayerUnit, Unit } from '../../types/typings';
 import { Fortifications, WorkerProduction, Levels, UnitTypes } from '../constants';
 
 class UserModel {
@@ -28,7 +28,7 @@ class UserModel {
 
   public attackTurns: number;
 
-  public units: (ArmyUnit | CivilianUnit)[];
+  public units: PlayerUnit[];
 
   constructor(
     modelFactory: ModelFactory,
@@ -65,19 +65,19 @@ class UserModel {
   get armySize(): number {
     return this.units
       .filter(
-        (unit) => unit.unitType !== 'CITIZEN' && unit.unitType !== 'WORKER'
+        (unit) => unit.type !== 'CITIZEN' && unit.type !== 'WORKER'
       )
       .reduce((acc, unit) => acc + unit.quantity, 0);
   }
 
   get citizens(): number {
     return this.units
-      .find((unit) => unit.unitType === 'CITIZEN').quantity;
+      .find((unit) => unit.type === 'CITIZEN').quantity;
   }
 
   get goldPerTurn(): number {
     const workerUnits = this.units
-      .find((units) => units.unitType === 'WORKER');
+      .find((units) => units.type === 'WORKER');
     if(!workerUnits) return 0;
     return workerUnits.quantity * WorkerProduction;
   }
@@ -114,7 +114,7 @@ class UserModel {
    * Limited to level one units only for now, until the upgrade system is
    * implemented.
    */
-  get availableUnitTypes(): UnitType[] {
+  get availableUnitTypes(): Unit[] {
     return UnitTypes.filter((unitType) => unitType.level === 1);
   }
 

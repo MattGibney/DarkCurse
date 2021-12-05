@@ -10,7 +10,7 @@ export default {
         id: `${idPrefix}_${unit.level}`,
         name: unit.name,
         bonus: unit.bonus,
-        ownedUnits: req.user.units.find(u => u.unitType === unit.type)?.quantity || 0,
+        ownedUnits: req.user.units.find(u => u.type === unit.type)?.quantity || 0,
         cost: new Intl.NumberFormat('en-GB').format(unit.cost),
       };
     };

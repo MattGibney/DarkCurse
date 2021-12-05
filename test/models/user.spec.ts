@@ -14,12 +14,12 @@ describe('Model: User', () => {
         const mockLogger = {} as pino.Logger;
         const mockData = {
           units: [
-            { unitType: 'CITIZEN', quantity: 1 },
-            { unitType: 'WORKER',  quantity: 2 },
-            { unitLevel: 1, unitType: 'OFFENSE', quantity: 3 },
-            { unitLevel: 1, unitType: 'DEFENSE', quantity: 4 },
-            { unitLevel: 1, unitType: 'SPY',     quantity: 5 },
-            { unitLevel: 1, unitType: 'SENTRY',  quantity: 6 }
+            { type: 'CITIZEN', quantity: 1 },
+            { type: 'WORKER',  quantity: 2 },
+            { level: 1, type: 'OFFENSE', quantity: 3 },
+            { level: 1, type: 'DEFENSE', quantity: 4 },
+            { level: 1, type: 'SPY',     quantity: 5 },
+            { level: 1, type: 'SENTRY',  quantity: 6 }
           ]
         } as UserData;
 
@@ -35,12 +35,12 @@ describe('Model: User', () => {
         const mockLogger = {} as pino.Logger;
         const mockData = {
           units: [
-            { unitType: 'CITIZEN', quantity: 1 },
-            { unitType: 'WORKER',  quantity: 2 },
-            { unitLevel: 1, unitType: 'OFFENSE', quantity: 3 },
-            { unitLevel: 1, unitType: 'DEFENSE', quantity: 4 },
-            { unitLevel: 1, unitType: 'SPY',     quantity: 5 },
-            { unitLevel: 1, unitType: 'SENTRY',  quantity: 6 }
+            { type: 'CITIZEN', quantity: 1 },
+            { type: 'WORKER',  quantity: 2 },
+            { level: 1, type: 'OFFENSE', quantity: 3 },
+            { level: 1, type: 'DEFENSE', quantity: 4 },
+            { level: 1, type: 'SPY',     quantity: 5 },
+            { level: 1, type: 'SENTRY',  quantity: 6 }
           ]
         } as UserData;
 
@@ -56,12 +56,12 @@ describe('Model: User', () => {
         const mockLogger = {} as pino.Logger;
         const mockData = {
           units: [
-            { unitType: 'CITIZEN', quantity: 1 },
-            { unitType: 'WORKER',  quantity: 2 },
-            { unitLevel: 1, unitType: 'OFFENSE', quantity: 3 },
-            { unitLevel: 1, unitType: 'DEFENSE', quantity: 4 },
-            { unitLevel: 1, unitType: 'SPY',     quantity: 5 },
-            { unitLevel: 1, unitType: 'SENTRY',  quantity: 6 }
+            { type: 'CITIZEN', quantity: 1 },
+            { type: 'WORKER',  quantity: 2 },
+            { level: 1, type: 'OFFENSE', quantity: 3 },
+            { level: 1, type: 'DEFENSE', quantity: 4 },
+            { level: 1, type: 'SPY',     quantity: 5 },
+            { level: 1, type: 'SENTRY',  quantity: 6 }
           ]
         } as UserData;
 
@@ -76,7 +76,7 @@ describe('Model: User', () => {
         const mockDaoFactory = {} as DaoFactory;
         const mockLogger = {} as pino.Logger;
         const mockData = {
-          units: [{ unitType: 'WORKER',  quantity: 2 }]
+          units: [{ type: 'WORKER',  quantity: 2 }]
         } as UserData;
 
         const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
@@ -177,11 +177,11 @@ describe('Model: User', () => {
         const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
 
         expect(user.availableUnitTypes).toMatchObject([
-          { name: 'Worker',      type: 'WORKER',  level: 1, bonus: 65, cost: 2000 },
-          { name: 'Soldier',     type: 'OFFENSE', level: 1, bonus: 3,  cost: 1500 },
-          { name: 'Guard',       type: 'DEFENSE', level: 1, bonus: 3,  cost: 1500 },
-          { name: 'Spy',         type: 'SPY',     level: 1, bonus: 3,  cost: 1500 },
-          { name: 'Sentry',      type: 'SENTRY',  level: 1, bonus: 3,  cost: 1500 },
+          { name: 'Worker',  type: 'WORKER',  level: 1, bonus: 65, cost: 2000 },
+          { name: 'Soldier', type: 'OFFENSE', level: 1, bonus: 3,  cost: 1500 },
+          { name: 'Guard',   type: 'DEFENSE', level: 1, bonus: 3,  cost: 1500 },
+          { name: 'Spy',     type: 'SPY',     level: 1, bonus: 3,  cost: 1500 },
+          { name: 'Sentry',  type: 'SENTRY',  level: 1, bonus: 3,  cost: 1500 },
         ]);
       });
     });

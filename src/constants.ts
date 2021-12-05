@@ -1,4 +1,4 @@
-import { UnitType } from '../types/typings';
+import { Unit, UnitType } from '../types/typings';
 
 export const Fortifications = {
   1: {
@@ -227,7 +227,7 @@ export const Levels = {
   4: 1000
 };
 
-export const UnitTypes: UnitType[] = [
+export const UnitTypes: Unit[] = [
   { name: 'Worker',      type: 'WORKER',  level: 1, bonus: 65, cost: 2000 },
   { name: 'Soldier',     type: 'OFFENSE', level: 1, bonus: 3,  cost: 1500 },
   { name: 'Knight',      type: 'OFFENSE', level: 2, bonus: 20, cost: 10000 },

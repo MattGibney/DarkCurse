@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { ArmyUnit, CivilianUnit, PlayerClass, PlayerRace } from '../../types/typings';
+import { PlayerClass, PlayerRace, PlayerUnit } from '../../types/typings';
 
 /**
  * This is seesntially documentation for the structure of the data in the
@@ -30,7 +30,7 @@ export interface UserData {
   passwordHash: string;
   race: PlayerRace;
   class: PlayerClass;
-  units: (ArmyUnit | CivilianUnit)[];
+  units: PlayerUnit[];
   experience: number;
   gold: number;
   goldInBank: number;
