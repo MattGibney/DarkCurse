@@ -127,6 +127,34 @@ class UserModel {
     await this.daoFactory.user.setGold(this.id, this.gold);
   }
 
+  /**
+   * Takes in an object containing the details of the desired units. It then
+   * merges the objects, if a unit already exists, it will add the quantity
+   * if it's a new unit. It'll be added directly.
+   * 
+   * TODO: This is a rather in-elegant approach. Make it better.
+   */
+  async trainNewUnits(newUnits: PlayerUnit[]): Promise<void> {
+    // Update existing units
+    const unitsToUpdate = this.units
+      .filter((unit) => newUnits
+        .find((newUnit) => newUnit.type === unit.type && newUnit.level === unit.level)
+      );
+    unitsToUpdate.forEach((unit) => {
+      const newUnit = newUnits
+        .find((newUnit) => newUnit.type === unit.type && newUnit.level === unit.level);
+      unit.quantity += newUnit.quantity;
+    });
+
+    this.units = Object.assign(this.units, unitsToUpdate);
+    
+    // Add new units
+    const newUnitsToAdd = newUnits.filter((newUnit) => !this.units.find((unit) => unit.type === newUnit.type && unit.level === newUnit.level));
+    this.units = this.units.concat(newUnitsToAdd);
+
+    await this.daoFactory.user.setUnits(this.id, this.units);
+  }
+
   // get attackLogs(): WarHistoryModel[] {
   //   return [];
   // }

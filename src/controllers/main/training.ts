@@ -61,6 +61,9 @@ export default {
     });
 
     req.logger.debug('Units to be trained', unitsToTrain);
+    if (unitsToTrain.length === 0) {
+      return req.logger.debug('No units to train');
+    }
 
     const totalRequestedUnits = unitsToTrain.reduce((total, unit) => total + unit.quantity, 0);
     if (totalRequestedUnits > req.user.citizens) {
@@ -75,7 +78,17 @@ export default {
     await req.user.subtractGold(totalCost);
     req.logger.debug('Subtracted gold for training units', totalCost);
 
-    // TODO; ADD UNITS
+    await req.user.trainNewUnits(
+      unitsToTrain.map(
+        (unit) => ({
+          level: unit.level,
+          type: unit.type as UnitType,
+          quantity: unit.quantity,
+        })
+      )
+    );
+    req.logger.debug('Trained new units', unitsToTrain);
+    
     // TODO: RENDER PAGE WITH MESSAGES
   }
 }

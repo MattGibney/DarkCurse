@@ -77,7 +77,7 @@ describe('Controller: Training', () => {
         'Not enough gold to train requested units',
       );
     });
-    it('Subtracts gold for a sucessful request', async () => {
+    it('Subtracts gold and trains units for a sucessful request', async () => {
       const mockRequest = {
         body: {
           'WORKER_1': '2',
@@ -92,6 +92,7 @@ describe('Controller: Training', () => {
             { name: 'Worker', type: 'WORKER', level: 1, bonus: 65, cost: 2000 },
           ],
           subtractGold: jest.fn().mockReturnThis(),
+          trainNewUnits: jest.fn().mockReturnThis(),
         } as unknown as UserModel
       } as unknown as Request;
       const mockResponse = {} as Response;
@@ -104,6 +105,14 @@ describe('Controller: Training', () => {
       );
 
       expect(mockRequest.user.subtractGold).toHaveBeenCalledWith(4000);
+
+      expect(mockRequest.user.trainNewUnits).toHaveBeenCalledWith([
+        {
+          level: 1,
+          quantity: 2,
+          type: 'WORKER',
+        }
+      ]);
     });
   });
 });
