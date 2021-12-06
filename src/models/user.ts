@@ -135,6 +135,11 @@ class UserModel {
    * TODO: This is a rather in-elegant approach. Make it better.
    */
   async trainNewUnits(newUnits: PlayerUnit[]): Promise<void> {
+    // Subtract Citizens
+    const totalNewUnits = newUnits.reduce((acc, unit) => acc + unit.quantity, 0);
+    const citizenUnits = this.units.find((unit) => unit.type === 'CITIZEN');
+    citizenUnits.quantity -= totalNewUnits;
+    
     // Update existing units
     const unitsToUpdate = this.units
       .filter((unit) => newUnits
@@ -146,7 +151,7 @@ class UserModel {
       unit.quantity += newUnit.quantity;
     });
 
-    this.units = Object.assign(this.units, unitsToUpdate);
+    this.units = Object.assign(unitsToUpdate, this.units);
     
     // Add new units
     const newUnitsToAdd = newUnits.filter((newUnit) => !this.units.find((unit) => unit.type === newUnit.type && unit.level === newUnit.level));
