@@ -49,6 +49,7 @@ describe('Middleware', () => {
       expect(mockRequest.modelFactory.userSession.fetchByExternalId).toHaveBeenCalledWith(
         mockRequest.modelFactory,
         mockRequest.daoFactory,
+        mockRequest.logger,
         'eed9b1ec-e3c3-4eef-a320-5198c76bb1be'
       );
       expect(mockRequest.logger.debug).toHaveBeenCalledWith(

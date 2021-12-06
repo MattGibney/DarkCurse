@@ -6,6 +6,7 @@ export default {
     const user = await req.modelFactory.user.fetchById(
       req.modelFactory,
       req.daoFactory,
+      req.logger,
       1
     );
 

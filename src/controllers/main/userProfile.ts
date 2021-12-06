@@ -8,6 +8,7 @@ export default {
     const userProfile = await req.modelFactory.user.fetchById(
       req.modelFactory,
       req.daoFactory,
+      req.logger,
       userProfileId
     );
 

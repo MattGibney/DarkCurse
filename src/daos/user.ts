@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { ArmyUnit, CivilianUnit, PlayerClass, PlayerRace } from '../../types/typings';
+import { PlayerClass, PlayerRace, PlayerUnit } from '../../types/typings';
 
 /**
  * This is seesntially documentation for the structure of the data in the
@@ -30,7 +30,7 @@ export interface UserData {
   passwordHash: string;
   race: PlayerRace;
   class: PlayerClass;
-  units: (ArmyUnit | CivilianUnit)[];
+  units: PlayerUnit[];
   experience: number;
   gold: number;
   goldInBank: number;
@@ -61,6 +61,17 @@ class UserDao {
   async fetchAll(): Promise<UserData[]> {
     const userRows = await this.database<UserRow>('users').select();
     return userRows.map(this.mapUserRowToUserData);
+  }
+
+  async setGold(userId: number, gold: number): Promise<void> {
+    await this.database('users').where({ id: userId }).update({ gold: gold });
+  }
+
+  async setUnits(userId: number, units: PlayerUnit[]): Promise<void> {
+    await this.database('users').where({ id: userId }).update({
+      // https://knexjs.org/#:~:text=For%20PostgreSQL%2C%20due%20to%20incompatibility%20between%20native%20array%20and%20json%20types%2C%20when%20setting%20an%20array%20(or%20a%20value%20that%20could%20be%20an%20array)%20as%20the%20value%20of%20a%20json%20or%20jsonb%20column%2C%20you%20should%20use%20JSON.stringify()%20to%20convert%20your%20value%20to%20a%20string%20prior%20to%20passing%20it%20to%20the%20query%20builder%2C%20e.g.
+      units: JSON.stringify(units)
+    });
   }
 
   mapUserRowToUserData(userRow: UserRow): UserData {

@@ -17,7 +17,7 @@ const Config: Config = {
   passwordHashingSaltRounds: 10,
   jwtSecret: process.env.JWT_SECRET || 'TOKENSECRET',
   jwtExpiry: 7 * 24 * 60 * 60 * 1000,
-  loggingLevel: 'info',
+  loggingLevel: 'trace',
   PGConnectionString: process.env.DATABASE_URL,
 };
 
