@@ -16,6 +16,14 @@ export default (config: Config): express.Application => {
   const app = express();
   const logger = pino({
     level: config.loggingLevel,
+    hooks: { 
+      logMethod (args, method) {
+        if (args.length === 2) {
+          args[0] = `${args[0]} %j`
+        }
+        method.apply(this, args)
+      }
+    }
   });
 
   const database = knex({

@@ -7,7 +7,7 @@ import ModelFactory from '../modelFactory';
 import WarHistoryModel from './warHistory';
 
 import { PlayerRace, PlayerClass, FortHealth, PlayerUnit, Unit } from '../../types/typings';
-import { Fortifications, WorkerProduction, Levels, UnitTypes } from '../constants';
+import { Fortifications, Levels, UnitTypes } from '../constants';
 
 class UserModel {
   private modelFactory: ModelFactory;
@@ -77,9 +77,10 @@ class UserModel {
 
   get goldPerTurn(): number {
     const workerUnits = this.units
-      .find((units) => units.type === 'WORKER');
-    if(!workerUnits) return 0;
-    return workerUnits.quantity * WorkerProduction;
+      .filter((units) => units.type === 'WORKER');
+    return workerUnits
+      .map((unit) => UnitTypes.find((unitType) => unitType.type === unit.type && unitType.level === unit.level).bonus * unit.quantity)
+      .reduce((acc, gold) => acc + gold, 0);
   }
 
   get offense(): number {

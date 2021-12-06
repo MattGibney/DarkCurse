@@ -76,12 +76,12 @@ describe('Model: User', () => {
         const mockDaoFactory = {} as DaoFactory;
         const mockLogger = {} as pino.Logger;
         const mockData = {
-          units: [{ type: 'WORKER',  quantity: 2 }]
+          units: [{ type: 'WORKER', level: 1, quantity: 2 }]
         } as UserData;
 
         const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
 
-        expect(user.goldPerTurn).toBe(100);
+        expect(user.goldPerTurn).toBe(130);
       });
       test('it works correctly if there are no WORKER units', () => {
         const mockModelFactory = {} as ModelFactory;
@@ -234,37 +234,37 @@ describe('Model: User', () => {
       });
     });
     describe('trainNewUnits', () => {
-      // it('adds new units that previously did not exist', async () => {
-      //   const mockModelFactory = {} as ModelFactory;
-      //   const mockDaoFactory = {
-      //     user: {
-      //       setUnits: jest.fn().mockResolvedValue(null),
-      //     }
-      //   } as unknown as DaoFactory;
-      //   const mockLogger = {} as pino.Logger;
-      //   const mockData = {
-      //     gold: 150,
-      //     units: [
-      //       { type: 'CITIZEN', level: 1, quantity: 1 },
-      //     ]
-      //   } as UserData;
+      it('adds new units that previously did not exist', async () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {
+          user: {
+            setUnits: jest.fn().mockResolvedValue(null),
+          }
+        } as unknown as DaoFactory;
+        const mockLogger = {} as pino.Logger;
+        const mockData = {
+          gold: 150,
+          units: [
+            { type: 'CITIZEN', level: 1, quantity: 1 },
+          ]
+        } as UserData;
 
-      //   const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
 
-      //   await user.trainNewUnits([
-      //     { type: 'CITIZEN', level: 1, quantity: 0 },
-      //     { type: 'WORKER', level: 1, quantity: 1 }
-      //   ]);
+        await user.trainNewUnits([
+          { type: 'CITIZEN', level: 1, quantity: 0 },
+          { type: 'WORKER', level: 1, quantity: 1 }
+        ]);
 
-      //   expect(user.units).toMatchObject([
-      //     { type: 'CITIZEN', level: 1, quantity: 0 },
-      //     { type: 'WORKER', level: 1, quantity: 1 },
-      //   ]);
-      //   expect(mockDaoFactory.user.setUnits).toHaveBeenCalledWith(user.id, [
-      //     { type: 'CITIZEN', level: 1, quantity: 0 },
-      //     { type: 'WORKER', level: 1, quantity: 1 },
-      //   ]);
-      // });
+        expect(user.units).toMatchObject([
+          { type: 'CITIZEN', level: 1, quantity: 0 },
+          { type: 'WORKER', level: 1, quantity: 1 },
+        ]);
+        expect(mockDaoFactory.user.setUnits).toHaveBeenCalledWith(user.id, [
+          { type: 'CITIZEN', level: 1, quantity: 0 },
+          { type: 'WORKER', level: 1, quantity: 1 },
+        ]);
+      });
       it('increases the count of existing units', async () => {
         const mockModelFactory = {} as ModelFactory;
         const mockDaoFactory = {

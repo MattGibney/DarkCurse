@@ -10,7 +10,7 @@ export default {
         id: `${idPrefix}_${unit.level}`,
         name: unit.name,
         bonus: unit.bonus,
-        ownedUnits: req.user.units.find(u => u.type === unit.type)?.quantity || 0,
+        ownedUnits: req.user.units.find(u => u.type === unit.type && u.level === unit.level)?.quantity || 0,
         cost: new Intl.NumberFormat('en-GB').format(unit.cost),
       };
     };
@@ -58,7 +58,7 @@ export default {
           quantity: parseInt(quantity),
         };
       }
-    });
+    }).filter(unit => !!unit);
 
     req.logger.debug('Units to be trained', unitsToTrain);
     if (unitsToTrain.length === 0) {
@@ -90,5 +90,6 @@ export default {
     req.logger.debug('Trained new units', unitsToTrain);
     
     // TODO: RENDER PAGE WITH MESSAGES
+    res.redirect('/training');
   }
 }

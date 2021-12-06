@@ -95,7 +95,9 @@ describe('Controller: Training', () => {
           trainNewUnits: jest.fn().mockReturnThis(),
         } as unknown as UserModel
       } as unknown as Request;
-      const mockResponse = {} as Response;
+      const mockResponse = {
+        redirect: jest.fn().mockReturnThis(),
+      } as unknown as Response;
 
       await controller.trainUnitsAction(mockRequest, mockResponse);
 
@@ -113,6 +115,8 @@ describe('Controller: Training', () => {
           type: 'WORKER',
         }
       ]);
+
+      expect(mockResponse.redirect).toHaveBeenCalledWith('/training');
     });
   });
 });

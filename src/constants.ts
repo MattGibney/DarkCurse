@@ -219,7 +219,6 @@ export const Fortifications = {
   }
 };
 
-export const WorkerProduction = 50;
 export const Levels = {
   1: 0,
   2: 200,
