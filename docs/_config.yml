@@ -40,6 +40,7 @@ plugins:
 header_pages:
  - index.md
  - updates.md
+ - developmentPlan.md
  - about.md
 
 # Exclude from processing.
