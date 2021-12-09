@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino';
-import knex from 'knex';
+
 
 import { Config } from '../config/environment';
 import DaoFactory from './daoFactory';
@@ -12,19 +12,21 @@ import ModelFactory from './modelFactory';
 import router from './router';
 import middleware from './middleware';
 
-export default (config: Config, logger: pino.Logger): express.Application => {
+export default (
+  config: Config,
+  logger: pino.Logger,
+  modelFactory: ModelFactory,
+  daoFactory: DaoFactory
+): express.Application => {
   const app = express();
 
-  const database = knex({
-    client: 'pg',
-    connection: config.PGConnectionString,
-  });
+  
 
   app.use((req, res, next) => {
     const requestId = uuidv4();
 
-    req.modelFactory = new ModelFactory();
-    req.daoFactory = new DaoFactory(database);
+    req.modelFactory = modelFactory;
+    req.daoFactory = daoFactory;
     req.config = config;
     req.requestId = requestId;
     req.logger = logger.child({ requestId });
