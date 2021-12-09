@@ -42,7 +42,21 @@ app.listen(Config.port, () => {
  * can be started and stopped. It would also allow for more granular control
  * over things like retries when things go wrong.
  */
-cron.schedule('0,30 * * * *', () => { // Runs every 30 minutes.
-  logger.info('Cron job started');
-  logger.info('Cron job finished');
+cron.schedule('0,30 * * * *', async () => { // Runs every 30 minutes.
+  logger.info('Start: Processing game ticks');
+  const allUsers = await modelFactory.user.fetchAll(
+    modelFactory,
+    daoFactory,
+    logger
+  );
+
+  for await (const user of allUsers) {
+    logger.info(`Processing user id:${user.id}`);
+
+    // Add Gold
+    logger.debug(`Adding gold per turn for id:${user.id}`)
+    await user.addGold(user.goldPerTurn);
+  };
+
+  logger.info('Finish: Processing game ticks');
 });

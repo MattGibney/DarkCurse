@@ -123,6 +123,11 @@ class UserModel {
     return await bcrypt.compare(password, this.passwordHash);
   }
 
+  async addGold(amount: number): Promise<void> {
+    this.gold += amount;
+    await this.daoFactory.user.setGold(this.id, this.gold);
+  }
+
   async subtractGold(amount: number): Promise<void> {
     this.gold -= amount;
     await this.daoFactory.user.setGold(this.id, this.gold);
