@@ -12,19 +12,8 @@ import ModelFactory from './modelFactory';
 import router from './router';
 import middleware from './middleware';
 
-export default (config: Config): express.Application => {
+export default (config: Config, logger: pino.Logger): express.Application => {
   const app = express();
-  const logger = pino({
-    level: config.loggingLevel,
-    hooks: { 
-      logMethod (args, method) {
-        if (args.length === 2) {
-          args[0] = `${args[0]} %j`
-        }
-        method.apply(this, args)
-      }
-    }
-  });
 
   const database = knex({
     client: 'pg',
