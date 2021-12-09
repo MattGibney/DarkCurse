@@ -211,6 +211,28 @@ describe('Model: User', () => {
         expect(await user.validatePassword('password')).toBe(true);
       });
     });
+    describe('addGold', () => {
+      it('calls the dao to set the gold to the correct amount', async () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {
+          user: {
+            id: 1111,
+            setGold: jest.fn().mockResolvedValue(null),
+          },
+        } as unknown as DaoFactory;
+        const mockLogger = {} as pino.Logger;
+        const mockData = {
+          gold: 150,
+        } as UserData;
+
+        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+
+        await user.addGold(100);
+
+        expect(user.gold).toBe(250);
+        expect(mockDaoFactory.user.setGold).toHaveBeenCalledWith(user.id, 250);
+      });
+    });
     describe('subtractGold', () => {
       it('calls the dao to set the gold to the correct amount', async () => {
         const mockModelFactory = {} as ModelFactory;
