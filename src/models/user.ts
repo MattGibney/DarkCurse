@@ -78,9 +78,12 @@ class UserModel {
   get goldPerTurn(): number {
     const workerUnits = this.units
       .filter((units) => units.type === 'WORKER');
-    return workerUnits
+    const workerGoldPerTurn = workerUnits
       .map((unit) => UnitTypes.find((unitType) => unitType.type === unit.type && unitType.level === unit.level).bonus * unit.quantity)
       .reduce((acc, gold) => acc + gold, 0);
+    
+    const fortificationGoldPerTurn = Fortifications[this.fortLevel].goldPerTurn;
+    return workerGoldPerTurn + fortificationGoldPerTurn;
   }
 
   get offense(): number {

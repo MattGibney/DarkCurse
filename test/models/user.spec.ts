@@ -76,24 +76,26 @@ describe('Model: User', () => {
         const mockDaoFactory = {} as DaoFactory;
         const mockLogger = {} as pino.Logger;
         const mockData = {
-          units: [{ type: 'WORKER', level: 1, quantity: 2 }]
+          units: [{ type: 'WORKER', level: 1, quantity: 2 }],
+          fortLevel: 1,
         } as UserData;
 
         const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
 
-        expect(user.goldPerTurn).toBe(130);
+        expect(user.goldPerTurn).toBe(1130);
       });
       test('it works correctly if there are no WORKER units', () => {
         const mockModelFactory = {} as ModelFactory;
         const mockDaoFactory = {} as DaoFactory;
         const mockLogger = {} as pino.Logger;
         const mockData = {
-          units: []
+          units: [],
+          fortLevel: 1,
         } as UserData;
 
         const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
 
-        expect(user.goldPerTurn).toBe(0);
+        expect(user.goldPerTurn).toBe(1000);
       });
     });
     describe('get level', () => {

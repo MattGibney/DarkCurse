@@ -20,7 +20,7 @@ with solo play.
   - [ ] Logout (including option to expire all sessions across devices)
 - [ ] Economy
   - [X] Worker units generate gold every turn
-  - [ ] Fortification generates gold every turn
+  - [X] Fortification generates gold every turn
   - [ ] Gold can be deposited into the bank for safe keeping
 - [ ] Training Units
   - [X] Citizens can be trained into different units
