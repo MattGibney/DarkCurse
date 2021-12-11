@@ -15,15 +15,20 @@ describe('Model: User', () => {
         const mockData = {
           units: [
             { type: 'CITIZEN', quantity: 1 },
-            { type: 'WORKER',  quantity: 2 },
+            { type: 'WORKER', quantity: 2 },
             { level: 1, type: 'OFFENSE', quantity: 3 },
             { level: 1, type: 'DEFENSE', quantity: 4 },
-            { level: 1, type: 'SPY',     quantity: 5 },
-            { level: 1, type: 'SENTRY',  quantity: 6 }
-          ]
+            { level: 1, type: 'SPY', quantity: 5 },
+            { level: 1, type: 'SENTRY', quantity: 6 },
+          ],
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.population).toBe(21);
       });
@@ -36,15 +41,20 @@ describe('Model: User', () => {
         const mockData = {
           units: [
             { type: 'CITIZEN', quantity: 1 },
-            { type: 'WORKER',  quantity: 2 },
+            { type: 'WORKER', quantity: 2 },
             { level: 1, type: 'OFFENSE', quantity: 3 },
             { level: 1, type: 'DEFENSE', quantity: 4 },
-            { level: 1, type: 'SPY',     quantity: 5 },
-            { level: 1, type: 'SENTRY',  quantity: 6 }
-          ]
+            { level: 1, type: 'SPY', quantity: 5 },
+            { level: 1, type: 'SENTRY', quantity: 6 },
+          ],
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.armySize).toBe(18);
       });
@@ -57,15 +67,20 @@ describe('Model: User', () => {
         const mockData = {
           units: [
             { type: 'CITIZEN', quantity: 1 },
-            { type: 'WORKER',  quantity: 2 },
+            { type: 'WORKER', quantity: 2 },
             { level: 1, type: 'OFFENSE', quantity: 3 },
             { level: 1, type: 'DEFENSE', quantity: 4 },
-            { level: 1, type: 'SPY',     quantity: 5 },
-            { level: 1, type: 'SENTRY',  quantity: 6 }
-          ]
+            { level: 1, type: 'SPY', quantity: 5 },
+            { level: 1, type: 'SENTRY', quantity: 6 },
+          ],
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.citizens).toBe(1);
       });
@@ -80,7 +95,12 @@ describe('Model: User', () => {
           fortLevel: 1,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.goldPerTurn).toBe(1130);
       });
@@ -93,7 +113,12 @@ describe('Model: User', () => {
           fortLevel: 1,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.goldPerTurn).toBe(1000);
       });
@@ -107,7 +132,12 @@ describe('Model: User', () => {
           experience: 199,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.level).toBe(1);
       });
@@ -119,7 +149,12 @@ describe('Model: User', () => {
           experience: 201,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.level).toBe(2);
       });
@@ -131,7 +166,12 @@ describe('Model: User', () => {
           experience: 0,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.level).toBe(1);
       });
@@ -145,7 +185,12 @@ describe('Model: User', () => {
           experience: 150,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.xpToNextLevel).toBe(50);
       });
@@ -157,15 +202,20 @@ describe('Model: User', () => {
         const mockLogger = {} as pino.Logger;
         const mockData = {
           fortHitpoints: 50,
-          fortLevel: 1
+          fortLevel: 1,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.fortHealth).toMatchObject({
           current: 50,
           max: 50,
-          percentage: 100
+          percentage: 100,
         });
       });
     });
@@ -176,14 +226,19 @@ describe('Model: User', () => {
         const mockLogger = {} as pino.Logger;
         const mockData = {} as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(user.availableUnitTypes).toMatchObject([
-          { name: 'Worker',  type: 'WORKER',  level: 1, bonus: 65, cost: 2000 },
-          { name: 'Soldier', type: 'OFFENSE', level: 1, bonus: 3,  cost: 1500 },
-          { name: 'Guard',   type: 'DEFENSE', level: 1, bonus: 3,  cost: 1500 },
-          { name: 'Spy',     type: 'SPY',     level: 1, bonus: 3,  cost: 1500 },
-          { name: 'Sentry',  type: 'SENTRY',  level: 1, bonus: 3,  cost: 1500 },
+          { name: 'Worker', type: 'WORKER', level: 1, bonus: 65, cost: 2000 },
+          { name: 'Soldier', type: 'OFFENSE', level: 1, bonus: 3, cost: 1500 },
+          { name: 'Guard', type: 'DEFENSE', level: 1, bonus: 3, cost: 1500 },
+          { name: 'Spy', type: 'SPY', level: 1, bonus: 3, cost: 1500 },
+          { name: 'Sentry', type: 'SENTRY', level: 1, bonus: 3, cost: 1500 },
         ]);
       });
     });
@@ -196,7 +251,12 @@ describe('Model: User', () => {
           passwordHash: 'password',
         } as unknown as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(await user.validatePassword('wrong password')).toBe(false);
       });
@@ -205,10 +265,16 @@ describe('Model: User', () => {
         const mockDaoFactory = {} as DaoFactory;
         const mockLogger = {} as pino.Logger;
         const mockData = {
-          passwordHash: '$2b$10$Zdf/HbQm4.CzYUoj1FoY5O9ng0GxJumavLpgPCqMDaTL4gc7Ntc0S',
+          passwordHash:
+            '$2b$10$Zdf/HbQm4.CzYUoj1FoY5O9ng0GxJumavLpgPCqMDaTL4gc7Ntc0S',
         } as unknown as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         expect(await user.validatePassword('password')).toBe(true);
       });
@@ -227,7 +293,12 @@ describe('Model: User', () => {
           gold: 150,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         await user.addGold(100);
 
@@ -249,12 +320,77 @@ describe('Model: User', () => {
           gold: 150,
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         await user.subtractGold(100);
 
         expect(user.gold).toBe(50);
         expect(mockDaoFactory.user.setGold).toHaveBeenCalledWith(user.id, 50);
+      });
+    });
+    describe('addBankedGold', () => {
+      it('calls the dao to set the gold to the correct amount', async () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {
+          user: {
+            id: 1111,
+            setBankedGold: jest.fn().mockResolvedValue(null),
+          },
+        } as unknown as DaoFactory;
+        const mockLogger = {} as pino.Logger;
+        const mockData = {
+          goldInBank: 150,
+        } as UserData;
+
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
+
+        await user.addBankedGold(100);
+
+        expect(user.goldInBank).toBe(250);
+        expect(mockDaoFactory.user.setBankedGold).toHaveBeenCalledWith(
+          user.id,
+          250
+        );
+      });
+    });
+    describe('subtractBankedGold', () => {
+      it('calls the dao to set the gold to the correct amount', async () => {
+        const mockModelFactory = {} as ModelFactory;
+        const mockDaoFactory = {
+          user: {
+            id: 1111,
+            setBankedGold: jest.fn().mockResolvedValue(null),
+          },
+        } as unknown as DaoFactory;
+        const mockLogger = {} as pino.Logger;
+        const mockData = {
+          goldInBank: 150,
+        } as UserData;
+
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
+
+        await user.subtractBankedGold(100);
+
+        expect(user.goldInBank).toBe(50);
+        expect(mockDaoFactory.user.setBankedGold).toHaveBeenCalledWith(
+          user.id,
+          50
+        );
       });
     });
     describe('trainNewUnits', () => {
@@ -263,21 +399,24 @@ describe('Model: User', () => {
         const mockDaoFactory = {
           user: {
             setUnits: jest.fn().mockResolvedValue(null),
-          }
+          },
         } as unknown as DaoFactory;
         const mockLogger = {} as pino.Logger;
         const mockData = {
           gold: 150,
-          units: [
-            { type: 'CITIZEN', level: 1, quantity: 1 },
-          ]
+          units: [{ type: 'CITIZEN', level: 1, quantity: 1 }],
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
         await user.trainNewUnits([
           { type: 'CITIZEN', level: 1, quantity: 0 },
-          { type: 'WORKER', level: 1, quantity: 1 }
+          { type: 'WORKER', level: 1, quantity: 1 },
         ]);
 
         expect(user.units).toMatchObject([
@@ -294,7 +433,7 @@ describe('Model: User', () => {
         const mockDaoFactory = {
           user: {
             setUnits: jest.fn().mockResolvedValue(null),
-          }
+          },
         } as unknown as DaoFactory;
         const mockLogger = {} as pino.Logger;
         const mockData = {
@@ -302,14 +441,17 @@ describe('Model: User', () => {
           units: [
             { type: 'CITIZEN', level: 1, quantity: 1 },
             { type: 'WORKER', level: 1, quantity: 1 },
-          ]
+          ],
         } as UserData;
 
-        const user = new UserModel(mockModelFactory, mockDaoFactory, mockLogger, mockData);
+        const user = new UserModel(
+          mockModelFactory,
+          mockDaoFactory,
+          mockLogger,
+          mockData
+        );
 
-        await user.trainNewUnits([
-          { type: 'WORKER', level: 1, quantity: 1 }
-        ]);
+        await user.trainNewUnits([{ type: 'WORKER', level: 1, quantity: 1 }]);
 
         expect(user.units).toMatchObject([
           { type: 'CITIZEN', level: 1, quantity: 0 },
@@ -317,7 +459,7 @@ describe('Model: User', () => {
         ]);
         expect(mockDaoFactory.user.setUnits).toHaveBeenCalledWith(user.id, [
           { type: 'CITIZEN', level: 1, quantity: 0 },
-          { type: 'WORKER', level: 1, quantity: 2 }
+          { type: 'WORKER', level: 1, quantity: 2 },
         ]);
       });
     });
@@ -329,7 +471,7 @@ describe('Model: User', () => {
         const mockDaoFactory = {
           user: {
             fetchById: jest.fn().mockResolvedValue({}),
-          }
+          },
         } as unknown as DaoFactory;
         const mockLogger = {} as pino.Logger;
 
@@ -346,7 +488,7 @@ describe('Model: User', () => {
         const mockDaoFactory = {
           user: {
             fetchById: jest.fn().mockResolvedValue(null),
-          }
+          },
         } as unknown as DaoFactory;
         const mockLogger = {} as pino.Logger;
 
@@ -365,7 +507,7 @@ describe('Model: User', () => {
         const mockDaoFactory = {
           user: {
             fetchByEmail: jest.fn().mockResolvedValue({}),
-          }
+          },
         } as unknown as DaoFactory;
         const mockLogger = {} as pino.Logger;
 
@@ -382,7 +524,7 @@ describe('Model: User', () => {
         const mockDaoFactory = {
           user: {
             fetchByEmail: jest.fn().mockResolvedValue(null),
-          }
+          },
         } as unknown as DaoFactory;
         const mockLogger = {} as pino.Logger;
 
@@ -393,17 +535,15 @@ describe('Model: User', () => {
           'email@example.com'
         );
         expect(user).toBeNull();
-      })
+      });
     });
     describe('fetchAll', () => {
       it('returns an array of UserModels', async () => {
         const mockModelFactory = {} as ModelFactory;
         const mockDaoFactory = {
           user: {
-            fetchAll: jest.fn().mockResolvedValue([
-              {} as UserData,
-            ]),
-          }
+            fetchAll: jest.fn().mockResolvedValue([{} as UserData]),
+          },
         } as unknown as DaoFactory;
         const mockLogger = {} as pino.Logger;
 

@@ -147,6 +147,16 @@ class UserModel {
     await this.daoFactory.user.setGold(this.id, this.gold);
   }
 
+  async addBankedGold(amount: number): Promise<void> {
+    this.goldInBank += amount;
+    await this.daoFactory.user.setBankedGold(this.id, this.goldInBank);
+  }
+
+  async subtractBankedGold(amount: number): Promise<void> {
+    this.goldInBank -= amount;
+    await this.daoFactory.user.setBankedGold(this.id, this.goldInBank);
+  }
+
   /**
    * Takes in an object containing the details of the desired units. It then
    * merges the objects, if a unit already exists, it will add the quantity
