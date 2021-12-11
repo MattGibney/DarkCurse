@@ -28,7 +28,8 @@ authedRouter.use((req, res, next) => {
 });
 
 authedRouter.get('/attack', attackController.renderAttackList);
-authedRouter.get('/bank', bankController.bankPage);
+authedRouter.get('/bank', (req, res) => bankController.bankPage(req, res));
+authedRouter.post('/bank', bankController.bankDepositGold);
 authedRouter.get('/overview', overviewController.overviewPage);
 authedRouter.get('/training', trainingController.trainingPage);
 authedRouter.post('/training', trainingController.trainUnitsAction);

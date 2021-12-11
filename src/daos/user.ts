@@ -74,7 +74,7 @@ class UserDao {
   async setBankedGold(userId: number, goldInBank: number): Promise<void> {
     await this.database('users')
       .where({ id: userId })
-      .update({ goldInBank: goldInBank });
+      .update({ gold_in_bank: goldInBank });
   }
 
   async setUnits(userId: number, units: PlayerUnit[]): Promise<void> {

@@ -133,6 +133,19 @@ class UserModel {
     return UnitTypes.filter((unitType) => unitType.level === 1);
   }
 
+  get maximumBankDeposits(): number {
+    return 1;
+  }
+
+  /**
+   * Uses banking transactional history to determine available deposits.
+   */
+  get availableBankDeposits(): number {
+    // Used in the last 24 hours.
+    const depositsUsed = 0;
+    return this.maximumBankDeposits - depositsUsed;
+  }
+
   async validatePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.passwordHash);
   }
