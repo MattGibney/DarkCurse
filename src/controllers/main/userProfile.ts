@@ -4,7 +4,7 @@ import { Fortifications } from '../../constants';
 export default {
   async renderUserProfile(req: Request, res: Response) {
     const userProfileId = Number(req.params.userId);
-    
+
     const userProfile = await req.modelFactory.user.fetchById(
       req.modelFactory,
       req.daoFactory,
@@ -29,5 +29,5 @@ export default {
       bio: 'THIS IS A BIO',
       // isOnline: false,
     });
-  }
-}
+  },
+};

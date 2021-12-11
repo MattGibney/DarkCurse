@@ -9,7 +9,6 @@ import overviewController from './controllers/main/overview';
 import trainingController from './controllers/main/training';
 import userProfileController from './controllers/main/userProfile';
 
-
 const router = express.Router();
 
 // Home
@@ -18,7 +17,6 @@ router.get('/', marketingHomeController.renderHomePage);
 // Login
 router.get('/login', marketingLoginController.renderLoginPage);
 router.post('/login', marketingLoginController.loginAction);
-
 
 const authedRouter = express.Router();
 
@@ -34,7 +32,10 @@ authedRouter.get('/bank', bankController.bankPage);
 authedRouter.get('/overview', overviewController.overviewPage);
 authedRouter.get('/training', trainingController.trainingPage);
 authedRouter.post('/training', trainingController.trainUnitsAction);
-authedRouter.get('/userprofile/:userId', userProfileController.renderUserProfile);
+authedRouter.get(
+  '/userprofile/:userId',
+  userProfileController.renderUserProfile
+);
 router.use(authedRouter);
 
 export default router;

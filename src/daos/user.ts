@@ -12,7 +12,7 @@ interface UserRow {
   password_hash: string;
   race: string;
   class: string;
-  units: any;
+  units: PlayerUnit[];
   experience: string;
   gold: string;
   gold_in_bank: string;
@@ -45,15 +45,19 @@ class UserDao {
   constructor(database: Knex) {
     this.database = database;
   }
-  
+
   async fetchById(id: number): Promise<UserData | null> {
-    const userRow = await this.database<UserRow>('users').where({ id: id }).first();
+    const userRow = await this.database<UserRow>('users')
+      .where({ id: id })
+      .first();
     if (!userRow) return null;
     return this.mapUserRowToUserData(userRow);
   }
 
   async fetchByEmail(email: string): Promise<UserData | null> {
-    const userRow = await this.database<UserRow>('users').where({ email: email }).first();
+    const userRow = await this.database<UserRow>('users')
+      .where({ email: email })
+      .first();
     if (!userRow) return null;
     return this.mapUserRowToUserData(userRow);
   }
@@ -68,10 +72,12 @@ class UserDao {
   }
 
   async setUnits(userId: number, units: PlayerUnit[]): Promise<void> {
-    await this.database('users').where({ id: userId }).update({
-      // https://knexjs.org/#:~:text=For%20PostgreSQL%2C%20due%20to%20incompatibility%20between%20native%20array%20and%20json%20types%2C%20when%20setting%20an%20array%20(or%20a%20value%20that%20could%20be%20an%20array)%20as%20the%20value%20of%20a%20json%20or%20jsonb%20column%2C%20you%20should%20use%20JSON.stringify()%20to%20convert%20your%20value%20to%20a%20string%20prior%20to%20passing%20it%20to%20the%20query%20builder%2C%20e.g.
-      units: JSON.stringify(units)
-    });
+    await this.database('users')
+      .where({ id: userId })
+      .update({
+        // https://knexjs.org/#:~:text=For%20PostgreSQL%2C%20due%20to%20incompatibility%20between%20native%20array%20and%20json%20types%2C%20when%20setting%20an%20array%20(or%20a%20value%20that%20could%20be%20an%20array)%20as%20the%20value%20of%20a%20json%20or%20jsonb%20column%2C%20you%20should%20use%20JSON.stringify()%20to%20convert%20your%20value%20to%20a%20string%20prior%20to%20passing%20it%20to%20the%20query%20builder%2C%20e.g.
+        units: JSON.stringify(units),
+      });
   }
 
   mapUserRowToUserData(userRow: UserRow): UserData {

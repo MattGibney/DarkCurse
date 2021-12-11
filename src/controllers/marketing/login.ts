@@ -12,12 +12,12 @@ export default {
   async loginAction(req: Request, res: Response) {
     const email = req.body?.email;
     const password = req.body?.password;
-    
+
     if (!email || !password) {
       return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
-        errorMessage: 'Email and password are mandatory'
+        errorMessage: 'Email and password are mandatory',
       });
     }
 
@@ -32,7 +32,7 @@ export default {
       return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
-        errorMessage: 'Email or password not recognised'
+        errorMessage: 'Email or password not recognised',
       });
     }
 
@@ -41,7 +41,7 @@ export default {
       return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
-        errorMessage: 'Email or password not recognised'
+        errorMessage: 'Email or password not recognised',
       });
     }
 
@@ -52,16 +52,19 @@ export default {
       user.id
     );
 
-    const newToken = jwt.sign({
-      id: newSession.externalId,
-    }, req.config.jwtSecret);
+    const newToken = jwt.sign(
+      {
+        id: newSession.externalId,
+      },
+      req.config.jwtSecret
+    );
 
     res.cookie('DCT', newToken, {
       httpOnly: true,
       sameSite: 'strict',
       expires: new Date(Date.now() + req.config.jwtExpiry),
     });
-    
+
     return res.redirect('/overview');
-  }
-}
+  },
+};

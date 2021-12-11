@@ -4,9 +4,14 @@ import pino from 'pino';
 import DaoFactory from '../daoFactory';
 import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
-import WarHistoryModel from './warHistory';
 
-import { PlayerRace, PlayerClass, FortHealth, PlayerUnit, Unit } from '../../types/typings';
+import {
+  PlayerRace,
+  PlayerClass,
+  FortHealth,
+  PlayerUnit,
+  Unit,
+} from '../../types/typings';
 import { Fortifications, Levels, UnitTypes } from '../constants';
 
 class UserModel {
@@ -64,24 +69,26 @@ class UserModel {
 
   get armySize(): number {
     return this.units
-      .filter(
-        (unit) => unit.type !== 'CITIZEN' && unit.type !== 'WORKER'
-      )
+      .filter((unit) => unit.type !== 'CITIZEN' && unit.type !== 'WORKER')
       .reduce((acc, unit) => acc + unit.quantity, 0);
   }
 
   get citizens(): number {
-    return this.units
-      .find((unit) => unit.type === 'CITIZEN').quantity;
+    return this.units.find((unit) => unit.type === 'CITIZEN').quantity;
   }
 
   get goldPerTurn(): number {
-    const workerUnits = this.units
-      .filter((units) => units.type === 'WORKER');
+    const workerUnits = this.units.filter((units) => units.type === 'WORKER');
     const workerGoldPerTurn = workerUnits
-      .map((unit) => UnitTypes.find((unitType) => unitType.type === unit.type && unitType.level === unit.level).bonus * unit.quantity)
+      .map(
+        (unit) =>
+          UnitTypes.find(
+            (unitType) =>
+              unitType.type === unit.type && unitType.level === unit.level
+          ).bonus * unit.quantity
+      )
       .reduce((acc, gold) => acc + gold, 0);
-    
+
     const fortificationGoldPerTurn = Fortifications[this.fortLevel].goldPerTurn;
     return workerGoldPerTurn + fortificationGoldPerTurn;
   }
@@ -97,7 +104,9 @@ class UserModel {
       .filter((levelXp) => this.experience > levelXp)
       .sort((a, b) => b - a);
     const xpOfCurrentLevel = possibleLevels[0];
-    return Number(Object.entries(Levels).find(([level, xp]) => xp === xpOfCurrentLevel)[0]);
+    return Number(
+      Object.entries(Levels).find(([, xp]) => xp === xpOfCurrentLevel)[0]
+    );
   }
 
   get xpToNextLevel(): number {
@@ -110,8 +119,10 @@ class UserModel {
     return {
       current: this.fortHitpoints,
       max: Fortifications[this.fortLevel].hitpoints,
-      percentage: Math.floor((this.fortHitpoints / Fortifications[this.fortLevel].hitpoints) * 100),
-    }
+      percentage: Math.floor(
+        (this.fortHitpoints / Fortifications[this.fortLevel].hitpoints) * 100
+      ),
+    };
   }
 
   /**
@@ -140,30 +151,40 @@ class UserModel {
    * Takes in an object containing the details of the desired units. It then
    * merges the objects, if a unit already exists, it will add the quantity
    * if it's a new unit. It'll be added directly.
-   * 
+   *
    * TODO: This is a rather in-elegant approach. Make it better.
    */
   async trainNewUnits(newUnits: PlayerUnit[]): Promise<void> {
     // Subtract Citizens
-    const totalNewUnits = newUnits.reduce((acc, unit) => acc + unit.quantity, 0);
+    const totalNewUnits = newUnits.reduce(
+      (acc, unit) => acc + unit.quantity,
+      0
+    );
     const citizenUnits = this.units.find((unit) => unit.type === 'CITIZEN');
     citizenUnits.quantity -= totalNewUnits;
-    
+
     // Update existing units
-    const unitsToUpdate = this.units
-      .filter((unit) => newUnits
-        .find((newUnit) => newUnit.type === unit.type && newUnit.level === unit.level)
-      );
+    const unitsToUpdate = this.units.filter((unit) =>
+      newUnits.find(
+        (newUnit) => newUnit.type === unit.type && newUnit.level === unit.level
+      )
+    );
     unitsToUpdate.forEach((unit) => {
-      const newUnit = newUnits
-        .find((newUnit) => newUnit.type === unit.type && newUnit.level === unit.level);
+      const newUnit = newUnits.find(
+        (newUnit) => newUnit.type === unit.type && newUnit.level === unit.level
+      );
       unit.quantity += newUnit.quantity;
     });
 
     this.units = Object.assign(unitsToUpdate, this.units);
-    
+
     // Add new units
-    const newUnitsToAdd = newUnits.filter((newUnit) => !this.units.find((unit) => unit.type === newUnit.type && unit.level === newUnit.level));
+    const newUnitsToAdd = newUnits.filter(
+      (newUnit) =>
+        !this.units.find(
+          (unit) => unit.type === newUnit.type && unit.level === newUnit.level
+        )
+    );
     this.units = this.units.concat(newUnitsToAdd);
 
     await this.daoFactory.user.setUnits(this.id, this.units);
@@ -185,21 +206,37 @@ class UserModel {
   //   return [];
   // }
 
-  static async fetchById(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger, id: number): Promise<UserModel> {
+  static async fetchById(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    id: number
+  ): Promise<UserModel> {
     const user = await daoFactory.user.fetchById(id);
     if (!user) return null;
     return new UserModel(modelFactory, daoFactory, logger, user);
   }
 
-  static async fetchByEmail(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger, email: string): Promise<UserModel> {
+  static async fetchByEmail(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    email: string
+  ): Promise<UserModel> {
     const user = await daoFactory.user.fetchByEmail(email);
     if (!user) return null;
     return new UserModel(modelFactory, daoFactory, logger, user);
   }
 
-  static async fetchAll(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger): Promise<UserModel[]> {
+  static async fetchAll(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger
+  ): Promise<UserModel[]> {
     const users = await daoFactory.user.fetchAll();
-    return users.map((user) => new UserModel(modelFactory, daoFactory, logger, user));
+    return users.map(
+      (user) => new UserModel(modelFactory, daoFactory, logger, user)
+    );
   }
 }
 

@@ -5,7 +5,6 @@ import * as cookieParser from 'cookie-parser';
 import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino';
 
-
 import { Config } from '../config/environment';
 import DaoFactory from './daoFactory';
 import ModelFactory from './modelFactory';
@@ -19,8 +18,6 @@ export default (
   daoFactory: DaoFactory
 ): express.Application => {
   const app = express();
-
-  
 
   app.use((req, res, next) => {
     const requestId = uuidv4();
@@ -55,17 +52,19 @@ export default (
       citizens: new Intl.NumberFormat('en-GB').format(req.user.citizens),
       level: new Intl.NumberFormat('en-GB').format(req.user.level),
       experience: new Intl.NumberFormat('en-GB').format(req.user.experience),
-      xpToNextLevel: new Intl.NumberFormat('en-GB').format(req.user.xpToNextLevel),
+      xpToNextLevel: new Intl.NumberFormat('en-GB').format(
+        req.user.xpToNextLevel
+      ),
       attackTurns: new Intl.NumberFormat('en-GB').format(req.user.attackTurns),
     };
     next();
   });
 
-  app.engine('.hbs', engine({extname: '.hbs'}));
+  app.engine('.hbs', engine({ extname: '.hbs' }));
   app.set('view engine', '.hbs');
-  app.set("views", "src/views");
+  app.set('views', 'src/views');
 
   app.use(router);
 
   return app;
-}
+};
