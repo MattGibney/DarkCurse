@@ -1,1 +1,23 @@
 <h1>Bank</h1>
+
+<div class="d-flex justify-content-around">
+  <p>Gold on Hand: {{gold}}</p>
+  <p>Banked Gold: {{goldInBank}}</p>
+</div>
+
+Deposits Remaining: {{deposits.remaining}} / {{deposits.max}}
+
+{{#if deposits.isMax}}
+  <p>You are at your maximum amount of deposits.</p>
+{{/if}}
+<p>You may deposit up to 80% of your gold at one time.</p>
+
+<form action="/bank/deposit" class="form d-flex align-items-end gap-2">
+  <div class="flex-fill">
+    <label for="deposit" class="form-control-label">Amount to Deposit</label>
+    <input type="number" name="deposit" id="deposit" class="form-control" min="0" value="0" />
+  </div>
+  <div>
+    <button type="submit" class="btn btn-primary">Deposit</button>
+  </div>
+</form>
