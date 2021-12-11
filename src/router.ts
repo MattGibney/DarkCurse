@@ -3,10 +3,12 @@ import * as express from 'express';
 import marketingHomeController from './controllers/marketing/home';
 import marketingLoginController from './controllers/marketing/login';
 
+import attackController from './controllers/main/attack';
+import bankController from './controllers/main/bank';
 import overviewController from './controllers/main/overview';
 import trainingController from './controllers/main/training';
-import attackController from './controllers/main/attack';
 import userProfileController from './controllers/main/userProfile';
+
 
 const router = express.Router();
 
@@ -27,10 +29,11 @@ authedRouter.use((req, res, next) => {
   next();
 });
 
+authedRouter.get('/attack', attackController.renderAttackList);
+authedRouter.get('/bank', bankController.bankPage);
 authedRouter.get('/overview', overviewController.overviewPage);
 authedRouter.get('/training', trainingController.trainingPage);
 authedRouter.post('/training', trainingController.trainUnitsAction);
-authedRouter.get('/attack', attackController.renderAttackList);
 authedRouter.get('/userprofile/:userId', userProfileController.renderUserProfile);
 router.use(authedRouter);
 
