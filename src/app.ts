@@ -47,16 +47,20 @@ export default (
   app.use(middleware.authenticate);
 
   app.use((req, res, next) => {
-    req.sidebarData = {
-      gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
-      citizens: new Intl.NumberFormat('en-GB').format(req.user.citizens),
-      level: new Intl.NumberFormat('en-GB').format(req.user.level),
-      experience: new Intl.NumberFormat('en-GB').format(req.user.experience),
-      xpToNextLevel: new Intl.NumberFormat('en-GB').format(
-        req.user.xpToNextLevel
-      ),
-      attackTurns: new Intl.NumberFormat('en-GB').format(req.user.attackTurns),
-    };
+    if (req.user) {
+      req.sidebarData = {
+        gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
+        citizens: new Intl.NumberFormat('en-GB').format(req.user.citizens),
+        level: new Intl.NumberFormat('en-GB').format(req.user.level),
+        experience: new Intl.NumberFormat('en-GB').format(req.user.experience),
+        xpToNextLevel: new Intl.NumberFormat('en-GB').format(
+          req.user.xpToNextLevel
+        ),
+        attackTurns: new Intl.NumberFormat('en-GB').format(
+          req.user.attackTurns
+        ),
+      };
+    }
     next();
   });
 
