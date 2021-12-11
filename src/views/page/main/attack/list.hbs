@@ -1,37 +1,24 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2">
-
-      {{> main/statsSidebar}}
-
-    </div>
-    <div class="col-10">
-      
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Username</th>
-            <th>Gold</th>
-            <th>Army Size</th>
-            <th>Level</th>
-            <th>Race</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each players as |player|}}
-            <tr>
-              <td></td>
-              <td><a href="/userprofile/{{player.id}}">{{player.displayName}}</a></td>
-              <td>{{player.gold}}</td>
-              <td>{{player.armySize}}</td>
-              <td>{{player.level}}</td>
-              <td>{{player.race}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-
-    </div>
-  </div>
-</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Gold</th>
+      <th>Army Size</th>
+      <th>Level</th>
+      <th>Race</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each players as |player|}}
+      <tr>
+        <td></td>
+        <td><a href="/userprofile/{{player.id}}">{{player.displayName}}</a></td>
+        <td>{{player.gold}}</td>
+        <td>{{player.armySize}}</td>
+        <td>{{player.level}}</td>
+        <td>{{player.race}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

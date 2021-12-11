@@ -19,6 +19,8 @@ export default {
       layout: 'main',
       pageTitle: 'Overview',
 
+      sidebarData: req.sidebarData,
+
       displayName: user.displayName,
       race: user.race,
       class: user.class,

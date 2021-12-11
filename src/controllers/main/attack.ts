@@ -12,13 +12,7 @@ export default {
     res.render('page/main/attack/list', {
       layout: 'main',
       pageTitle: 'Attack List',
-
-      gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
-      citizens: req.user.citizens,
-      level: req.user.level,
-      experience: new Intl.NumberFormat('en-GB').format(req.user.experience),
-      xpToNextLevel: new Intl.NumberFormat('en-GB').format(req.user.xpToNextLevel),
-      attackTurns: req.user.attackTurns,
+      sidebarData: req.sidebarData,
 
       players: players.map(player => ({
         id: player.id,

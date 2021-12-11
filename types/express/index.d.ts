@@ -13,6 +13,14 @@ declare global {
       user?: UserModel;
       logger: pino.Logger;
       requestId?: string;
+      sidebarData: {
+        gold: string;
+        citizens: string;
+        level: string;
+        experience: string;
+        xpToNextLevel: string;
+        attackTurns: string;
+      }
     }
   }
 }

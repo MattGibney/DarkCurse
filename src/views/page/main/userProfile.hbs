@@ -1,97 +1,77 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2">
+<div class="text-center my-4">
+  {{> main/userTitle
+    displayName=displayName
+    race=race
+    class=class
+  }}
+</div>
 
-      {{> main/statsSidebar
-        gold=player.gold
-        citizens=player.citizens
-        level=player.level
-        experience=player.experience
-        xpToNextLevel=player.xpToNextLevel
-        attackTurns=player.attackTurns
-      }}
+<div class="d-flex justify-content-around my-4">
+  <p class="mb-0">Level: {{level}}</p>
+  <p class="mb-0">Overall Rank: {{overallRank}}</p>
+</div>
 
+<div class="row">
+  <div class="col-6">
+
+    <svg class="rounded" style="text-anchor: middle;" width="100%" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">{{displayName}}</text></svg>
+    <div class="my-3 mb-4">
+      {{bio}}
     </div>
-    <div class="col-8 mx-auto">
+    
+    {{!-- <h6 class="border-bottom border-2 border-dark p-2 fw-bold">Status</h6>
+    {{#if isOnline}}
+      <h6 class="text-success">Online</h6>
+    {{else}}
+      <h6 class="text-danger">Offline</h6>
+    {{/if}} --}}
+
+
+  </div>
+  <div class="col-6">
+
+    <div class="list-group mb-4">
+      <a href="#" class="list-group-item list-group-item-action disabled">Message this Player</a>
+      <a href="#" class="list-group-item list-group-item-action disabled">Attack this Player</a>
+      <a href="#" class="list-group-item list-group-item-action disabled">Spy Missions</a>
+      <a href="#" class="list-group-item list-group-item-action disabled">Transfer Gold</a>
+      <a href="#" class="list-group-item list-group-item-action disabled">Recruit this Player</a>
+      <a href="#" class="list-group-item list-group-item-action disabled">Add to Friends List</a>
+      <a href="#" class="list-group-item list-group-item-action disabled">Add to Enemies List</a>
+    </div>
+
+    <table class="table mb-5">
+      <thead>
+        <tr>
+          <th colspan="2">Statistics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Population</td>
+          <td>{{population}}</td>
+        </tr>
+        <tr>
+          <td>Army Size</td>
+          <td>{{armySize}}</td>
+        </tr>
+        <tr>
+          <td>Fortification</td>
+          <td>{{fortification}}</td>
+        </tr>
+        <tr>
+          <td>Gold</td>
+          <td>{{gold}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h6 class="border-bottom border-2 border-dark p-2 fw-bold">Medals</h6>
+    {{#if medals}}
       
-      <div class="text-center my-4">
-        {{> main/userTitle
-          displayName=userProfile.displayName
-          race=userProfile.race
-          class=userProfile.class
-        }}
-      </div>
+    {{else}}
+      <p class="text-center my-4">No Medals</p>
+    {{/if}}
 
-      <div class="d-flex justify-content-around my-4">
-        <p class="mb-0">Level: {{userProfile.level}}</p>
-        <p class="mb-0">Overall Rank: {{userProfile.overallRank}}</p>
-      </div>
-
-      <div class="row">
-        <div class="col-6">
-
-          <svg class="rounded" style="text-anchor: middle;" width="100%" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">{{userProfile.displayName}}</text></svg>
-          <div class="my-3 mb-4">
-            {{userProfile.bio}}
-          </div>
-          
-          {{!-- <h6 class="border-bottom border-2 border-dark p-2 fw-bold">Status</h6>
-          {{#if userProfile.isOnline}}
-            <h6 class="text-success">Online</h6>
-          {{else}}
-            <h6 class="text-danger">Offline</h6>
-          {{/if}} --}}
-
-
-        </div>
-        <div class="col-6">
-
-          <div class="list-group mb-4">
-            <a href="#" class="list-group-item list-group-item-action disabled">Message this Player</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">Attack this Player</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">Spy Missions</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">Transfer Gold</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">Recruit this Player</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">Add to Friends List</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">Add to Enemies List</a>
-          </div>
-
-          <table class="table mb-5">
-            <thead>
-              <tr>
-                <th colspan="2">Statistics</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Population</td>
-                <td>{{userProfile.population}}</td>
-              </tr>
-              <tr>
-                <td>Army Size</td>
-                <td>{{userProfile.armySize}}</td>
-              </tr>
-              <tr>
-                <td>Fortification</td>
-                <td>{{userProfile.fortification}}</td>
-              </tr>
-              <tr>
-                <td>Gold</td>
-                <td>{{userProfile.gold}}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h6 class="border-bottom border-2 border-dark p-2 fw-bold">Medals</h6>
-          {{#if userProfile.medals}}
-            
-          {{else}}
-            <p class="text-center my-4">No Medals</p>
-          {{/if}}
-
-        </div>
-      </div>
-
-    </div>
   </div>
 </div>

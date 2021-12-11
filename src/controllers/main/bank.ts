@@ -4,6 +4,7 @@ export default {
     return res.render('page/main/bank', {
       layout: 'main',
       pageTitle: 'Bank',
+      sidebarData: req.sidebarData,
     });
   }
 }

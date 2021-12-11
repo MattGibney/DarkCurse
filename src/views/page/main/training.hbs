@@ -1,30 +1,17 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2">
-
-      {{> main/statsSidebar}}
-
-    </div>
-    <div class="col-10">
-
-      <div class="d-flex justify-content-around my-5">
-        <p class="mb-0">Untrained Citizens: {{citizens}}</p>
-        <p class="mb-0">Gold On Hand: {{gold}}</p>
-        <p class="mb-0">Banked Gold: {{goldInBank}}</p>
-      </div>
-
-      <form action="/training" method="post" class="mb-5">
-        {{> main/training/unitSection heading="Economy"     units=workerUnits}}
-        {{> main/training/unitSection heading="Offense"     units=offensiveUnits}}
-        {{> main/training/unitSection heading="Defense"     units=defensiveUnits}}
-        {{> main/training/unitSection heading="Spy Offense" units=spyUnits}}
-        {{> main/training/unitSection heading="Spy Defense" units=sentryUnits}}
-        <div class="d-flex gap-2 justify-content-end">
-          <button class="btn btn-secondary" disabled>Untrain</button>
-          <button class="btn btn-primary">Train</button>
-        </div>
-      </form>
-      
-    </div>
-  </div>
+<div class="d-flex justify-content-around my-5">
+  <p class="mb-0">Untrained Citizens: {{citizens}}</p>
+  <p class="mb-0">Gold On Hand: {{gold}}</p>
+  <p class="mb-0">Banked Gold: {{goldInBank}}</p>
 </div>
+
+<form action="/training" method="post" class="mb-5">
+  {{> main/training/unitSection heading="Economy"     units=workerUnits}}
+  {{> main/training/unitSection heading="Offense"     units=offensiveUnits}}
+  {{> main/training/unitSection heading="Defense"     units=defensiveUnits}}
+  {{> main/training/unitSection heading="Spy Offense" units=spyUnits}}
+  {{> main/training/unitSection heading="Spy Defense" units=sentryUnits}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" disabled>Untrain</button>
+    <button class="btn btn-primary">Train</button>
+  </div>
+</form>

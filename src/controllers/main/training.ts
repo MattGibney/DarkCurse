@@ -18,14 +18,11 @@ export default {
     return res.render('page/main/training', {
       layout: 'main',
       pageTitle: 'Training',
+      sidebarData: req.sidebarData,
 
       gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
       goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
       citizens: req.user.citizens,
-      level: req.user.level,
-      experience: new Intl.NumberFormat('en-GB').format(req.user.experience),
-      xpToNextLevel: new Intl.NumberFormat('en-GB').format(req.user.xpToNextLevel),
-      attackTurns: req.user.attackTurns,
 
       workerUnits: req.user.availableUnitTypes
         .filter(unit => unit.type === 'WORKER')
