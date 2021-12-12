@@ -1,5 +1,7 @@
 <h1>Bank</h1>
 
+{{> main/bank/navigation currentPage='deposit'}}
+
 {{#if alert}}
   <div class="alert alert-{{alert.type}}">
     {{alert.message}}
@@ -18,7 +20,7 @@ Deposits Remaining: {{deposits.remaining}} / {{deposits.max}}
 {{/if}}
 <p>You may deposit up to 80% of your gold at one time.</p>
 
-<form action="/bank" method="post" class="form d-flex align-items-end gap-2">
+<form action="/bank/deposit" method="post" class="form d-flex align-items-end gap-2">
   <div class="flex-fill">
     <label for="depositAmount" class="form-control-label">Amount to Deposit</label>
     <input type="number" name="depositAmount" id="depositAmount" class="form-control" min="0" value="0" />

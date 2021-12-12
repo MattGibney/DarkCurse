@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { engine } from 'express-handlebars';
+import { create } from 'express-handlebars';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { v4 as uuidv4 } from 'uuid';
@@ -64,7 +64,16 @@ export default (
     next();
   });
 
-  app.engine('.hbs', engine({ extname: '.hbs' }));
+  const hbs = create({
+    extname: '.hbs',
+    // Specify helpers which are only registered on this instance.
+    helpers: {
+      eq(arg1, arg2) {
+        return arg1 === arg2;
+      },
+    },
+  });
+  app.engine('.hbs', hbs.engine);
   app.set('view engine', '.hbs');
   app.set('views', 'src/views');
 
