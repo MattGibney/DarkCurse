@@ -1,0 +1,30 @@
+<h1>Bank</h1>
+
+{{> main/bank/navigation currentPage='history'}}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Gold</th>
+      <th>From Player</th>
+      <th>From Account</th>
+      <th>To Player</th>
+      <th>To Account</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each history}}
+      <tr>
+        <td>{{this.dateTime}}</td>
+        <td>{{this.goldAmount}}</td>
+        <td>{{this.fromPlayerUsername}}</td>
+        <td>{{this.fromPlayerAccount}}</td>
+        <td>{{this.toPlayerUsername}}</td>
+        <td>{{this.toPlayerAccount}}</td>
+        <td>{{this.type}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

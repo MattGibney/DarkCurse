@@ -57,6 +57,20 @@ cron.schedule('0,30 * * * *', async () => {
     // Add Gold
     logger.debug(`Adding gold per turn for id:${user.id}`);
     await user.addGold(user.goldPerTurn);
+    await modelFactory.bankHistory.createHistory(
+      modelFactory,
+      daoFactory,
+      logger,
+      {
+        goldAmount: user.goldPerTurn,
+        fromUserId: user.id,
+        fromUserAccount: 'HAND',
+        toUserId: user.id,
+        toUserAccount: 'HAND',
+        dateTime: new Date(),
+        historyType: 'ECONOMY',
+      }
+    );
   }
 
   logger.info('Finish: Processing game ticks');

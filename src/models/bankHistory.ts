@@ -39,6 +39,20 @@ class BankHistory {
     this.historyType = bankHistory.historyType;
   }
 
+  static async fetchToUserHistory(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    toUser: UserModel
+  ): Promise<BankHistory[]> {
+    const historyForUser = await daoFactory.bankHistory.fetchToUserHistory(
+      toUser.id
+    );
+    return historyForUser.map(
+      (history) => new BankHistory(modelFactory, daoFactory, logger, history)
+    );
+  }
+
   static async fetchToUserHistoryForLastTwentyFourHours(
     modelFactory: ModelFactory,
     daoFactory: DaoFactory,

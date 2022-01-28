@@ -8,7 +8,7 @@ interface PageAlert {
 async function bankPage(req: Request, res: Response, alert?: PageAlert) {
   const availableBankDeposits = await req.user.fetchAvailableBankDeposits();
 
-  return res.render('page/main/bank', {
+  return res.render('page/main/bank/deposit', {
     layout: 'main',
     pageTitle: 'Bank',
     sidebarData: req.sidebarData,
@@ -28,6 +28,53 @@ async function bankPage(req: Request, res: Response, alert?: PageAlert) {
       max: req.user.maximumBankDeposits,
       isMax: availableBankDeposits > 0,
     },
+  });
+}
+
+async function historyPage(req: Request, res: Response) {
+  const history = await req.modelFactory.bankHistory.fetchToUserHistory(
+    req.modelFactory,
+    req.daoFactory,
+    req.logger,
+    req.user
+  );
+
+  return res.render('page/main/bank/history', {
+    layout: 'main',
+    pageTitle: 'Bank',
+    sidebarData: req.sidebarData,
+
+    history: await Promise.all(
+      history.map(async (transaction) => ({
+        dateTime: transaction.dateTime.toLocaleDateString(),
+        goldAmount: new Intl.NumberFormat('en-GB').format(
+          transaction.goldAmount
+        ),
+        fromPlayerUsername:
+          // This is terribly inefficient as it's (n) DB queries.
+          (
+            await req.modelFactory.user.fetchById(
+              req.modelFactory,
+              req.daoFactory,
+              req.logger,
+              transaction.fromUserId
+            )
+          ).displayName,
+        fromPlayerAccount: transaction.fromUserAccount,
+        toPlayerUsername:
+          // This is terribly inefficient as it's (n) DB queries.
+          (
+            await req.modelFactory.user.fetchById(
+              req.modelFactory,
+              req.daoFactory,
+              req.logger,
+              transaction.toUserId
+            )
+          ).displayName,
+        toPlayerAccount: transaction.toUserAccount,
+        type: transaction.historyType,
+      }))
+    ),
   });
 }
 
@@ -107,4 +154,4 @@ async function bankDepositGold(
   return bankPageController(req, res, alert);
 }
 
-export default { bankPage, bankDepositGold };
+export default { bankPage, bankDepositGold, historyPage };
