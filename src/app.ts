@@ -26,6 +26,7 @@ export default (
     req.daoFactory = daoFactory;
     req.config = config;
     req.requestId = requestId;
+    req.dateTime = new Date();
     req.logger = logger.child({ requestId });
 
     res.setHeader('X-Request-Id', requestId);

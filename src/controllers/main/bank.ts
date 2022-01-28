@@ -5,7 +5,9 @@ interface PageAlert {
   message: string;
 }
 
-function bankPage(req: Request, res: Response, alert?: PageAlert) {
+async function bankPage(req: Request, res: Response, alert?: PageAlert) {
+  const availableBankDeposits = await req.user.fetchAvailableBankDeposits();
+
   return res.render('page/main/bank', {
     layout: 'main',
     pageTitle: 'Bank',
@@ -22,20 +24,48 @@ function bankPage(req: Request, res: Response, alert?: PageAlert) {
       : null,
 
     deposits: {
-      remaining: req.user.availableBankDeposits,
+      remaining: availableBankDeposits,
       max: req.user.maximumBankDeposits,
-      isMax: req.user.availableBankDeposits > 0,
+      isMax: availableBankDeposits > 0,
     },
   });
 }
 
-async function bankDepositGold(req: Request, res: Response) {
+/**
+ * This controller is never intended to render anything to the user. Instead, it
+ * is a stacked controller. Once it finished it's work, it will call the
+ * `bankPage` controller to render.
+ */
+async function bankDepositGold(
+  req: Request,
+  res: Response,
+  bankPageController: (
+    req: Request,
+    res: Response,
+    alert?: PageAlert
+  ) => Promise<void>
+) {
   const depositAmount = parseInt(req.body.depositAmount);
 
+  if (!depositAmount) {
+    return bankPageController(req, res, {
+      type: 'DANGER',
+      message: 'You must specify an amount to deposit',
+    });
+  }
+
   if (depositAmount < 0) {
-    return bankPage(req, res, {
+    return bankPageController(req, res, {
       type: 'DANGER',
       message: 'You cannot deposit a negative amount',
+    });
+  }
+
+  const availableBankDeposits = await req.user.fetchAvailableBankDeposits();
+  if (availableBankDeposits <= 0) {
+    return bankPageController(req, res, {
+      type: 'DANGER',
+      message: 'You have no deposits available.',
     });
   }
 
@@ -44,7 +74,7 @@ async function bankDepositGold(req: Request, res: Response) {
     const maximumGoldString = new Intl.NumberFormat('en-GB').format(
       maximumAllowedDeposit
     );
-    return bankPage(req, res, {
+    return bankPageController(req, res, {
       type: 'DANGER',
       message: `You cannot deposit more than 80% of your gold on hand. The maximum you can deposit is: ${maximumGoldString}`,
     });
@@ -52,6 +82,20 @@ async function bankDepositGold(req: Request, res: Response) {
 
   await req.user.subtractGold(depositAmount);
   await req.user.addBankedGold(depositAmount);
+  await req.modelFactory.bankHistory.createHistory(
+    req.modelFactory,
+    req.daoFactory,
+    req.logger,
+    {
+      goldAmount: depositAmount,
+      fromUserId: req.user.id,
+      fromUserAccount: 'HAND',
+      toUserId: req.user.id,
+      toUserAccount: 'BANK',
+      dateTime: req.dateTime,
+      historyType: 'PLAYER_TRANSFER',
+    }
+  );
 
   const depositAmountString = new Intl.NumberFormat('en-GB').format(
     depositAmount
@@ -60,7 +104,7 @@ async function bankDepositGold(req: Request, res: Response) {
     type: 'SUCCESS',
     message: `Deposited ${depositAmountString} into your bank`,
   };
-  return bankPage(req, res, alert);
+  return bankPageController(req, res, alert);
 }
 
 export default { bankPage, bankDepositGold };

@@ -140,10 +140,24 @@ class UserModel {
   /**
    * Uses banking transactional history to determine available deposits.
    */
-  get availableBankDeposits(): number {
+  async fetchAvailableBankDeposits(): Promise<number> {
     // Used in the last 24 hours.
-    const depositsUsed = 0;
-    return this.maximumBankDeposits - depositsUsed;
+    const depositsUsed =
+      await this.modelFactory.bankHistory.fetchToUserHistoryForLastTwentyFourHours(
+        this.modelFactory,
+        this.daoFactory,
+        this.logger,
+        this
+      );
+    // We only want to include transfers from the player's own hand to their
+    // bank
+    const bankingActions = depositsUsed.filter(
+      (history) =>
+        history.fromUserId === this.id &&
+        history.fromUserAccount === 'HAND' &&
+        history.historyType === 'PLAYER_TRANSFER'
+    );
+    return this.maximumBankDeposits - bankingActions.length;
   }
 
   async validatePassword(password: string): Promise<boolean> {
