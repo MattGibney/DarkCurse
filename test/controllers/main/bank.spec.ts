@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import BankController from '../../../src/controllers/main/bank';
+import BankHistory from '../../../src/models/bankHistory';
 
 describe('Controller: Bank', () => {
   describe('bankPage', () => {
@@ -21,7 +22,7 @@ describe('Controller: Bank', () => {
 
       expect(mockReq.user.fetchAvailableBankDeposits).toHaveBeenCalled();
 
-      expect(mockRes.render).toHaveBeenCalledWith('page/main/bank', {
+      expect(mockRes.render).toHaveBeenCalledWith('page/main/bank/deposit', {
         layout: 'main',
         pageTitle: 'Bank',
         sidebarData: mockReq.sidebarData,
@@ -36,6 +37,39 @@ describe('Controller: Bank', () => {
           max: 1,
           isMax: true,
         },
+      });
+    });
+  });
+  describe('historyPage', () => {
+    test('it renders the correct page with the correct data', async () => {
+      const mockReq = {
+        modelFactory: {
+          user: {
+            fetchById: jest.fn().mockResolvedValue({}),
+          },
+          bankHistory: {
+            fetchToUserHistory: jest
+              .fn()
+              .mockResolvedValue([] as BankHistory[]),
+          },
+        },
+        sidebarData: {},
+        user: {},
+      } as unknown as Request;
+      const mockRes = {
+        render: jest.fn().mockReturnThis(),
+      } as unknown as Response;
+
+      await BankController.historyPage(mockReq, mockRes);
+
+      // expect(mockReq.user.fetchAvailableBankDeposits).toHaveBeenCalled();
+
+      expect(mockRes.render).toHaveBeenCalledWith('page/main/bank/history', {
+        layout: 'main',
+        pageTitle: 'Bank',
+        sidebarData: mockReq.sidebarData,
+
+        history: [],
       });
     });
   });

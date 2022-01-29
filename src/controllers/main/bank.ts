@@ -39,13 +39,17 @@ async function historyPage(req: Request, res: Response) {
     req.user
   );
 
+  const transactionHistory = history.filter(
+    (transaction) => transaction.historyType === 'PLAYER_TRANSFER'
+  );
+
   return res.render('page/main/bank/history', {
     layout: 'main',
     pageTitle: 'Bank',
     sidebarData: req.sidebarData,
 
     history: await Promise.all(
-      history.map(async (transaction) => ({
+      transactionHistory.map(async (transaction) => ({
         dateTime: transaction.dateTime.toLocaleDateString(),
         goldAmount: new Intl.NumberFormat('en-GB').format(
           transaction.goldAmount
