@@ -10,12 +10,12 @@ describe('Controller: Overview', () => {
         modelFactory: {
           user: {
             fetchById: jest.fn().mockReturnValue(null)
-          }
+          },
         },
-        daoFactory: {}
+        daoFactory: {},
       } as unknown as express.Request;
       const mockRes = {
-        sendStatus: jest.fn().mockReturnThis()
+        sendStatus: jest.fn().mockReturnThis(),
       } as unknown as express.Response;
 
       await Controller.overviewPage(mockReq, mockRes);

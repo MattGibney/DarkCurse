@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 
 export default {
   async overviewPage(req: Request, res: Response) {
-
     const user = await req.modelFactory.user.fetchById(
       req.modelFactory,
       req.daoFactory,
@@ -19,6 +18,8 @@ export default {
       layout: 'main',
       pageTitle: 'Overview',
 
+      sidebarData: req.sidebarData,
+
       displayName: user.displayName,
       race: user.race,
       class: user.class,
@@ -33,7 +34,7 @@ export default {
       fortHealth: {
         current: new Intl.NumberFormat('en-GB').format(user.fortHealth.current),
         max: new Intl.NumberFormat('en-GB').format(user.fortHealth.max),
-        percentage: user.fortHealth.percentage
+        percentage: user.fortHealth.percentage,
       },
       gold: new Intl.NumberFormat('en-GB').format(user.gold),
       goldPerTurn: new Intl.NumberFormat('en-GB').format(user.goldPerTurn),
@@ -46,16 +47,16 @@ export default {
       attacks: {
         won: 0,
         total: 0,
-        percentage: 0
+        percentage: 0,
       },
       defends: {
         won: 0,
         total: 0,
-        percentage: 0
+        percentage: 0,
       },
       spyVictories: 0,
       sentryVictories: 0,
     });
     return;
-  }
-}
+  },
+};

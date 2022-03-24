@@ -13,7 +13,12 @@ class UserSessionModel {
   public userId: number;
   public sessionExpires: Date;
 
-  constructor(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger, userSessionData: UserSessionData) {
+  constructor(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    userSessionData: UserSessionData
+  ) {
     this.modelFactory = modelFactory;
     this.daoFactory = daoFactory;
     this.logger = logger;
@@ -32,13 +37,25 @@ class UserSessionModel {
     );
   }
 
-  static async fetchByExternalId(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger, externalId: string): Promise<UserSessionModel | null> {
-    const sessionData = await daoFactory.userSession.fetchByExternalId(externalId);
+  static async fetchByExternalId(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    externalId: string
+  ): Promise<UserSessionModel | null> {
+    const sessionData = await daoFactory.userSession.fetchByExternalId(
+      externalId
+    );
     if (!sessionData) return null;
     return new UserSessionModel(modelFactory, daoFactory, logger, sessionData);
   }
 
-  static async createSession(modelFactory: ModelFactory, daoFactory: DaoFactory, logger: pino.Logger, userId: number): Promise<UserSessionModel> {
+  static async createSession(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    userId: number
+  ): Promise<UserSessionModel> {
     const sessionData = await daoFactory.userSession.createSession(userId);
     return new UserSessionModel(modelFactory, daoFactory, logger, sessionData);
   }

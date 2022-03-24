@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 
 interface UserSessionRow {
   id: number;
@@ -22,7 +22,7 @@ class UserSessionDao {
   constructor(database: Knex) {
     this.database = database;
   }
-  
+
   async fetchByExternalId(externalId: string): Promise<UserSessionData | null> {
     const userSessionRow = await this.database<UserSessionRow>('user_sessions')
       .select('*')

@@ -1,10 +1,9 @@
 import * as express from 'express';
-import { engine } from 'express-handlebars';
+import { create } from 'express-handlebars';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino';
-
 
 import { Config } from '../config/environment';
 import DaoFactory from './daoFactory';
@@ -20,8 +19,6 @@ export default (
 ): express.Application => {
   const app = express();
 
-  
-
   app.use((req, res, next) => {
     const requestId = uuidv4();
 
@@ -29,6 +26,7 @@ export default (
     req.daoFactory = daoFactory;
     req.config = config;
     req.requestId = requestId;
+    req.dateTime = new Date();
     req.logger = logger.child({ requestId });
 
     res.setHeader('X-Request-Id', requestId);
@@ -49,11 +47,38 @@ export default (
 
   app.use(middleware.authenticate);
 
-  app.engine('.hbs', engine({extname: '.hbs'}));
+  app.use((req, res, next) => {
+    if (req.user) {
+      req.sidebarData = {
+        gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
+        citizens: new Intl.NumberFormat('en-GB').format(req.user.citizens),
+        level: new Intl.NumberFormat('en-GB').format(req.user.level),
+        experience: new Intl.NumberFormat('en-GB').format(req.user.experience),
+        xpToNextLevel: new Intl.NumberFormat('en-GB').format(
+          req.user.xpToNextLevel
+        ),
+        attackTurns: new Intl.NumberFormat('en-GB').format(
+          req.user.attackTurns
+        ),
+      };
+    }
+    next();
+  });
+
+  const hbs = create({
+    extname: '.hbs',
+    // Specify helpers which are only registered on this instance.
+    helpers: {
+      eq(arg1, arg2) {
+        return arg1 === arg2;
+      },
+    },
+  });
+  app.engine('.hbs', hbs.engine);
   app.set('view engine', '.hbs');
-  app.set("views", "src/views");
+  app.set('views', 'src/views');
 
   app.use(router);
 
   return app;
-}
+};

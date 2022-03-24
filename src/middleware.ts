@@ -13,7 +13,9 @@ export default {
       const decodedToken = jsonwebtoken.verify(JWTCookie, req.config.jwtSecret);
       const sessionId = decodedToken.valueOf()['id'];
 
-      req.logger.debug(`Request contains a valid JWT with sessionId: ${sessionId}`);
+      req.logger.debug(
+        `Request contains a valid JWT with sessionId: ${sessionId}`
+      );
 
       const session = await req.modelFactory.userSession.fetchByExternalId(
         req.modelFactory,
@@ -50,5 +52,5 @@ export default {
       res.clearCookie('DCT');
       return next();
     }
-  }
-}
+  },
+};

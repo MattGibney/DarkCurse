@@ -13,6 +13,20 @@ declare global {
       user?: UserModel;
       logger: pino.Logger;
       requestId?: string;
+      /**
+       * This property was added to make testing easier. With it set here, we
+       * avoid race conditions where tests run in-between miliseconds and
+       * generate different dateTime objects.
+       */
+      dateTime: Date;
+      sidebarData: {
+        gold: string;
+        citizens: string;
+        level: string;
+        experience: string;
+        xpToNextLevel: string;
+        attackTurns: string;
+      };
     }
   }
 }
