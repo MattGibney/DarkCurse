@@ -6,15 +6,15 @@ permalink: /about
 The Dark Curse project is an Open Source re-creation of the classic MMO Dark
 Throne. This project aims to be a faithful recreation of the game, with the will
 of the community driving it forward. To begin with, I intend to make the game as
-similar as possible to the original Dark Throne. Once I have acheived this, I
+similar as possible to the original Dark Throne. Once I have achieved this, I
 will move on to enhancing the game with new features and functionality. All
 changes to the game will first be proposed to the player base and put to a vote.
 Only the top voted changes will be implemented.
 
 ## A focus on Charity
 
-Dark Throne offerd a premium subscription to players. This subscription provided
-players with sevelar benefits over a free account. The proceeds of these
+Dark Throne offered a premium subscription to players. This subscription provided
+players with several benefits over a free account. The proceeds of these
 subscriptions were one of the Game's primary sources of income. As well as the
 premium subscription, the game also ran adverts for players on free accounts.
 
@@ -54,7 +54,7 @@ like. It is however, also the name of a Norwegian metal band.
 
 By avoiding the name Dark Throne; I hope to avoid confusion with the game,
 especially with newer players. Having a different name will also help a lot with
-things like Search Engine Optimiization (SEO).
+things like Search Engine Optimization (SEO).
 
 ## Who is Moppler?
 
@@ -64,9 +64,9 @@ I learnt that Dark Throne was shutting down, I wanted to do something. I didn't
 want to let go. Even thought he player base has long since moved on to other,
 more modern games, I still wanted to keep playing Dark Throne.
 
-My professional background is in web development. I've worked my way up  from my
+My professional background is in web development. I've worked my way up from my
 first job as tech support in an office through to junior developer. After that,
 i've climbed the ladder. With new experiences and challenges, i've reached the
-point where I work as a technical leader for a large organisation. I design and
+point where I work as a technical leader for a large organization. I design and
 build systems and services that process millions of requests a day. I have teams
 spread across the world, with the way things are set up, we never stop building.
