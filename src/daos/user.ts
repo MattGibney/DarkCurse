@@ -49,25 +49,26 @@ class UserDao {
   }
 
   async createUser(
-    username: string,
+    email: string,
     password: string,
     salt: string,
     race: string,
     class_name: string,
     display_name: string
   ): Promise<UserData | null> {
-    const userRow = await this.fetchByEmail(username);
+    const userRow = await this.fetchByEmail(email);
     if (userRow) return null;
     const nuser = {
       display_name: display_name,
-      email: username,
+      email: email,
       password_hash: password,
       salt: salt,
       race: race,
       class: class_name,
       fort_hitpoints: 50,
     };
-    return await this.database.insert(nuser).into('users');
+    await this.database.insert(nuser).into('users');
+    return await this.fetchByEmail(email);
   }
 
   async fetchById(id: number): Promise<UserData | null> {

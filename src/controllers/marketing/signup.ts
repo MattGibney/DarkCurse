@@ -72,18 +72,13 @@ export default {
       req.daoFactory
     );
 
-    user = await req.modelFactory.user.fetchByEmail(
-      req.modelFactory,
-      req.daoFactory,
-      req.logger,
-      email
-    );
+    console.log(myUser);
 
     const newSession = await req.modelFactory.userSession.createSession(
       req.modelFactory,
       req.daoFactory,
       req.logger,
-      user.id
+      myUser.id
     );
 
     const newToken = jwt.sign(
