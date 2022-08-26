@@ -10,7 +10,6 @@ export default {
     );
 
     if (!user) {
-      console.log('Remove Me: user not found');
       res.sendStatus(404);
       return;
     }

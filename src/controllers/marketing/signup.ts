@@ -72,8 +72,6 @@ export default {
       req.daoFactory
     );
 
-    console.log('myUser: %s', myUser);
-
     user = await req.modelFactory.user.fetchByEmail(
       req.modelFactory,
       req.daoFactory,
