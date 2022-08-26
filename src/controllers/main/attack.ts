@@ -8,6 +8,13 @@ export default {
       req.logger
     );
 
+    const user = await req.modelFactory.user.fetchById(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      req.user.id
+    );
+
     res.render('page/main/attack/list', {
       layout: 'main',
       pageTitle: 'Attack List',
@@ -21,6 +28,7 @@ export default {
         armySize: new Intl.NumberFormat('en-GB').format(player.armySize),
         level: player.level,
         race: player.race,
+        is_player: player.id == user.id,
       })),
     });
   },

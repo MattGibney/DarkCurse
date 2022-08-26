@@ -1,4 +1,5 @@
-<table class="table">
+
+<table class="table table-responsive">
   <thead>
     <tr>
       <th>Rank</th>
@@ -11,7 +12,7 @@
   </thead>
   <tbody>
     {{#each players as |player|}}
-      <tr>
+      <tr {{#if player.is_player}}style="background-color: lightgray"{{/if}}>
         <td></td>
         <td><a href="/userprofile/{{player.id}}">{{player.displayName}}</a></td>
         <td>{{player.gold}}</td>
