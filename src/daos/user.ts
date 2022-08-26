@@ -2,13 +2,14 @@ import { Knex } from 'knex';
 import { PlayerClass, PlayerRace, PlayerUnit } from '../../types/typings';
 
 /**
- * This is seesntially documentation for the structure of the data in the
+ * This is essentially documentation for the structure of the data in the
  * database.
  */
 interface UserRow {
   id: number;
   display_name: string;
   email: string;
+  salt: string;
   password_hash: string;
   race: string;
   class: string;
@@ -28,6 +29,7 @@ export interface UserData {
   displayName: string;
   email: string;
   passwordHash: string;
+  salt: string;
   race: PlayerRace;
   class: PlayerClass;
   units: PlayerUnit[];
@@ -46,6 +48,28 @@ class UserDao {
     this.database = database;
   }
 
+  async createUser(
+    username: string,
+    password: string,
+    salt: string,
+    race: string,
+    class_name: string,
+    display_name: string
+  ): Promise<UserData | null> {
+    const userRow = await this.fetchByEmail(username);
+    if (userRow) return null;
+    const nuser = {
+      display_name: display_name,
+      email: username,
+      password_hash: password,
+      salt: salt,
+      race: race,
+      class: class_name,
+      fort_hitpoints: 50,
+    };
+    return await this.database.insert(nuser).into('users');
+  }
+
   async fetchById(id: number): Promise<UserData | null> {
     const userRow = await this.database<UserRow>('users')
       .where({ id: id })
@@ -57,6 +81,14 @@ class UserDao {
   async fetchByEmail(email: string): Promise<UserData | null> {
     const userRow = await this.database<UserRow>('users')
       .where({ email: email })
+      .first();
+    if (!userRow) return null;
+    return this.mapUserRowToUserData(userRow);
+  }
+
+  async fetchByDisplayName(display_name: string): Promise<UserData | null> {
+    const userRow = await this.database<UserRow>('users')
+      .where({ display_name: display_name })
       .first();
     if (!userRow) return null;
     return this.mapUserRowToUserData(userRow);
@@ -94,6 +126,7 @@ class UserDao {
       displayName: userRow.display_name,
       email: userRow.email,
       passwordHash: userRow.password_hash,
+      salt: userRow.salt,
       race: userRow.race as PlayerRace,
       class: userRow.class as PlayerClass,
       units:

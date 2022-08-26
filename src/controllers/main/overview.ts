@@ -6,10 +6,11 @@ export default {
       req.modelFactory,
       req.daoFactory,
       req.logger,
-      1
+      req.user.id
     );
 
     if (!user) {
+      console.log('Remove Me: user not found');
       res.sendStatus(404);
       return;
     }

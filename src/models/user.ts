@@ -164,6 +164,19 @@ class UserModel {
     return await bcrypt.compare(password, this.passwordHash);
   }
 
+  static async createUser(
+    email: string,
+    password: string,
+    race: string,
+    class_name: string,
+    display_name: string,
+    daoFactory: DaoFactory
+  ): Promise<UserData> {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    return await daoFactory.user.createUser(email, hash, salt, race, class_name, display_name);
+  }
+
   async addGold(amount: number): Promise<void> {
     this.gold += amount;
     await this.daoFactory.user.setGold(this.id, this.gold);
@@ -261,6 +274,17 @@ class UserModel {
     email: string
   ): Promise<UserModel> {
     const user = await daoFactory.user.fetchByEmail(email);
+    if (!user) return null;
+    return new UserModel(modelFactory, daoFactory, logger, user);
+  }
+
+  static async fetchByDisplayName(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    display_name: string
+  ): Promise<UserModel> {
+    const user = await daoFactory.user.fetchByDisplayName(display_name);
     if (!user) return null;
     return new UserModel(modelFactory, daoFactory, logger, user);
   }

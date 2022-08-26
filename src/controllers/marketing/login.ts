@@ -32,12 +32,13 @@ export default {
       return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
-        errorMessage: 'Email or password not recognised',
+        errorMessage: 'Email or password not recognized',
       });
     }
 
     const isPasswordValid = await user.validatePassword(password);
     if (!isPasswordValid) {
+      console.log('Password invalid');
       return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
