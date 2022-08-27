@@ -174,7 +174,14 @@ class UserModel {
   ): Promise<UserData> {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    return await daoFactory.user.createUser(email, hash, salt, race, class_name, display_name);
+    return await daoFactory.user.createUser(
+      email,
+      hash,
+      salt,
+      race,
+      class_name,
+      display_name
+    );
   }
 
   async addGold(amount: number): Promise<void> {
@@ -195,6 +202,49 @@ class UserModel {
   async subtractBankedGold(amount: number): Promise<void> {
     this.goldInBank -= amount;
     await this.daoFactory.user.setBankedGold(this.id, this.goldInBank);
+  }
+
+  /**
+   * Takes in an object containing the details of the desired units. It then
+   * merges the objects, if a unit already exists, it will add the quantity
+   * if it's a new unit. It'll be added directly.
+   *
+   * TODO: This is a rather in-elegant approach. Make it better.
+   */
+  async untrainNewUnits(newUnits: PlayerUnit[]): Promise<void> {
+    // Add New Citizens
+    const totalNewUnits = newUnits.reduce(
+      (acc, unit) => acc + unit.quantity,
+      0
+    );
+    const citizenUnits = this.units.find((unit) => unit.type === 'CITIZEN');
+    citizenUnits.quantity += totalNewUnits;
+
+    // Update existing units
+    const unitsToUpdate = this.units.filter((unit) =>
+      newUnits.find(
+        (newUnit) => newUnit.type === unit.type && newUnit.level === unit.level
+      )
+    );
+    unitsToUpdate.forEach((unit) => {
+      const newUnit = newUnits.find(
+        (newUnit) => newUnit.type === unit.type && newUnit.level === unit.level
+      );
+      unit.quantity -= newUnit.quantity;
+    });
+
+    this.units = Object.assign(unitsToUpdate, this.units);
+
+    // Subtract old units
+    const newUnitsToAdd = newUnits.filter(
+      (newUnit) =>
+        !this.units.find(
+          (unit) => unit.type === newUnit.type && unit.level === newUnit.level
+        )
+    );
+    this.units = this.units.concat(newUnitsToAdd);
+
+    await this.daoFactory.user.setUnits(this.id, this.units);
   }
 
   /**

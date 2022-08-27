@@ -1,17 +1,116 @@
-<div class="d-flex justify-content-around my-5">
-  <p class="mb-0">Untrained Citizens: {{citizens}}</p>
-  <p class="mb-0">Gold On Hand: {{gold}}</p>
-  <p class="mb-0">Banked Gold: {{goldInBank}}</p>
+<div class="d-flex justify-content-around my-5" id='alertMSG' name='alertMSG' style="display:none">
+  
 </div>
 
-<form action="/training" method="post" class="mb-5">
+<div class="d-flex justify-content-around my-5">
+  <p class="mb-0">Untrained Citizens: <span id="citizens">{{citizens}}</span></p>
+  <p class="mb-0">Gold On Hand: <span id="gold">{{gold}}</span></p>
+  <p class="mb-0">Banked Gold: <span id="goldInBank">{{goldInBank}}</span></p>
+</div>
+
+<form name="training" id="training" class="mb-5">
   {{> main/training/unitSection heading="Economy"     units=workerUnits}}
   {{> main/training/unitSection heading="Offense"     units=offensiveUnits}}
   {{> main/training/unitSection heading="Defense"     units=defensiveUnits}}
   {{> main/training/unitSection heading="Spy Offense" units=spyUnits}}
   {{> main/training/unitSection heading="Spy Defense" units=sentryUnits}}
   <div class="d-flex gap-2 justify-content-end">
-    <button class="btn btn-secondary" disabled>Untrain</button>
-    <button class="btn btn-primary">Train</button>
+    <button class="btn btn-secondary" id="untrainSubmit" onClick="untrain()">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
   </div>
 </form>
+
+<script>
+  $('#untrainSubmit').click(function(e) {
+      e.preventDefault();
+      const form = $('#training');
+      $.ajax({
+        url: '/training/untrain',
+        type: 'POST',
+        data: form.serialize(),
+        success: function(response) {
+          if(response.error){
+            console.log('Failed')
+            Toast.create(
+              "Error",
+              response.error,
+              TOAST_STATUS.DANGER,
+              3000
+            );
+          }else if(response.success){
+            Toast.create(
+              "Success",
+              response.success,
+              TOAST_STATUS.SUCCESS,
+              3000
+            );
+            $('[id=gold]').text(response.stats.gold);
+            $('[id=goldInBank]').text(response.stats.goldInBank);
+            $('[id=citizens]').text(response.stats.citizens);
+            for(let i = 0; i < response.stats.workerUnits.length; i++){
+              $('[id='+response.stats.workerUnits[i].id+'_owned]').text(response.stats.workerUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.defensiveUnits.length; i++){
+              $('[id='+response.stats.defensiveUnits[i].id+'_owned]').text(response.stats.defensiveUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.offensiveUnits.length; i++){
+              $('[id='+response.stats.offensiveUnits[i].id+'_owned]').text(response.stats.offensiveUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.spyUnits.length; i++){
+              $('[id='+response.stats.spyUnits[i].id+'_owned]').text(response.stats.spyUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.sentryUnits.length; i++){
+              $('[id='+response.stats.sentryUnits[i].id+'_owned]').text(response.stats.sentryUnits[i].ownedUnits)
+            }
+          }
+        }
+      });
+      return false;
+    });
+    $('#trainSubmit').click(function(e) {
+      e.preventDefault();
+      const form = $('#training');
+      $.ajax({
+        url: '/training/train',
+        type: 'POST',
+        data: form.serialize(),
+        success: function(response) {
+          if(response.error){
+            console.log('Failed')
+            Toast.create(
+              "Error",
+              response.error,
+              TOAST_STATUS.DANGER,
+              3000
+            );
+          }else if(response.success){
+            Toast.create(
+              "Success",
+              response.success,
+              TOAST_STATUS.SUCCESS,
+              3000
+            );
+            $('[id=gold]').text(response.stats.gold);
+            $('[id=goldInBank]').text(response.stats.goldInBank);
+            $('[id=citizens]').text(response.stats.citizens);
+            for(let i = 0; i < response.stats.workerUnits.length; i++){
+              $('[id='+response.stats.workerUnits[i].id+'_owned]').text(response.stats.workerUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.defensiveUnits.length; i++){
+              $('[id='+response.stats.defensiveUnits[i].id+'_owned]').text(response.stats.defensiveUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.offensiveUnits.length; i++){
+              $('[id='+response.stats.offensiveUnits[i].id+'_owned]').text(response.stats.offensiveUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.spyUnits.length; i++){
+              $('[id='+response.stats.spyUnits[i].id+'_owned]').text(response.stats.spyUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.sentryUnits.length; i++){
+              $('[id='+response.stats.sentryUnits[i].id+'_owned]').text(response.stats.sentryUnits[i].ownedUnits)
+            }
+          }
+        }
+      });
+      return false;
+    });
+</script>

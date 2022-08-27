@@ -13,7 +13,7 @@
       <tr>
         <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
         <td class="align-middle">+{{unit.bonus}} {{../heading}}</td>
-        <td class="align-middle">{{unit.ownedUnits}}</td>
+        <td class="align-middle"><span id='{{unit.id}}_owned'>{{unit.ownedUnits}}</span></td>
         <td class="align-middle">{{unit.cost}}</td>
         <td>
           <input type="number" aria-labelledby={{unit.id}} name={{unit.id}} class="form-control">

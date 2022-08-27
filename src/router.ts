@@ -61,9 +61,14 @@ router.get(
   trainingController.trainingPage
 );
 router.post(
-  '/training',
+  '/training/train',
   middleware.authenticate,
   trainingController.trainUnitsAction
+);
+router.post(
+  '/training/untrain',
+  middleware.authenticate,
+  trainingController.untrainUnitsAction,
 );
 router.get('/userprofile/:userId', userProfileController.renderUserProfile);
 
