@@ -57,6 +57,7 @@ cron.schedule('0,30 * * * *', async () => {
     // Add Gold
     logger.debug(`Adding gold per turn for id:${user.id}`);
     await user.addGold(user.goldPerTurn);
+    // TODO: I don't think adding history for each epoch is a great idea for production
     await modelFactory.bankHistory.createHistory(
       modelFactory,
       daoFactory,
@@ -71,6 +72,9 @@ cron.schedule('0,30 * * * *', async () => {
         historyType: 'ECONOMY',
       }
     );
+
+    // Add Turns
+    logger.debug(`Adding turns for id:${user.id}`);
   }
 
   logger.info('Finish: Processing game ticks');
