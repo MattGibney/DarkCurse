@@ -93,8 +93,65 @@ class UserModel {
     return workerGoldPerTurn + fortificationGoldPerTurn;
   }
 
+  // TODO: refactor the below Off/Def/Spy/Sentry functions
   get offense(): number {
-    return 0;
+    const offenseUnits = this.units.filter((units) => units.type === 'OFFENSE');
+    const offenseStat = offenseUnits
+      .map(
+        (unit) =>
+          UnitTypes.find(
+            (unitType) =>
+              unitType.type === unit.type && unitType.level === unit.level
+          ).bonus * unit.quantity
+      )
+      .reduce((acc, gold) => acc + gold, 0);
+
+    return offenseStat;
+  }
+
+  get defense(): number {
+    const offenseUnits = this.units.filter((units) => units.type === 'DEFENSE');
+    const offenseStat = offenseUnits
+      .map(
+        (unit) =>
+          UnitTypes.find(
+            (unitType) =>
+              unitType.type === unit.type && unitType.level === unit.level
+          ).bonus * unit.quantity
+      )
+      .reduce((acc, gold) => acc + gold, 0);
+
+    return offenseStat;
+  }
+
+  get sentry(): number {
+    const offenseUnits = this.units.filter((units) => units.type === 'SENTRY');
+    const offenseStat = offenseUnits
+      .map(
+        (unit) =>
+          UnitTypes.find(
+            (unitType) =>
+              unitType.type === unit.type && unitType.level === unit.level
+          ).bonus * unit.quantity
+      )
+      .reduce((acc, gold) => acc + gold, 0);
+
+    return offenseStat;
+  }
+
+  get spy(): number {
+    const offenseUnits = this.units.filter((units) => units.type === 'SENTRY');
+    const offenseStat = offenseUnits
+      .map(
+        (unit) =>
+          UnitTypes.find(
+            (unitType) =>
+              unitType.type === unit.type && unitType.level === unit.level
+          ).bonus * unit.quantity
+      )
+      .reduce((acc, gold) => acc + gold, 0);
+
+    return offenseStat;
   }
 
   get level(): number {

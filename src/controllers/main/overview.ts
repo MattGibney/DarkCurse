@@ -40,10 +40,10 @@ export default {
       goldPerTurn: new Intl.NumberFormat('en-GB').format(user.goldPerTurn),
       goldInBank: new Intl.NumberFormat('en-GB').format(user.goldInBank),
 
-      offense: 0,
-      defense: 0,
-      spyOffense: 0,
-      spyDefense: 0,
+      offense: new Intl.NumberFormat('en-GB').format(user.offense),
+      defense: new Intl.NumberFormat('en-GB').format(user.defense),
+      spyOffense: new Intl.NumberFormat('en-GB').format(user.spy),
+      spyDefense: new Intl.NumberFormat('en-GB').format(user.sentry),
       attacks: {
         won: 0,
         total: 0,
