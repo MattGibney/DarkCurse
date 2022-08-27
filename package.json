@@ -51,6 +51,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
+    "bootstrap-toaster": "^5.2.0-beta1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
     "express-handlebars": "^6.0.1",
