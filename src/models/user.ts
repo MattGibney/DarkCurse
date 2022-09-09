@@ -30,9 +30,7 @@ class UserModel {
   public goldInBank: number;
   public fortLevel: number;
   public fortHitpoints: number;
-
   public attackTurns: number;
-
   public units: PlayerUnit[];
   public last_active: Date;
 
@@ -60,7 +58,7 @@ class UserModel {
     this.fortHitpoints = userData.fortHitpoints;
 
     this.attackTurns = userData.attackTurns;
-
+    this.last_active = userData.last_active;
     this.units = userData.units;
   }
 
