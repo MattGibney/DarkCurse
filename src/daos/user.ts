@@ -22,6 +22,7 @@ interface UserRow {
   attack_turns: string;
   created_date: Date;
   updated_date: Date;
+  last_active: Date;
 }
 
 export interface UserData {
@@ -39,6 +40,7 @@ export interface UserData {
   fortLevel: number;
   fortHitpoints: number;
   attackTurns: number;
+  last_active: Date;
 }
 
 class UserDao {
@@ -100,6 +102,13 @@ class UserDao {
     return userRows.map(this.mapUserRowToUserData);
   }
 
+  async setLastActive(userId: number): Promise<void> {
+    await this.database<UserRow>('users')
+      .where({ id: userId })
+      .andWhere('last_active', '<', new Date(new Date().getTime() - 300000))
+      .update({ last_active: new Date() });
+  }
+
   async setGold(userId: number, gold: number): Promise<void> {
     await this.database<UserRow>('users')
       .where({ id: userId })
@@ -140,6 +149,7 @@ class UserDao {
       fortLevel: userRow.fort_level,
       fortHitpoints: userRow.fort_hitpoints,
       attackTurns: parseInt(userRow.attack_turns),
+      last_active: userRow.last_active,
     };
   }
 }

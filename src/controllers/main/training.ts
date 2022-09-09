@@ -17,6 +17,9 @@ export default {
       };
     };
 
+    console.log(req.user);
+    if (req.user !== undefined) await req.user.updateLastActive();
+
     return res.render('page/main/training', {
       layout: 'main',
       pageTitle: 'Training',

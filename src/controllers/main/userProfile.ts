@@ -27,7 +27,10 @@ export default {
       fortification: Fortifications[userProfile.fortLevel].name,
       gold: new Intl.NumberFormat('en-GB').format(userProfile.gold),
       bio: 'THIS IS A BIO',
-      // isOnline: false,
+      isOnline:
+        userProfile.last_active < new Date(new Date().getTime() - 300000)
+          ? false
+          : true,
     });
   },
 };

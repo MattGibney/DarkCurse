@@ -34,6 +34,7 @@ class UserModel {
   public attackTurns: number;
 
   public units: PlayerUnit[];
+  public last_active: Date;
 
   constructor(
     modelFactory: ModelFactory,
@@ -239,6 +240,12 @@ class UserModel {
       class_name,
       display_name
     );
+  }
+
+  //TODO: I'm not happy with this idea, feels like a good way to overwhelm the db
+  async updateLastActive(): Promise<void> {
+    console.log(this.id);
+    await this.daoFactory.user.setLastActive(this.id);
   }
 
   async addGold(amount: number): Promise<void> {
