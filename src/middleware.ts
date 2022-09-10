@@ -45,6 +45,8 @@ export default {
       });
 
       req.user = user;
+      req.logger.info('Updating Last Active for %s', user.id);
+      await req.user.updateLastActive();
 
       return next();
     } catch (error) {

@@ -250,7 +250,6 @@ class UserModel {
 
   //TODO: I'm not happy with this idea, feels like a good way to overwhelm the db
   async updateLastActive(): Promise<void> {
-    console.log(this.id);
     await this.daoFactory.user.setLastActive(this.id);
   }
 
