@@ -22,7 +22,7 @@ export default {
 
       players: players.map((player) => ({
         id: player.id,
-        rank: '',
+        rank: player.rank,
         displayName: player.displayName,
         gold: new Intl.NumberFormat('en-GB').format(player.gold),
         armySize: new Intl.NumberFormat('en-GB').format(player.armySize),

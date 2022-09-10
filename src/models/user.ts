@@ -33,7 +33,7 @@ class UserModel {
   public attackTurns: number;
   public units: PlayerUnit[];
   public last_active: Date;
-
+  public rank: number;
   constructor(
     modelFactory: ModelFactory,
     daoFactory: DaoFactory,
@@ -60,6 +60,7 @@ class UserModel {
     this.attackTurns = userData.attackTurns;
     this.last_active = userData.last_active;
     this.units = userData.units;
+    this.rank = userData.rank;
   }
 
   get population() {
@@ -240,6 +241,7 @@ class UserModel {
     );
   }
 
+  // Deprecated: see fetchAll, already part of the UserModel
   async fetchRank(id: number): Promise<number> {
     const user = await this.daoFactory.user.fetchRank(id);
     if (!user) return 0;

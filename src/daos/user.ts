@@ -23,6 +23,7 @@ interface UserRow {
   created_date: Date;
   updated_date: Date;
   last_active: Date;
+  rank: number;
 }
 
 export interface UserData {
@@ -41,6 +42,7 @@ export interface UserData {
   fortHitpoints: number;
   attackTurns: number;
   last_active: Date;
+  rank: number;
 }
 
 class UserDao {
@@ -73,6 +75,7 @@ class UserDao {
     return await this.fetchByEmail(email);
   }
 
+  //deprecated: see fetchAll
   //this sub query may need to be re-thought to something that stores into the db rather than alot of subqueries.
   async fetchRank(id: number): Promise<number> {
     const rank = await this.database<UserRow>('users')
@@ -116,7 +119,13 @@ class UserDao {
   }
 
   async fetchAll(): Promise<UserData[]> {
-    const userRows = await this.database<UserRow>('users').select();
+    const userRows = await this.database<UserRow>('users')
+      .select()
+      .from(
+        this.database.raw(
+          '(select *, row_number() OVER (ORDER BY experience desc, display_name) as rank from users) as ranks'
+        )
+      );
     return userRows.map(this.mapUserRowToUserData);
   }
 
@@ -168,6 +177,7 @@ class UserDao {
       fortHitpoints: userRow.fort_hitpoints,
       attackTurns: parseInt(userRow.attack_turns),
       last_active: userRow.last_active,
+      rank: userRow.rank,
     };
   }
 }
