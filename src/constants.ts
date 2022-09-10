@@ -1,4 +1,4 @@
-import { Unit } from '../types/typings';
+import { Unit, PlayerBonus } from '../types/typings';
 
 export const Fortifications = {
   1: {
@@ -247,4 +247,16 @@ export const UnitTypes: Unit[] = [
   { name: 'Sentry', type: 'SENTRY', level: 1, bonus: 3, cost: 1500 },
   { name: 'Sentinel', type: 'SENTRY', level: 2, bonus: 20, cost: 10000 },
   { name: 'Inquisitor', type: 'SENTRY', level: 3, bonus: 50, cost: 25000 },
+];
+
+export const Bonuses: PlayerBonus[] = [
+  { race: 'HUMAN', bonusType: 'ATTACK', bonusAmount: 5 },
+  { race: 'GOBLIN', bonusType: 'DEFENSE', bonusAmount: 5 },
+  { race: 'UNDEAD', bonusType: 'RECRUITING', bonusAmount: 5 },
+  { race: 'UNDEAD', bonusType: 'CASUALTY', bonusAmount: 5 },
+  { race: 'ELF', bonusType: 'INTEL', bonusAmount: 5 },
+  { race: 'FIGHTER', bonusType: 'ATTACK', bonusAmount: 5 },
+  { race: 'CLERIC', bonusType: 'ATTACK', bonusAmount: 5 },
+  { race: 'THIEF', bonusType: 'ATTACK', bonusAmount: 5 },
+  { race: 'ASSASSIN', bonusType: 'ATTACK', bonusAmount: 5 },
 ];

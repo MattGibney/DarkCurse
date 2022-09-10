@@ -7,6 +7,13 @@ export type UnitType =
   | 'DEFENSE'
   | 'SPY'
   | 'SENTRY';
+export type BonusType =
+  | 'ATTACK'
+  | 'DEFENSE'
+  | 'RECRUITING'
+  | 'CASUALTY'
+  | 'INTEL'
+  | 'INCOME';
 export type PlayerUnit = {
   level: number;
   type: UnitType;
@@ -23,6 +30,11 @@ export type Unit = {
   level: number;
   bonus: number;
   cost: number;
+};
+export type PlayerBonus = {
+  race: PlayerRace | PlayerClass;
+  bonusType: BonusType;
+  bonusAmount: number;
 };
 export type BankAccountType = 'HAND' | 'BANK';
 /**

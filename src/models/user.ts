@@ -11,8 +11,9 @@ import {
   FortHealth,
   PlayerUnit,
   Unit,
+  PlayerBonus,
 } from '../../types/typings';
-import { Fortifications, Levels, UnitTypes } from '../constants';
+import { Fortifications, Levels, UnitTypes, Bonuses } from '../constants';
 
 class UserModel {
   private modelFactory: ModelFactory;
@@ -67,6 +68,78 @@ class UserModel {
     return this.units.reduce((acc, unit) => acc + unit.quantity, 0);
   }
 
+  get playerBonuses() {
+    return Bonuses.filter(
+      (bonus) => bonus.race === this.race || bonus.race === this.class
+    );
+  }
+
+  get incomeBonus() {
+    const income = Bonuses.filter(
+      (bonus) =>
+        (bonus.race === this.race || bonus.race === this.class) &&
+        bonus.bonusType == 'INCOME'
+    ).reduce(function (count, stat) {
+      return count + stat.bonusAmount;
+    }, 0);
+    return income;
+  }
+
+  get attackBonus() {
+    const attack = Bonuses.filter(
+      (bonus) =>
+        (bonus.race === this.race || bonus.race === this.class) &&
+        bonus.bonusType == 'ATTACK'
+    ).reduce(function (count, stat) {
+      return count + stat.bonusAmount;
+    }, 0);
+    return attack;
+  }
+
+  get defenseBonus(): number {
+    const defense = Bonuses.filter(
+      (bonus) =>
+        (bonus.race === this.race || bonus.race === this.class) &&
+        bonus.bonusType == 'DEFENSE'
+    ).reduce(function (count, stat) {
+      return count + stat.bonusAmount;
+    }, 0);
+    return defense;
+  }
+
+  get intelBonus() {
+    const intel = Bonuses.filter(
+      (bonus) =>
+        (bonus.race === this.race || bonus.race === this.class) &&
+        bonus.bonusType == 'INTEL'
+    ).reduce(function (count, stat) {
+      return count + stat.bonusAmount;
+    }, 0);
+    return intel;
+  }
+
+  get recruitingBonus() {
+    const recruiting = Bonuses.filter(
+      (bonus) =>
+        (bonus.race === this.race || bonus.race === this.class) &&
+        bonus.bonusType == 'RECRUITING'
+    ).reduce(function (count, stat) {
+      return count + stat.bonusAmount;
+    }, 0);
+    return recruiting;
+  }
+
+  get casualtyBonus() {
+    const casualty = Bonuses.filter(
+      (bonus) =>
+        (bonus.race === this.race || bonus.race === this.class) &&
+        bonus.bonusType == 'CASUALTY'
+    ).reduce(function (count, stat) {
+      return count + stat.bonusAmount;
+    }, 0);
+    return casualty;
+  }
+
   get armySize(): number {
     return this.units
       .filter((unit) => unit.type !== 'CITIZEN' && unit.type !== 'WORKER')
@@ -85,7 +158,9 @@ class UserModel {
           UnitTypes.find(
             (unitType) =>
               unitType.type === unit.type && unitType.level === unit.level
-          ).bonus * unit.quantity
+          ).bonus *
+          unit.quantity *
+          (1 + parseInt(this.incomeBonus.toString()) / 100)
       )
       .reduce((acc, gold) => acc + gold, 0);
 
@@ -97,13 +172,16 @@ class UserModel {
   get offense(): number {
     const offenseUnits = this.units.filter((units) => units.type === 'OFFENSE');
     const offenseStat = offenseUnits
-      .map(
-        (unit) =>
+      .map((unit) => {
+        return (
           UnitTypes.find(
             (unitType) =>
               unitType.type === unit.type && unitType.level === unit.level
-          ).bonus * unit.quantity
-      )
+          ).bonus *
+          unit.quantity *
+          (1 + parseInt(this.attackBonus.toString()) / 100)
+        );
+      })
       .reduce((acc, gold) => acc + gold, 0);
 
     return offenseStat;
@@ -117,10 +195,11 @@ class UserModel {
           UnitTypes.find(
             (unitType) =>
               unitType.type === unit.type && unitType.level === unit.level
-          ).bonus * unit.quantity
+          ).bonus *
+          unit.quantity *
+          (1 + parseInt(this.defenseBonus.toString()) / 100)
       )
       .reduce((acc, gold) => acc + gold, 0);
-
     return offenseStat;
   }
 
@@ -132,7 +211,9 @@ class UserModel {
           UnitTypes.find(
             (unitType) =>
               unitType.type === unit.type && unitType.level === unit.level
-          ).bonus * unit.quantity
+          ).bonus *
+          unit.quantity *
+          (1 + parseInt(this.intelBonus.toString()) / 100)
       )
       .reduce((acc, gold) => acc + gold, 0);
 
@@ -147,7 +228,9 @@ class UserModel {
           UnitTypes.find(
             (unitType) =>
               unitType.type === unit.type && unitType.level === unit.level
-          ).bonus * unit.quantity
+          ).bonus *
+          unit.quantity *
+          (1 + parseInt(this.intelBonus.toString()) / 100)
       )
       .reduce((acc, gold) => acc + gold, 0);
 
