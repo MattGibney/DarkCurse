@@ -60,6 +60,13 @@ router.get(
   middleware.authenticate,
   trainingController.trainingPage
 );
+
+router.get(
+  '/attack/:id',
+  middleware.authenticate,
+  attackController.renderAttackPage
+)
+
 router.post(
   '/training/train',
   middleware.authenticate,

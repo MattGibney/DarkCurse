@@ -1,6 +1,43 @@
 import { Request, Response } from 'express';
 
 export default {
+  async renderAttackPage(req: Request, res: Response) {
+    const attacker = await req.modelFactory.user.fetchById(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      req.user.id
+    );
+
+    const defender = await req.modelFactory.user.fetchById(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      parseInt(req.params.id)
+    );
+
+    if (
+      defender.level >= attacker.level + 5 ||
+      defender.level <= attacker.level - 5 ||
+      defender.offense != 0
+    ) {
+      const err =
+        defender.level <= attacker.level - 5
+          ? 'TooLow'
+          : defender.level >= attacker.level + 5
+          ? 'TooHigh'
+          : 'NoOffense';
+      res.redirect(`/userprofile/${defender.id}?err=${err}`);
+    }
+
+    res.render('page/main/attack/turns', {
+      layout: 'main',
+      pageTitle: `Attack ${defender.id}`,
+      sidebarData: req.sidebarData,
+      turns: attacker.attackTurns,
+    });
+  },
+
   async renderAttackList(req: Request, res: Response) {
     const players = await req.modelFactory.user.fetchAll(
       req.modelFactory,

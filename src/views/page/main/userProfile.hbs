@@ -6,6 +6,12 @@
   }}
 </div>
 
+{{#if messages}}
+  <div class="alert alert-{{messages.type}}">
+    {{messages.message}}
+  </div>
+{{/if}}
+
 <div class="d-flex justify-content-around my-4">
   <p class="mb-0">Level: {{level}}</p>
   <p class="mb-0">Overall Rank: {{overallRank}}</p>
@@ -32,7 +38,7 @@
 
     <div class="list-group mb-4">
       <a href="#" class="list-group-item list-group-item-action disabled">Message this Player</a>
-      <a href="#" class="list-group-item list-group-item-action disabled">Attack this Player</a>
+      <a href="/attack/{{id}}" class="list-group-item list-group-item-action {{#if cantAttack }}disabled{{/if}}">Attack this Player</a>
       <a href="#" class="list-group-item list-group-item-action disabled">Spy Missions</a>
       <a href="#" class="list-group-item list-group-item-action disabled">Transfer Gold</a>
       <a href="#" class="list-group-item list-group-item-action disabled">Recruit this Player</a>
