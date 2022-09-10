@@ -240,6 +240,12 @@ class UserModel {
     );
   }
 
+  async fetchRank(id: number): Promise<number> {
+    const user = await this.daoFactory.user.fetchRank(id);
+    if (!user) return 0;
+    return user;
+  }
+
   //TODO: I'm not happy with this idea, feels like a good way to overwhelm the db
   async updateLastActive(): Promise<void> {
     console.log(this.id);

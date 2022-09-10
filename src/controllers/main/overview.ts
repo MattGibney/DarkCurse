@@ -24,7 +24,7 @@ export default {
       race: user.race,
       class: user.class,
       attackTurns: new Intl.NumberFormat('en-GB').format(user.attackTurns),
-
+      rank: user.fetchRank(user.id),
       population: new Intl.NumberFormat('en-GB').format(user.population),
       armySize: new Intl.NumberFormat('en-GB').format(user.armySize),
       citizens: new Intl.NumberFormat('en-GB').format(user.citizens),

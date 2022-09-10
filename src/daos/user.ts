@@ -73,6 +73,24 @@ class UserDao {
     return await this.fetchByEmail(email);
   }
 
+  //this sub query may need to be re-thought to something that stores into the db rather than alot of subqueries.
+  async fetchRank(id: number): Promise<number> {
+    const rank = await this.database<UserRow>('users')
+      .column('rank')
+      .from(
+        this.database.raw(
+          '(select id, row_number() OVER (ORDER BY experience desc, display_name) as rank from users) as ranks'
+        )
+      )
+      .where('id', id);
+    return rank[0].rank;
+  }
+
+  // SELECT row_number FROM
+  //	(
+  //		SELECT id, row_number() OVER (ORDER BY experience desc, display_name) FROM users
+  // ) AS bar*/
+
   async fetchById(id: number): Promise<UserData | null> {
     const userRow = await this.database<UserRow>('users')
       .where({ id: id })
