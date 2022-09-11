@@ -12,8 +12,15 @@ import {
   PlayerUnit,
   Unit,
   PlayerBonus,
+  Weapon,
 } from '../../types/typings';
-import { Fortifications, Levels, UnitTypes, Bonuses } from '../constants';
+import {
+  Fortifications,
+  Levels,
+  UnitTypes,
+  Bonuses,
+  WeaponTypes,
+} from '../constants';
 
 class UserModel {
   private modelFactory: ModelFactory;
@@ -271,6 +278,10 @@ class UserModel {
    */
   get availableUnitTypes(): Unit[] {
     return UnitTypes.filter((unitType) => unitType.level === 1);
+  }
+
+  get availableItemTypes(): Weapon[] {
+    return WeaponTypes.filter((unitType) => unitType.level === 1);
   }
 
   get maximumBankDeposits(): number {

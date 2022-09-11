@@ -53,7 +53,7 @@ export default {
       level: number;
       cost: number;
       quantity: number;
-    }[] = req.user.availableUnitTypes
+    }[] = req.user.availableItemTypes
       .map((unit) => {
         const quantity = body[`${unit.type}_${unit.level}`];
         if (quantity) {
@@ -128,20 +128,17 @@ export default {
         gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
         goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
         citizens: req.user.citizens,
-        workerUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'WORKER')
-          .map((unit) => unitMapFunction(unit, 'WORKER')),
-        offensiveUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'OFFENSE')
+        offensiveUnits: req.user.availableItemTypes
+          .filter((unit) => unit.usage === 'OFFENSE')
           .map((unit) => unitMapFunction(unit, 'OFFENSE')),
-        defensiveUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'DEFENSE')
+        defensiveUnits: req.user.availableItemTypes
+          .filter((unit) => unit.usage === 'DEFENSE')
           .map((unit) => unitMapFunction(unit, 'DEFENSE')),
-        spyUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'SPY')
+        spyUnits: req.user.availableItemTypes
+          .filter((unit) => unit.usage === 'SPY')
           .map((unit) => unitMapFunction(unit, 'SPY')),
-        sentryUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'SENTRY')
+        sentryUnits: req.user.availableItemTypes
+          .filter((unit) => unit.usage === 'SENTRY')
           .map((unit) => unitMapFunction(unit, 'SENTRY')),
       },
     });
@@ -152,15 +149,17 @@ export default {
 
     const unitsToTrain: {
       type: string;
+      usage: string;
       level: number;
       cost: number;
       quantity: number;
-    }[] = req.user.availableUnitTypes
+    }[] = req.user.availableItemTypes
       .map((unit) => {
-        const quantity = body[`${unit.type}_${unit.level}`];
+        const quantity = body[`${unit.usage}_${unit.type}_${unit.level}`];
         if (quantity) {
           return {
             type: unit.type,
+            usage: unit.usage,
             level: unit.level,
             cost: unit.cost,
             quantity: parseInt(quantity),
@@ -239,20 +238,17 @@ export default {
         gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
         goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
         citizens: req.user.citizens,
-        workerUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'WORKER')
-          .map((unit) => unitMapFunction(unit, 'WORKER')),
-        offensiveUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'OFFENSE')
+        offensiveUnits: req.user.availableItemTypes
+          .filter((unit) => unit.usage === 'OFFENSE')
           .map((unit) => unitMapFunction(unit, 'OFFENSE')),
-        defensiveUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'DEFENSE')
+        defensiveUnits: req.user.availableItemTypes
+          .filter((unit) => unit.usage === 'DEFENSE')
           .map((unit) => unitMapFunction(unit, 'DEFENSE')),
-        spyUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'SPY')
+        spyUnits: req.user.availableItemTypes
+          .filter((unit) => unit.usage === 'SPY')
           .map((unit) => unitMapFunction(unit, 'SPY')),
-        sentryUnits: req.user.availableUnitTypes
-          .filter((unit) => unit.type === 'SENTRY')
+        sentryUnits: req.user.availableItemTypes
+          .filter((unit) => unit.usage === 'SENTRY')
           .map((unit) => unitMapFunction(unit, 'SENTRY')),
       },
     });

@@ -233,7 +233,7 @@ export const Levels = {
   11: 100000,
 };
 
-export const weaponTypes: Weapon[] = [
+export const WeaponTypes: Weapon[] = [
   {
     name: 'Dagger',
     usage: 'OFFENSE',
