@@ -7,6 +7,13 @@ export type UnitType =
   | 'DEFENSE'
   | 'SPY'
   | 'SENTRY';
+export type ItemType =
+  | 'WEAPON'
+  | 'HELM'
+  | 'ARMOR'
+  | 'BOOTS'
+  | 'BRACERS'
+  | 'SHIELD';
 export type BonusType =
   | 'ATTACK'
   | 'DEFENSE'
@@ -27,6 +34,14 @@ export type FortHealth = {
 export type Unit = {
   name: string;
   type: UnitType;
+  level: number;
+  bonus: number;
+  cost: number;
+};
+export type Weapon = {
+  name: string;
+  usage: UnitType;
+  type: ItemType;
   level: number;
   bonus: number;
   cost: number;

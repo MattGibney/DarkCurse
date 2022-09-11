@@ -11,6 +11,7 @@ import bankController from './controllers/main/bank';
 import overviewController from './controllers/main/overview';
 import trainingController from './controllers/main/training';
 import userProfileController from './controllers/main/userProfile';
+import armoryController from './controllers/main/armory';
 
 import middleware from './middleware';
 
@@ -60,6 +61,11 @@ router.get(
   middleware.authenticate,
   trainingController.trainingPage
 );
+router.get(
+  '/armory',
+  middleware.authenticate,
+  armoryController.armoryPage
+)
 
 router.get(
   '/attack/:id',
@@ -76,6 +82,16 @@ router.post(
   '/training/untrain',
   middleware.authenticate,
   trainingController.untrainUnitsAction,
+);
+router.post(
+  '/armory/equip',
+  middleware.authenticate,
+  armoryController.equipItemAction
+);
+router.post(
+  '/armory/unequip',
+  middleware.authenticate,
+  armoryController.unequipItemsAction,
 );
 router.get('/userprofile/:userId', userProfileController.renderUserProfile);
 
