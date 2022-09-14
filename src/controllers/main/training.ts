@@ -14,6 +14,8 @@ export default {
             (u) => u.type === unit.type && u.level === unit.level
           )?.quantity || 0,
         cost: new Intl.NumberFormat('en-GB').format(unit.cost),
+        enabled: unit.level <= req.user.fortLevel ? true : false,
+        level: unit.level,
       };
     };
 

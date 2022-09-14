@@ -10,6 +10,7 @@
   </thead>
   <tbody>
     {{#each units as |unit|}}
+      {{#if unit.enabled}}
       <tr>
         <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
         <td class="align-middle">+{{unit.bonus}} {{../heading}}</td>
@@ -19,6 +20,15 @@
           <input type="number" aria-labelledby={{unit.id}} name={{unit.id}} class="form-control">
         </td>
       </tr>
+      {{else}}
+      <tr>
+        <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
+        <td class="align-middle"></td>
+        <td class="align-middle"></td>
+        <td class="align-middle"></td>
+        <td class="align-middle">Unlocked at Fort Level: {{unit.level}}</td>
+      </tr>
+      {{/if}}
     {{/each}}
   </tbody>
 </table>

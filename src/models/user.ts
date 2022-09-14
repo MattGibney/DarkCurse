@@ -277,11 +277,13 @@ class UserModel {
    * implemented.
    */
   get availableUnitTypes(): Unit[] {
-    return UnitTypes.filter((unitType) => unitType.level === 1);
+    return UnitTypes.filter((unitType) => unitType.level <= this.fortLevel + 1);
   }
 
   get availableItemTypes(): Weapon[] {
-    return WeaponTypes.filter((unitType) => unitType.level === 1);
+    return WeaponTypes.filter(
+      (unitType) => unitType.level <= this.fortLevel + 1
+    );
   }
 
   get maximumBankDeposits(): number {
