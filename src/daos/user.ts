@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { PlayerClass, PlayerRace, PlayerUnit } from '../../types/typings';
+import { PlayerClass, PlayerRace, PlayerUnit, PlayerItem } from '../../types/typings';
 
 /**
  * This is essentially documentation for the structure of the data in the
@@ -14,6 +14,7 @@ interface UserRow {
   race: string;
   class: string;
   units: string;
+  items: string;
   experience: string;
   gold: string;
   gold_in_bank: string;
@@ -35,6 +36,7 @@ export interface UserData {
   race: PlayerRace;
   class: PlayerClass;
   units: PlayerUnit[];
+  items: PlayerItem[];
   experience: number;
   gold: number;
   goldInBank: number;
@@ -170,6 +172,10 @@ class UserDao {
         typeof userRow.units === 'string'
           ? JSON.parse(userRow.units)
           : userRow.units,
+      items:
+        typeof userRow.items === 'string'
+          ? JSON.parse(userRow.items)
+          : userRow.items,
       experience: parseInt(userRow.experience),
       gold: parseInt(userRow.gold),
       goldInBank: parseInt(userRow.gold_in_bank),

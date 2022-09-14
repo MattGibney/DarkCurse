@@ -13,6 +13,7 @@ import {
   Unit,
   PlayerBonus,
   Weapon,
+  PlayerItem,
 } from '../../types/typings';
 import {
   Fortifications,
@@ -40,6 +41,7 @@ class UserModel {
   public fortHitpoints: number;
   public attackTurns: number;
   public units: PlayerUnit[];
+  public items: PlayerItem[];
   public last_active: Date;
   public rank: number;
   constructor(
@@ -68,6 +70,7 @@ class UserModel {
     this.attackTurns = userData.attackTurns;
     this.last_active = userData.last_active;
     this.units = userData.units;
+    this.items = userData.items;
     this.rank = userData.rank;
   }
 

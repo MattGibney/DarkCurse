@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UnitType } from '../../../types/typings';
+import { UnitType, ItemType } from '../../../types/typings';
 // import { UnitTypes } from '../../constants';
 
 export default {
@@ -9,13 +9,36 @@ export default {
         id: `${idPrefix}_${unit.level}`,
         name: unit.name,
         bonus: unit.bonus,
-        ownedUnits:
-          req.user.units.find(
+        owneditems:
+          req.user.items.find(
             (u) => u.type === unit.type && u.level === unit.level
           )?.quantity || 0,
         cost: new Intl.NumberFormat('en-GB').format(unit.cost),
       };
     };
+    const itemMapFunction = (unit, idPrefix: string, itemType: string) => {
+      return {
+        id: `${itemType}_${idPrefix}_${unit.level}`,
+        name: unit.name,
+        bonus: unit.bonus,
+        owneditems:
+          req.user.items.find(
+            (u) =>
+              u.type === unit.type &&
+              u.level === unit.level &&
+              u.unitType === unit.unitType
+          )?.quantity || 0,
+        cost: new Intl.NumberFormat('en-GB').format(unit.cost),
+        enabled: unit.level <= req.user.fortLevel ? true : false,
+        level: req.user.fortLevel,
+      };
+    };
+
+    console.log(
+      req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'OFFENSE')
+        .map((unit) => itemMapFunction(unit, 'OFFENSE', 'WEAPON'))
+    );
 
     return res.render('page/main/armory', {
       layout: 'main',
@@ -25,23 +48,96 @@ export default {
       gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
       goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
       citizens: req.user.citizens,
+      itemTypes: ['WEAPON', 'HELM', 'ARMOR', 'BOOTS', 'BRACERS', 'SHIELD'], //TODO: this is me being lazy
+      offensiveWeapons: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'OFFENSE' && unit.type == 'WEAPON')
+        .map((unit) => itemMapFunction(unit, 'OFFENSE', 'WEAPON')),
+      defensiveWeapons: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'DEFENSE' && unit.type == 'WEAPON')
+        .map((unit) => itemMapFunction(unit, 'DEFENSE', 'WEAPON')),
+      offensiveHelm: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'OFFENSE' && unit.type == 'HELM')
+        .map((unit) => itemMapFunction(unit, 'OFFENSE', 'HELM')),
+      defensiveHelm: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'DEFENSE' && unit.type == 'HELM')
+        .map((unit) => itemMapFunction(unit, 'DEFENSE', 'HELM')),
+      offensiveBoots: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'OFFENSE' && unit.type == 'BOOTS')
+        .map((unit) => itemMapFunction(unit, 'OFFENSE', 'BOOTS')),
+      defensiveBoots: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'DEFENSE' && unit.type == 'BOOTS')
+        .map((unit) => itemMapFunction(unit, 'DEFENSE', 'BOOTS')),
+      offensiveBracers: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'OFFENSE' && unit.type == 'BRACERS')
+        .map((unit) => itemMapFunction(unit, 'OFFENSE', 'BRACERS')),
+      defensiveBracers: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'DEFENSE' && unit.type == 'BRACERS')
+        .map((unit) => itemMapFunction(unit, 'DEFENSE', 'BRACERS')),
+      offensiveShield: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'OFFENSE' && unit.type == 'SHIELD')
+        .map((unit) => itemMapFunction(unit, 'OFFENSE', 'SHIELD')),
+      defensiveShield: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'DEFENSE' && unit.type == 'SHIELD')
+        .map((unit) => itemMapFunction(unit, 'DEFENSE', 'SHIELD')),
+      offensiveArmor: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'OFFENSE' && unit.type == 'ARMOR')
+        .map((unit) => itemMapFunction(unit, 'OFFENSE', 'ARMOR')),
+      defensiveArmor: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'DEFENSE' && unit.type == 'ARMOR')
+        .map((unit) => itemMapFunction(unit, 'DEFENSE', 'ARMOR')),
 
+        spyWeapons: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SPY' && unit.type == 'WEAPON')
+        .map((unit) => itemMapFunction(unit, 'SPY', 'WEAPON')),
+      sentryWeapons: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SENTRY' && unit.type == 'WEAPON')
+        .map((unit) => itemMapFunction(unit, 'SENTRY', 'WEAPON')),
+      spyHelm: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SPY' && unit.type == 'HELM')
+        .map((unit) => itemMapFunction(unit, 'SPY', 'HELM')),
+      sentryHelm: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SENTRY' && unit.type == 'HELM')
+        .map((unit) => itemMapFunction(unit, 'SENTRY', 'HELM')),
+      spyBoots: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SPY' && unit.type == 'BOOTS')
+        .map((unit) => itemMapFunction(unit, 'SPY', 'BOOTS')),
+      sentryBoots: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SENTRY' && unit.type == 'BOOTS')
+        .map((unit) => itemMapFunction(unit, 'SENTRY', 'BOOTS')),
+      spyBracers: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SPY' && unit.type == 'BRACERS')
+        .map((unit) => itemMapFunction(unit, 'SPY', 'BRACERS')),
+      sentryBracers: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SENTRY' && unit.type == 'BRACERS')
+        .map((unit) => itemMapFunction(unit, 'SENTRY', 'BRACERS')),
+      spyShield: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SPY' && unit.type == 'SHIELD')
+        .map((unit) => itemMapFunction(unit, 'SPY', 'SHIELD')),
+      sentryShield: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SENTRY' && unit.type == 'SHIELD')
+        .map((unit) => itemMapFunction(unit, 'SENTRY', 'SHIELD')),
+      spyArmor: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SPY' && unit.type == 'ARMOR')
+        .map((unit) => itemMapFunction(unit, 'SPY', 'ARMOR')),
+      sentryArmor: req.user.availableItemTypes
+        .filter((unit) => unit.usage === 'SENTRY' && unit.type == 'ARMOR')
+        .map((unit) => itemMapFunction(unit, 'SENTRY', 'ARMOR')),
       offensiveUnits: req.user.units
-        .filter((unit) => unit.type === 'OFFENSE')
-        .map((unit) => unitMapFunction(unit, 'OFFENSE'))
-        .reduce((acc, unit) => acc + unit.ownedUnits, 0),
+        .filter((unit) => unit.type === 'SPY')
+        .map((unit) => unitMapFunction(unit, 'SPY'))
+        .reduce((acc, unit) => acc + unit.owneditems, 0),
       defensiveUnits: req.user.units
         .filter((unit) => unit.type === 'DEFENSE')
         .map((unit) => unitMapFunction(unit, 'DEFENSE'))
-        .reduce((acc, unit) => acc + unit.ownedUnits, 0),
+        .reduce((acc, unit) => acc + unit.owneditems, 0),
       spyUnits: req.user.units
         .filter((unit) => unit.type === 'SPY')
         .map((unit) => unitMapFunction(unit, 'SPY'))
-        .reduce((acc, unit) => acc + unit.ownedUnits, 0),
+        .reduce((acc, unit) => acc + unit.owneditems, 0),
       sentryUnits: req.user.units
         .filter((unit) => unit.type === 'SENTRY')
         .map((unit) => unitMapFunction(unit, 'SENTRY'))
-        .reduce((acc, unit) => acc + unit.ownedUnits, 0),
+        .reduce((acc, unit) => acc + unit.owneditems, 0),
     });
   },
 

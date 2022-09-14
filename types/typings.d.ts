@@ -26,6 +26,12 @@ export type PlayerUnit = {
   type: UnitType;
   quantity: number;
 };
+export type PlayerItem = {
+  level: number;
+  type: ItemType;
+  unitType: UnitType;
+  quantity: number;
+};
 export type FortHealth = {
   current: number;
   max: number;
