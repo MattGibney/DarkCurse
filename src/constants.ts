@@ -219,18 +219,90 @@ export const Fortifications = {
   },
 };
 
+export const ArmoryUpgrades = {
+  1: {
+    name: 'Leather Armory 1',
+    fortLevel: 5,
+    cost: 500000,
+  },
+  2: {
+    name: 'Leather Armory 2',
+    fortLevel: 10, //Stronghold Level 3
+    cost: 2000000,
+  },
+  3: {
+    name: 'Chainmail Armory 1',
+    fortLevel: 13, //Citadel
+    cost: 5000000,
+  },
+  4: {
+    name: 'Chainmail Armory 2',
+    fortLevel: 17, // Castle Level 2
+    cost: 15000000,
+  },
+  5: {
+    name: 'Chainmail Armory 3',
+    fortLevel: 21, // Kingdom Level 3
+    cost: 37500000,
+  },
+};
+
+export const HouseUpgrades = {
+  1: {
+    name: 'Housing Level 1',
+    fortLevel: 1,
+    citizensDaily: 10,
+    cost: 500000,
+  },
+  2: {
+    name: 'Housing Level 2',
+    fortLevel: 6, //Outpost Level 3
+    citizensDaily: 20,
+    cost: 1000000,
+  },
+  3: {
+    name: 'Housing Level 3',
+    fortLevel: 10, //Fortress
+    citizensDaily: 30,
+    cost: 1500000,
+  },
+  4: {
+    name: 'Housing Level 4',
+    fortLevel: 14, //Citadel Level 2
+    citizensDaily: 40,
+    cost: 2500000,
+  },
+  5: {
+    name: 'Housing Level 5',
+    fortLevel: 18, //Castle Level 3
+    citizensDaily: 50,
+    cost: 3500000,
+  },
+  6: {
+    name: 'Housing Level 6',
+    fortLevel: 22, //Empire
+    citizensDaily: 60,
+    cost: 5000000,
+  },
+};
+
 export const Levels = {
   1: 0,
-  2: 200,
-  3: 500,
-  4: 1000,
-  5: 2000,
-  6: 5000,
-  7: 10000,
-  8: 25000,
-  9: 50000,
-  10: 75000,
-  11: 100000,
+  2: 6000,
+  3: 13000,
+  4: 19000,
+  5: 23000,
+  6: 34000,
+  7: 43000,
+  8: 53000,
+  9: 64000,
+  10: 76000,
+  11: 89000,
+  12: 103000,
+  13: 118000,
+  14: 134000,
+  15: 151000,
+  16: 169000,
 };
 
 export const WeaponTypes: Weapon[] = [
@@ -241,22 +313,61 @@ export const WeaponTypes: Weapon[] = [
     bonus: 25,
     cost: 12500,
     type: 'WEAPON',
+    race: 'ALL',
   },
   {
     name: 'Hatchet',
     usage: 'OFFENSE',
     level: 2,
     bonus: 50,
-    cost: 2500,
+    cost: 25000,
     type: 'WEAPON',
+    race: 'ALL',
   },
   {
-    name: 'Quaterstaff',
+    name: 'Quarterstaff',
     usage: 'OFFENSE',
     level: 3,
     bonus: 100,
     cost: 50000,
     type: 'WEAPON',
+    race: 'ALL',
+  },
+  {
+    name: 'Mace',
+    usage: 'OFFENSE',
+    level: 4,
+    bonus: 225,
+    cost: 100000,
+    type: 'WEAPON',
+    race: 'ALL',
+  },
+  {
+    name: 'Battle Axe',
+    usage: 'OFFENSE',
+    level: 5,
+    bonus: 700,
+    cost: 200000,
+    type: 'WEAPON',
+    race: 'ALL',
+  },
+  {
+    name: 'Short Sword',
+    usage: 'OFFENSE',
+    level: 6,
+    bonus: 1000,
+    cost: 500000,
+    type: 'WEAPON',
+    race: 'ALL',
+  },
+  {
+    name: 'Long Sword',
+    usage: 'OFFENSE',
+    level: 6,
+    bonus: 1500,
+    cost: 750000,
+    type: 'WEAPON',
+    race: 'HUMAN',
   },
   {
     name: 'Padded Hood',
@@ -265,6 +376,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 6,
     cost: 3000,
     type: 'HELM',
+    race: 'ALL',
   },
   {
     name: 'Leather Hood',
@@ -273,6 +385,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 12,
     cost: 6000,
     type: 'HELM',
+    race: 'ALL',
   },
   {
     name: 'Studded Leather Hood',
@@ -281,6 +394,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 25,
     cost: 12500,
     type: 'HELM',
+    race: 'ALL',
   },
   {
     name: 'Padded Armor',
@@ -289,6 +403,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 19,
     cost: 9500,
     type: 'ARMOR',
+    race: 'ALL',
   },
   {
     name: 'Leather Armor',
@@ -297,6 +412,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 38,
     cost: 19000,
     type: 'ARMOR',
+    race: 'ALL',
   },
   {
     name: 'Studded Leather Armor',
@@ -305,6 +421,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 75,
     cost: 37500,
     type: 'ARMOR',
+    race: 'ALL',
   },
   {
     name: 'Padded Armor',
@@ -313,6 +430,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 6,
     cost: 3000,
     type: 'BOOTS',
+    race: 'ALL',
   },
   {
     name: 'Leather Armor',
@@ -321,6 +439,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 12,
     cost: 6000,
     type: 'BOOTS',
+    race: 'ALL',
   },
   {
     name: 'Studded Leather Armor',
@@ -329,6 +448,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 25,
     cost: 12500,
     type: 'BOOTS',
+    race: 'ALL',
   },
   {
     name: 'Padded Bracers',
@@ -337,6 +457,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 3,
     cost: 1500,
     type: 'BRACERS',
+    race: 'ALL',
   },
   {
     name: 'Leather Bracers',
@@ -345,6 +466,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 5,
     cost: 2500,
     type: 'BRACERS',
+    race: 'ALL',
   },
   {
     name: 'Studded Leather Bracers',
@@ -353,6 +475,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 10,
     cost: 5000,
     type: 'BRACERS',
+    race: 'ALL',
   },
   {
     name: 'Small Wooden Shield',
@@ -361,6 +484,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 12,
     cost: 6000,
     type: 'SHIELD',
+    race: 'ALL',
   },
   {
     name: 'Medium Wooden Shield',
@@ -369,6 +493,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 25,
     cost: 12500,
     type: 'SHIELD',
+    race: 'ALL',
   },
   {
     name: 'Large Wooden Shield',
@@ -377,6 +502,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 50,
     cost: 25000,
     type: 'SHIELD',
+    race: 'ALL',
   },
   {
     name: 'Sling',
@@ -385,6 +511,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 25,
     cost: 12500,
     type: 'WEAPON',
+    race: 'ALL',
   },
   {
     name: 'Hatchet',
@@ -393,6 +520,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 50,
     cost: 2500,
     type: 'WEAPON',
+    race: 'ALL',
   },
   {
     name: 'Spear',
@@ -401,6 +529,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 100,
     cost: 50000,
     type: 'WEAPON',
+    race: 'ALL',
   },
   {
     name: 'Padded Hood',
@@ -409,6 +538,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 6,
     cost: 3000,
     type: 'HELM',
+    race: 'ALL',
   },
   {
     name: 'Leather Hood',
@@ -417,6 +547,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 12,
     cost: 6000,
     type: 'HELM',
+    race: 'ALL',
   },
   {
     name: 'Studded Leather Hood',
@@ -425,6 +556,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 25,
     cost: 12500,
     type: 'HELM',
+    race: 'ALL',
   },
   {
     name: 'Padded Armor',
@@ -433,6 +565,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 19,
     cost: 9500,
     type: 'ARMOR',
+    race: 'ALL',
   },
   {
     name: 'Leather Armor',
@@ -441,6 +574,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 38,
     cost: 19000,
     type: 'ARMOR',
+    race: 'ALL',
   },
   {
     name: 'Studded Leather Armor',
@@ -449,6 +583,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 75,
     cost: 37500,
     type: 'ARMOR',
+    race: 'ALL',
   },
   {
     name: 'Padded Armor',
@@ -457,6 +592,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 6,
     cost: 3000,
     type: 'BOOTS',
+    race: 'ALL',
   },
   {
     name: 'Leather Armor',
@@ -465,6 +601,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 12,
     cost: 6000,
     type: 'BOOTS',
+    race: 'ALL',
   },
   {
     name: 'Studded Leather Armor',
@@ -473,6 +610,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 25,
     cost: 12500,
     type: 'BOOTS',
+    race: 'ALL',
   },
   {
     name: 'Padded Bracers',
@@ -481,6 +619,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 3,
     cost: 1500,
     type: 'BRACERS',
+    race: 'ALL',
   },
   {
     name: 'Leather Bracers',
@@ -489,6 +628,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 5,
     cost: 2500,
     type: 'BRACERS',
+    race: 'ALL',
   },
   {
     name: 'Studded Leather Bracers',
@@ -497,6 +637,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 10,
     cost: 5000,
     type: 'BRACERS',
+    race: 'ALL',
   },
   {
     name: 'Small Wooden Shield',
@@ -505,6 +646,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 12,
     cost: 6000,
     type: 'SHIELD',
+    race: 'ALL',
   },
   {
     name: 'Medium Wooden Shield',
@@ -513,6 +655,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 25,
     cost: 12500,
     type: 'SHIELD',
+    race: 'ALL',
   },
   {
     name: 'Large Wooden Shield',
@@ -521,6 +664,7 @@ export const WeaponTypes: Weapon[] = [
     bonus: 50,
     cost: 25000,
     type: 'SHIELD',
+    race: 'ALL',
   },
 ];
 
