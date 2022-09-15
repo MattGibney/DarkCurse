@@ -11,17 +11,20 @@
   <p>Banked Gold: {{goldInBank}}</p>
 </div>
 
-<form name="#" id="" class="mb-5">
+<form name="#" id="repairForts" class="mb-5">
   
-  <div class="d-flex gap-2 justify-content-end">
+  <div class="gap-2 justify-content-center">
     <p>Current Fortification: {{fort.name}}</p>
-    <p>Fort Health: {{fort.health}} / {{fort.maxHealth}}</p>
-    <p>Repair Cost: {{fort.costPerPoint}} gold per point</p>
+    <p>Fort Health: {{fort.health.current}} / {{fort.health.current}}</p>
+    <p>Repair Cost: {{fort.costPerRepairPoint}} gold per point</p>
     <div>
-      <label for="repairAmount" class="form-control-label">Points to Repair</label>
-      <input type="number" name="repairAmount" id="repairAmount" class="form-control" min="0" max="{{(fort.maxHealth - fort.health)}}" value="0" />
-      <button class="btn btn-secondary" id="repairSubmit">Repair</button>
-      <button class="btn btn-primary" id="rapairAllSubmit">Repair Max</button>
+      <div class="input-group">
+        <input type="number" name="repairAmount" id="repairAmount" class="form-control" placeholder="{{fort.maxRepairPoints}}" min="0" max="{{fort.maxRepairPoints}}" value="0">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" id="repairSubmit">Repair</button>
+          <button class="btn btn-outline-primary" type="button" id="rapairAllSubmit">Repair Max</button>
+        </div>
+      </div>
     </div>
   </div>
 </form>

@@ -12,7 +12,7 @@ import overviewController from './controllers/main/overview';
 import trainingController from './controllers/main/training';
 import userProfileController from './controllers/main/userProfile';
 import armoryController from './controllers/main/armory';
-
+import repairController from './controllers/main/repair';
 import middleware from './middleware';
 
 const router = express.Router();
@@ -55,6 +55,9 @@ router.post('/bank/deposit', middleware.authenticate, (req, res) =>
 );
 router.get('/bank/history', middleware.authenticate, (req, res) =>
   bankController.historyPage(req, res)
+);
+router.get('/repair', middleware.authenticate, (req, res) =>
+  repairController.renderRepairPage(req, res)
 );
 router.get(
   '/overview',
