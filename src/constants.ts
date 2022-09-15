@@ -5,9 +5,9 @@ export const Fortifications = {
     name: 'Manor',
     levelRequirement: 0,
     hitpoints: 50,
-    costPerRepairPoint: 0,
+    costPerRepairPoint: 5,
     goldPerTurn: 1000,
-    defenseBonusPercentage: 0,
+    defenseBonusPercentage: 5,
     cost: 0,
   },
   2: {
@@ -16,7 +16,7 @@ export const Fortifications = {
     hitpoints: 100,
     costPerRepairPoint: 15,
     goldPerTurn: 2000,
-    defenseBonusPercentage: 5,
+    defenseBonusPercentage: 10,
     cost: 100000,
   },
   3: {
@@ -25,7 +25,7 @@ export const Fortifications = {
     hitpoints: 200,
     costPerRepairPoint: 35,
     goldPerTurn: 3000,
-    defenseBonusPercentage: 10,
+    defenseBonusPercentage: 15,
     cost: 250000,
   },
   4: {
@@ -34,7 +34,7 @@ export const Fortifications = {
     hitpoints: 300,
     costPerRepairPoint: 75,
     goldPerTurn: 4000,
-    defenseBonusPercentage: 15,
+    defenseBonusPercentage: 20,
     cost: 500000,
   },
   5: {
@@ -43,7 +43,7 @@ export const Fortifications = {
     hitpoints: 500,
     costPerRepairPoint: 125,
     goldPerTurn: 5000,
-    defenseBonusPercentage: 20,
+    defenseBonusPercentage: 25,
     cost: 1000000,
   },
   6: {
@@ -52,7 +52,7 @@ export const Fortifications = {
     hitpoints: 750,
     costPerRepairPoint: 225,
     goldPerTurn: 6000,
-    defenseBonusPercentage: 25,
+    defenseBonusPercentage: 30,
     cost: 2000000,
   },
   7: {
@@ -61,7 +61,7 @@ export const Fortifications = {
     hitpoints: 1000,
     costPerRepairPoint: 325,
     goldPerTurn: 7000,
-    defenseBonusPercentage: 30,
+    defenseBonusPercentage: 35,
     cost: 3000000,
   },
   8: {
@@ -70,7 +70,7 @@ export const Fortifications = {
     hitpoints: 1500,
     costPerRepairPoint: 450,
     goldPerTurn: 8000,
-    defenseBonusPercentage: 35,
+    defenseBonusPercentage: 40,
     cost: 4000000,
   },
   9: {
@@ -79,7 +79,7 @@ export const Fortifications = {
     hitpoints: 2000,
     costPerRepairPoint: 550,
     goldPerTurn: 9000,
-    defenseBonusPercentage: 40,
+    defenseBonusPercentage: 45,
     cost: 5000000,
   },
   10: {
@@ -88,7 +88,7 @@ export const Fortifications = {
     hitpoints: 2500,
     costPerRepairPoint: 675,
     goldPerTurn: 10000,
-    defenseBonusPercentage: 45,
+    defenseBonusPercentage: 50,
     cost: 7500000,
   },
   11: {
@@ -97,7 +97,7 @@ export const Fortifications = {
     hitpoints: 3000,
     costPerRepairPoint: 750,
     goldPerTurn: 11000,
-    defenseBonusPercentage: 50,
+    defenseBonusPercentage: 55,
     cost: 10000000,
   },
   12: {
@@ -106,7 +106,7 @@ export const Fortifications = {
     hitpoints: 3500,
     costPerRepairPoint: 875,
     goldPerTurn: 12000,
-    defenseBonusPercentage: 55,
+    defenseBonusPercentage: 60,
     cost: 15000000,
   },
   13: {
@@ -115,7 +115,7 @@ export const Fortifications = {
     hitpoints: 4000,
     costPerRepairPoint: 1150,
     goldPerTurn: 13000,
-    defenseBonusPercentage: 60,
+    defenseBonusPercentage: 65,
     cost: 20000000,
   },
   14: {
@@ -124,7 +124,7 @@ export const Fortifications = {
     hitpoints: 4500,
     costPerRepairPoint: 1550,
     goldPerTurn: 14000,
-    defenseBonusPercentage: 65,
+    defenseBonusPercentage: 70,
     cost: 30000000,
   },
   15: {
@@ -133,7 +133,7 @@ export const Fortifications = {
     hitpoints: 5000,
     costPerRepairPoint: 1850,
     goldPerTurn: 15000,
-    defenseBonusPercentage: 70,
+    defenseBonusPercentage: 75,
     cost: 40000000,
   },
   16: {
@@ -142,7 +142,7 @@ export const Fortifications = {
     hitpoints: 5500,
     costPerRepairPoint: 2100,
     goldPerTurn: 16000,
-    defenseBonusPercentage: 75,
+    defenseBonusPercentage: 80,
     cost: 50000000,
   },
   17: {
@@ -151,7 +151,7 @@ export const Fortifications = {
     hitpoints: 6000,
     costPerRepairPoint: 2900,
     goldPerTurn: 17000,
-    defenseBonusPercentage: 80,
+    defenseBonusPercentage: 85,
     cost: 75000000,
   },
   18: {
@@ -160,7 +160,7 @@ export const Fortifications = {
     hitpoints: 6500,
     costPerRepairPoint: 3600,
     goldPerTurn: 18000,
-    defenseBonusPercentage: 85,
+    defenseBonusPercentage: 90,
     cost: 100000000,
   },
   19: {
@@ -169,7 +169,7 @@ export const Fortifications = {
     hitpoints: 7000,
     costPerRepairPoint: 5000,
     goldPerTurn: 19000,
-    defenseBonusPercentage: 90,
+    defenseBonusPercentage: 95,
     cost: 150000000,
   },
   20: {
@@ -178,7 +178,7 @@ export const Fortifications = {
     hitpoints: 7500,
     costPerRepairPoint: 6750,
     goldPerTurn: 20000,
-    defenseBonusPercentage: 95,
+    defenseBonusPercentage: 100,
     cost: 200000000,
   },
   21: {
@@ -187,7 +187,7 @@ export const Fortifications = {
     hitpoints: 8000,
     costPerRepairPoint: 7500,
     goldPerTurn: 21000,
-    defenseBonusPercentage: 100,
+    defenseBonusPercentage: 105,
     cost: 250000000,
   },
   22: {
@@ -196,7 +196,7 @@ export const Fortifications = {
     hitpoints: 8500,
     costPerRepairPoint: 8250,
     goldPerTurn: 22000,
-    defenseBonusPercentage: 105,
+    defenseBonusPercentage: 110,
     cost: 300000000,
   },
   23: {
@@ -205,7 +205,7 @@ export const Fortifications = {
     hitpoints: 9000,
     costPerRepairPoint: 9000,
     goldPerTurn: 23000,
-    defenseBonusPercentage: 110,
+    defenseBonusPercentage: 115,
     cost: 350000000,
   },
   24: {
@@ -214,7 +214,7 @@ export const Fortifications = {
     hitpoints: 9500,
     costPerRepairPoint: 9750,
     goldPerTurn: 24000,
-    defenseBonusPercentage: 115,
+    defenseBonusPercentage: 120,
     cost: 400000000,
   },
 };
