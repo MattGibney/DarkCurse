@@ -24,10 +24,11 @@ export default {
     if (
       userProfile.level >= req.user.level - 5 &&
       userProfile.level <= req.user.level + 5 &&
-      userProfile.offense != 0
+      req.user.offense != 0
     ) {
       cantAttack = false;
     }
+
 
     let messages: PageAlert;
     if (req.query.err) {
