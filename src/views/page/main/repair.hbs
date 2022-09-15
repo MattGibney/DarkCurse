@@ -1,0 +1,27 @@
+<h1>Repair</h1>
+
+{{#if alert}}
+  <div class="alert alert-{{alert.type}}">
+    {{alert.message}}
+  </div>
+{{/if}}
+
+<div class="d-flex justify-content-around">
+  <p>Gold on Hand: {{gold}}</p>
+  <p>Banked Gold: {{goldInBank}}</p>
+</div>
+
+<form name="#" id="" class="mb-5">
+  
+  <div class="d-flex gap-2 justify-content-end">
+    <p>Current Fortification: {{fort.name}}</p>
+    <p>Fort Health: {{fort.health}} / {{fort.maxHealth}}</p>
+    <p>Repair Cost: {{fort.costPerPoint}} gold per point</p>
+    <div>
+      <label for="repairAmount" class="form-control-label">Points to Repair</label>
+      <input type="number" name="repairAmount" id="repairAmount" class="form-control" min="0" max="{{(fort.maxHealth - fort.health)}}" value="0" />
+      <button class="btn btn-secondary" id="repairSubmit">Repair</button>
+      <button class="btn btn-primary" id="rapairAllSubmit">Repair Max</button>
+    </div>
+  </div>
+</form>
