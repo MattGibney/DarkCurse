@@ -1,4 +1,4 @@
-export type PlayerRace = 'UNDEAD' | 'HUMAN' | 'GOBLIN' | 'ELF';
+export type PlayerRace = 'UNDEAD' | 'HUMAN' | 'GOBLIN' | 'ELF' | 'ALL';
 export type PlayerClass = 'FIGHTER' | 'CLERIC' | 'ASSASSIN' | 'THIEF';
 export type UnitType =
   | 'CITIZEN'
@@ -51,6 +51,7 @@ export type Weapon = {
   level: number;
   bonus: number;
   cost: number;
+  race: PlayerRace;
 };
 export type PlayerBonus = {
   race: PlayerRace | PlayerClass;
