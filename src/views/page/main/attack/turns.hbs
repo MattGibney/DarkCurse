@@ -1,6 +1,4 @@
-<h1>Bank</h1>
-
-{{> main/bank/navigation currentPage='attack'}}
+<h1>Attack NAMEHERE</h1>
 
 {{#if alert}}
   <div class="alert alert-{{alert.type}}">
@@ -13,10 +11,10 @@
 </div>
 
 
-<form action="#" method="post" class="form d-flex align-items-end gap-2">
+<form action="/attack/{{defender.id}}/status" method="post" class="form d-flex align-items-end gap-2">
   <div class="flex-fill">
     <label for="turnsAmount" class="form-control-label">Number of Turns</label>
-    <input type="number" name="turnsAmount" id="turnsAmount" class="form-control" min="0" value="0" />
+    <input type="number" name="turnsAmount" id="turnsAmount" class="form-control" min="0" max="10" value="0" />
   </div>
   <div>
     <button type="submit" class="btn btn-primary">Attack</button>

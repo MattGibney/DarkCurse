@@ -1,5 +1,10 @@
 import { Knex } from 'knex';
-import { PlayerClass, PlayerRace, PlayerUnit, PlayerItem } from '../../types/typings';
+import {
+  PlayerClass,
+  PlayerRace,
+  PlayerUnit,
+  PlayerItem,
+} from '../../types/typings';
 
 /**
  * This is essentially documentation for the structure of the data in the
@@ -142,6 +147,18 @@ class UserDao {
     await this.database<UserRow>('users')
       .where({ id: userId })
       .update({ gold: gold.toString() });
+  }
+
+  async setTurns(userId: number, turns: number): Promise<void> {
+    await this.database<UserRow>('users')
+      .where({ id: userId })
+      .update({ attack_turns: turns.toString() });
+  }
+
+  async setXP(userId: number, xp: number): Promise<void> {
+    await this.database<UserRow>('users')
+      .where({ id: userId })
+      .update({ experience: xp.toString() });
   }
 
   async setBankedGold(userId: number, goldInBank: number): Promise<void> {

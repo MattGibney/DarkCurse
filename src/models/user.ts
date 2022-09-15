@@ -352,6 +352,11 @@ class UserModel {
     await this.daoFactory.user.setLastActive(this.id);
   }
 
+  async subtractTurns(amount: number): Promise<void> {
+    this.attackTurns -= amount;
+    await this.daoFactory.user.setTurns(this.id, amount);
+  }
+
   async addGold(amount: number): Promise<void> {
     this.gold += amount;
     await this.daoFactory.user.setGold(this.id, this.gold);

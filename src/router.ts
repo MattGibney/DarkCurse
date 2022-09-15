@@ -42,6 +42,11 @@ router.get(
   middleware.authenticate,
   attackController.renderAttackList
 );
+router.post(
+  '/attack/:id/status',
+  middleware.authenticate,
+  attackController.handleAttack
+);
 router.get('/bank/deposit', middleware.authenticate, (req, res) =>
   bankController.bankPage(req, res)
 );
