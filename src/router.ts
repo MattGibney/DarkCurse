@@ -14,6 +14,7 @@ import userProfileController from './controllers/main/userProfile';
 import armoryController from './controllers/main/armory';
 import repairController from './controllers/main/repair';
 import middleware from './middleware';
+import attack from './controllers/main/attack';
 
 const router = express.Router();
 
@@ -47,6 +48,7 @@ router.post(
   middleware.authenticate,
   attackController.handleAttack
 );
+router.get('/attack/status/:id', middleware.authenticate, attackController.renderAttackLogPage);
 router.get('/bank/deposit', middleware.authenticate, (req, res) =>
   bankController.bankPage(req, res)
 );
