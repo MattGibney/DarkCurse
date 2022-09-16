@@ -3,6 +3,7 @@ import { Config } from '../../config/environment';
 import DaoFactory from '../../src/daoFactory';
 import ModelFactory from '../../src/modelFactory';
 import UserModel from '../../src/models/user';
+import { SidebarData } from '../typings';
 
 declare global {
   declare namespace Express {
@@ -19,14 +20,7 @@ declare global {
        * generate different dateTime objects.
        */
       dateTime: Date;
-      sidebarData: {
-        gold: string;
-        citizens: string;
-        level: string;
-        experience: string;
-        xpToNextLevel: string;
-        attackTurns: string;
-      };
+      sidebarData: SidebarData;
     }
   }
 }

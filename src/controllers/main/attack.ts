@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Stats } from 'fs';
 import { AttackLogStats, AttackLogData } from '../../daos/attackLog';
 
 export default {
@@ -84,27 +85,36 @@ export default {
       0 * (parseInt(req.body.turnsAmount) / 100);
 
     await attacker.subtractTurns(parseInt(req.body?.turnsAmount));
+
+    // TODO: this whole thing needs clean up.
+    const stats: AttackLogStats[] = [
+      {
+        offensePoints: attacker.offense,
+        defensePoints: defender.defense,
+        pillagedGold: Math.floor(
+          winner === attacker ? availablePillage : availablePillage * 0.3
+        ),
+        xpEarned: winner === attacker ? 10 : 0, //TODO: Create a formula for XP
+        offenseXPStart: attacker.experience,
+      },
+    ];
+    const attackLogData: AttackLogData = {
+      attacker_id: attacker.id,
+      defender_id: defender.id,
+      winner: winner.id,
+      stats: stats,
+      timestamp: new Date(),
+    };
+
+    const earnedNewLevel =
+      stats[0].xpEarned >= attacker.xpToNextLevel ? true : false;
+    if (stats[0].xpEarned !== 0) attacker.addXP(stats[0].xpEarned);
+
     if (winner === attacker) {
       if (defender.gold != 0) {
         await attacker.addGold(availablePillage);
         await defender.subtractGold(availablePillage);
       }
-      const stats: AttackLogStats[] = [
-        {
-          offensePoints: attacker.offense,
-          defensePoints: defender.defense,
-          pillagedGold: availablePillage,
-          xpEarned: 10,
-          offenseXPStart: attacker.experience,
-        },
-      ];
-      const attackLogData: AttackLogData = {
-        attacker_id: attacker.id,
-        defender_id: defender.id,
-        winner: winner.id,
-        stats: stats,
-        timestamp: new Date(),
-      };
       await req.modelFactory.attackLog.createHistory(
         req.modelFactory,
         req.daoFactory,
@@ -112,34 +122,80 @@ export default {
         attackLogData
       );
     }
-    console.log(
-      'Attacker: %s, Defender: %s',
-      attacker.offense,
-      defender.defense
-    );
-    console.log(
-      'Attacker: %s, Defender: %s, Winner: %s',
-      attacker.id,
-      defender.id,
-      winner.id
-    );
+
     res.render('page/main/attack/stat', {
       layout: 'main',
       pageTitle: 'Attack Results',
-      sidebarData: req.sidebarData,
+      sidebarData: {
+        gold: attacker.gold,
+        citizens: attacker.citizens,
+        level: attacker.level,
+        experience: attacker.experience,
+        xpToNextLevel: attacker.xpToNextLevel,
+        attackTurns: attacker.attackTurns,
+        nextTurnTimeStamp: attacker.getTimeToNextTurn(),
+      },
       winner: winner,
       attacker: {
         id: attacker.id,
         displayName: attacker.displayName,
         offense: attacker.offense,
+        level: attacker.level,
       }, //TODO: the UserData isn't being passed, so this is a crude workaround for now
       defender: {
         id: defender.id,
         displayName: defender.displayName,
         defense: defender.defense,
+        level: defender.level,
       }, //TODO: the UserData isn't being passed, so this is a crude workaround for now
       won: winner.id === attacker.id ? true : false,
       turns: parseInt(req.body?.turnsAmount),
+      stats: stats[0],
+      earnedNewLevel: earnedNewLevel,
+      newLevel: attacker.level + 1,
+    });
+  },
+
+  async renderAttackLogPage(req: Request, res: Response) {
+    const battleID = req.params.id;
+    const battleLog = await req.modelFactory.attackLog.fetchByID(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      parseInt(battleID)
+    );
+    const attacker = await req.modelFactory.user.fetchById(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      battleLog.attacker_id
+    );
+    const defender = await req.modelFactory.user.fetchById(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      battleLog.defender_id
+    );
+    res.render('page/main/attack/stat', {
+      layout: 'main',
+      pageTitle: 'Attack Results',
+      sidebarData: req.sidebarData,
+      winner: battleLog.winner,
+      attacker: {
+        id: attacker.id,
+        displayName: attacker.displayName,
+        offense: attacker.offense,
+        level: attacker.level,
+      }, //TODO: the UserData isn't being passed, so this is a crude workaround for now
+      defender: {
+        id: defender.id,
+        displayName: defender.displayName,
+        defense: defender.defense,
+        level: defender.level,
+      }, //TODO: the UserData isn't being passed, so this is a crude workaround for now
+      won: battleLog.winner === attacker.id ? true : false,
+      turns: parseInt(req.body?.turnsAmount),
+      stats: battleLog.stats,
     });
   },
 

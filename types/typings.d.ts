@@ -21,6 +21,17 @@ export type BonusType =
   | 'CASUALTY'
   | 'INTEL'
   | 'INCOME';
+
+export type SidebarData = {
+  gold: string;
+  citizens: string;
+  level: string;
+  experience: string;
+  xpToNextLevel: string;
+  attackTurns: string;
+  nextTurnTimestamp: string;
+};
+
 export type PlayerUnit = {
   level: number;
   type: UnitType;

@@ -60,10 +60,37 @@ export default (
         attackTurns: new Intl.NumberFormat('en-GB').format(
           req.user.attackTurns
         ),
+        nextTurnTimestamp:
+          getTimeRemaining(getTimeToNextTurn()).minutes +
+          ':' +
+          getTimeRemaining(getTimeToNextTurn()).seconds,
       };
     }
     next();
   });
+
+  // https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
+  function getTimeRemaining(endtime) {
+    const total = Date.parse(endtime) - new Date().getTime();
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+    return {
+      total,
+      days,
+      hours,
+      minutes,
+      seconds,
+    };
+  }
+
+  function getTimeToNextTurn(date = new Date()) {
+    const ms = 1800000; // 30mins in ms
+    const nextTurn = new Date(Math.ceil(date.getTime() / ms) * ms);
+    return nextTurn;
+  }
 
   const hbs = create({
     extname: '.hbs',

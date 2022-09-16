@@ -1,7 +1,7 @@
 import BankHistoryModel from './models/bankHistory';
 import UserModel from './models/user';
 import UserSessionModel from './models/userSession';
-import AttackLogModel from './models/attackLog'
+import AttackLogModel from './models/attackLog';
 
 class ModelFactory {
   public bankHistory: typeof BankHistoryModel;

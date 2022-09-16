@@ -4,6 +4,7 @@ import pino from 'pino';
 import DaoFactory from '../daoFactory';
 import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
+import { SidebarData } from '../../types/typings';
 
 import {
   PlayerRace,
@@ -275,6 +276,44 @@ class UserModel {
     };
   }
 
+  get sideBarData(): SidebarData {
+    return {
+      gold: this.gold.toString(),
+      citizens: this.citizens.toString(),
+      level: this.level.toString(),
+      experience: this.experience.toString(),
+      xpToNextLevel: this.xpToNextLevel.toString(),
+      attackTurns: this.attackTurns.toString(),
+      nextTurnTimestamp:
+        this.getTimeRemaining(this.getTimeToNextTurn()).minutes +
+        ':' +
+        this.getTimeRemaining(this.getTimeToNextTurn()).seconds,
+    };
+  }
+
+  // https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
+  getTimeRemaining(endtime) {
+    const total = Date.parse(endtime) - new Date().getTime();
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+    return {
+      total,
+      days,
+      hours,
+      minutes,
+      seconds,
+    };
+  }
+
+  getTimeToNextTurn(date = new Date()) {
+    const ms = 1800000; // 30mins in ms
+    const nextTurn = new Date(Math.ceil(date.getTime() / ms) * ms);
+    return nextTurn;
+  }
+
   /**
    * Limited to level one units only for now, until the upgrade system is
    * implemented.
@@ -357,9 +396,13 @@ class UserModel {
     await this.daoFactory.user.setTurns(this.id, amount);
   }
 
+  async addXP(amount: number): Promise<void> {
+    this.experience += amount;
+    await this.daoFactory.user.setXP(this.id, this.experience);
+  }
+
   async addGold(amount: number): Promise<void> {
     this.gold += amount;
-    console.log(this.gold);
     await this.daoFactory.user.setGold(this.id, this.gold);
   }
 

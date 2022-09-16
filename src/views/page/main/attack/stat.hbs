@@ -12,7 +12,11 @@
   <p>{{defender.displayName}}'s forces had a combined total of {{defender.defense}} Defense.</p>
   <p>You used a total of {{turns}} turns to attack</p>
   {{#if won}}
-  <p>You pillaged x Gold</p>
+  <p>You pillaged {{stats.pillagedGold}} Gold</p>
+  <p>You earned {{stats.xpEarned}} XP</p>
+    {{#if earnedNewLevel}}
+      <p>You've grown to a new level: {{newLevel}}
+    {{/if}}
   {{else}}
   {{/if}}
 </div>

@@ -34,6 +34,15 @@ class AttackLog {
     this.stats = attackLog.stats;
   }
 
+  static async fetchByID(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    battleID: number
+  ): Promise<AttackLogData> {
+    return await daoFactory.attackLog.fetchById(battleID);
+  }
+
   static async fetchUserOffenseHistory(
     modelFactory: ModelFactory,
     daoFactory: DaoFactory,
