@@ -359,6 +359,7 @@ class UserModel {
 
   async addGold(amount: number): Promise<void> {
     this.gold += amount;
+    console.log(this.gold);
     await this.daoFactory.user.setGold(this.id, this.gold);
   }
 

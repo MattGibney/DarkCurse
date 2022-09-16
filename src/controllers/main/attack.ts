@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { AttackLogStats, AttackLogData } from '../../daos/attackLog';
 
 export default {
   async renderAttackPage(req: Request, res: Response) {
@@ -79,14 +80,37 @@ export default {
 
     const winner = attacker.offense > defender.defense ? attacker : defender;
     const availablePillage =
-      defender.gold != 0
-        ? Math.floor(Math.random() * (defender.gold * 0.8 + 1)) +
-          0 * (parseInt(req.params.turns) / 100)
-        : 0;
+      Math.floor(Math.random() * (defender.gold * 0.8 + 1)) +
+      0 * (parseInt(req.body.turnsAmount) / 100);
+
     await attacker.subtractTurns(parseInt(req.body?.turnsAmount));
     if (winner === attacker) {
-      await attacker.addGold(availablePillage);
-      await defender.subtractGold(availablePillage);
+      if (defender.gold != 0) {
+        await attacker.addGold(availablePillage);
+        await defender.subtractGold(availablePillage);
+      }
+      const stats: AttackLogStats[] = [
+        {
+          offensePoints: attacker.offense,
+          defensePoints: defender.defense,
+          pillagedGold: availablePillage,
+          xpEarned: 10,
+          offenseXPStart: attacker.experience,
+        },
+      ];
+      const attackLogData: AttackLogData = {
+        attacker_id: attacker.id,
+        defender_id: defender.id,
+        winner: winner.id,
+        stats: stats,
+        timestamp: new Date(),
+      };
+      await req.modelFactory.attackLog.createHistory(
+        req.modelFactory,
+        req.daoFactory,
+        req.logger,
+        attackLogData
+      );
     }
     console.log(
       'Attacker: %s, Defender: %s',
