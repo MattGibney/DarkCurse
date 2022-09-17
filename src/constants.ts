@@ -248,6 +248,12 @@ export const ArmoryUpgrades = {
 };
 
 export const HouseUpgrades = {
+  0: {
+    name: 'N/A',
+    fortLevel: 0,
+    citizensDaily: 1,
+    cost: 0,
+  },
   1: {
     name: 'Housing Level 1',
     fortLevel: 1,
@@ -687,11 +693,10 @@ export const UnitTypes: Unit[] = [
 export const Bonuses: PlayerBonus[] = [
   { race: 'HUMAN', bonusType: 'ATTACK', bonusAmount: 5 },
   { race: 'GOBLIN', bonusType: 'DEFENSE', bonusAmount: 5 },
-  { race: 'UNDEAD', bonusType: 'RECRUITING', bonusAmount: 5 },
-  { race: 'UNDEAD', bonusType: 'CASUALTY', bonusAmount: 5 },
-  { race: 'ELF', bonusType: 'INTEL', bonusAmount: 5 },
+  { race: 'UNDEAD', bonusType: 'ATTACK', bonusAmount: 5 },
+  { race: 'ELF', bonusType: 'DEFENSE', bonusAmount: 5 },
   { race: 'FIGHTER', bonusType: 'ATTACK', bonusAmount: 5 },
-  { race: 'CLERIC', bonusType: 'ATTACK', bonusAmount: 5 },
-  { race: 'THIEF', bonusType: 'ATTACK', bonusAmount: 5 },
-  { race: 'ASSASSIN', bonusType: 'ATTACK', bonusAmount: 5 },
+  { race: 'CLERIC', bonusType: 'DEFENSE', bonusAmount: 5 },
+  { race: 'THIEF', bonusType: 'INCOME', bonusAmount: 5 },
+  { race: 'ASSASSIN', bonusType: 'INTEL', bonusAmount: 5 },
 ];

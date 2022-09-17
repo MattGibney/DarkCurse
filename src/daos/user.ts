@@ -25,6 +25,7 @@ interface UserRow {
   gold_in_bank: string;
   fort_level: number;
   fort_hitpoints: number;
+  house_level: number;
   attack_turns: string;
   created_date: Date;
   updated_date: Date;
@@ -47,6 +48,7 @@ export interface UserData {
   goldInBank: number;
   fortLevel: number;
   fortHitpoints: number;
+  houseLevel: number;
   attackTurns: number;
   last_active: Date;
   rank: number;

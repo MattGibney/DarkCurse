@@ -6,6 +6,8 @@ import application from './app';
 import Config from '../config/environment';
 import ModelFactory from './modelFactory';
 import DaoFactory from './daoFactory';
+import { HouseUpgrades } from './constants';
+import { PlayerUnit } from '../types/typings';
 
 const logger = pino({
   level: Config.loggingLevel,
@@ -75,7 +77,28 @@ cron.schedule('0,30 * * * *', async () => {
 
     // Add Turns
     logger.debug(`Adding turns for id:${user.id}`);
+    await user.addTurns(2);
   }
 
   logger.info('Finish: Processing game ticks');
+});
+
+cron.schedule('0 0 * * *', async () => {
+  // Runs every day.
+  logger.info('Start: Processing daily game ticks');
+  const allUsers = await modelFactory.user.fetchAll(
+    modelFactory,
+    daoFactory,
+    logger
+  );
+  for await (const user of allUsers) {
+    //Add Citizens
+    logger.debug(`Adding ${user.recruitingBonus} citizens for id${user.id}`);
+    const newCitizen: PlayerUnit = {
+      level: 1,
+      type: 'CITIZEN',
+      quantity: user.recruitingBonus,
+    };
+    await user.trainNewUnits([newCitizen]);
+  }
 });

@@ -5,6 +5,7 @@ import DaoFactory from '../daoFactory';
 import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
 import { SidebarData } from '../../types/typings';
+import { HouseUpgrades } from '../constants';
 
 import {
   PlayerRace,
@@ -40,6 +41,7 @@ class UserModel {
   public goldInBank: number;
   public fortLevel: number;
   public fortHitpoints: number;
+  public houseLevel: number;
   public attackTurns: number;
   public units: PlayerUnit[];
   public items: PlayerItem[];
@@ -67,6 +69,7 @@ class UserModel {
 
     this.fortLevel = userData.fortLevel;
     this.fortHitpoints = userData.fortHitpoints;
+    this.houseLevel = userData.houseLevel;
 
     this.attackTurns = userData.attackTurns;
     this.last_active = userData.last_active;
@@ -137,7 +140,8 @@ class UserModel {
     ).reduce(function (count, stat) {
       return count + stat.bonusAmount;
     }, 0);
-    return recruiting;
+    const houseBonus = HouseUpgrades[this.houseLevel];
+    return recruiting + houseBonus;
   }
 
   get casualtyBonus() {
@@ -200,7 +204,7 @@ class UserModel {
 
   get defense(): number {
     const offenseUnits = this.units.filter((units) => units.type === 'DEFENSE');
-    const offenseStat = offenseUnits
+    let offenseStat = offenseUnits
       .map(
         (unit) =>
           UnitTypes.find(
@@ -211,6 +215,10 @@ class UserModel {
           (1 + parseInt(this.defenseBonus.toString()) / 100)
       )
       .reduce((acc, gold) => acc + gold, 0);
+
+    const fortificationBonus =
+      Fortifications[this.fortLevel].defenseBonusPercentage;
+    offenseStat += offenseStat * fortificationBonus;
     return offenseStat;
   }
 
@@ -393,7 +401,12 @@ class UserModel {
 
   async subtractTurns(amount: number): Promise<void> {
     this.attackTurns -= amount;
-    await this.daoFactory.user.setTurns(this.id, amount);
+    await this.daoFactory.user.setTurns(this.id, this.attackTurns);
+  }
+
+  async addTurns(amount: number): Promise<void> {
+    this.attackTurns += amount;
+    await this.daoFactory.user.setTurns(this.id, this.attackTurns)
   }
 
   async addXP(amount: number): Promise<void> {
@@ -472,7 +485,7 @@ class UserModel {
    * TODO: This is a rather in-elegant approach. Make it better.
    */
   async trainNewUnits(newUnits: PlayerUnit[]): Promise<void> {
-    // Subtract Citizens
+    // Add Citizens
     const totalNewUnits = newUnits.reduce(
       (acc, unit) => acc + unit.quantity,
       0
