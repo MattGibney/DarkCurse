@@ -1,5 +1,5 @@
 
-<table class="table table-responsive">
+<table class="table table-responsive" id="attackList">
   <thead>
     <tr>
       <th>Rank</th>
@@ -23,3 +23,12 @@
     {{/each}}
   </tbody>
 </table>
+<script>
+$(document).ready(function () {
+    const table = $('#attackList').DataTable({
+      searching: false,
+      lengthChange: false,
+      pageLength: 50
+    });
+});
+</script>
