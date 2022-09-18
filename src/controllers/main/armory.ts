@@ -43,6 +43,8 @@ export default {
     return res.render('page/main/armory', {
       layout: 'main',
       pageTitle: 'Armory',
+      menu_category: 'battle',
+      menu_link: 'armory',
       sidebarData: req.sidebarData,
 
       gold: new Intl.NumberFormat('en-GB').format(req.user.gold),

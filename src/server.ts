@@ -6,7 +6,6 @@ import application from './app';
 import Config from '../config/environment';
 import ModelFactory from './modelFactory';
 import DaoFactory from './daoFactory';
-import { HouseUpgrades } from './constants';
 import { PlayerUnit } from '../types/typings';
 
 const logger = pino({

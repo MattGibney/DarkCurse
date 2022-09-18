@@ -17,6 +17,8 @@ export default {
     res.render('page/main/overview', {
       layout: 'main',
       pageTitle: 'Overview',
+      menu_category: 'home',
+      menu_link: 'overview',
 
       sidebarData: req.sidebarData,
 

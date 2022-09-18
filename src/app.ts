@@ -99,6 +99,11 @@ export default (
       eq(arg1, arg2) {
         return arg1 === arg2;
       },
+      isSelected(v1, v2) {
+        if (v1 == v2) {
+          return 'current';
+        }
+      },
     },
   });
   app.engine('.hbs', hbs.engine);

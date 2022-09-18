@@ -1,33 +1,35 @@
-<ul class="nav justify-content-center border-top border-bottom">
-  <li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Home</a>
-    <div class="dropdown-menu">
-      <a class="nav-link" aria-current="page" href="/overview">Overview</a>
-      <a class="nav-link" aria-current="page" href="/overview">Levels</a>
-      <a class="nav-link" aria-current="page" href="#" disabled>Profile</a>
-      <a class="nav-link" aria-current="page" href="#" disabled>Settings</a>
-    </div>
+<ul class="nav justify-content-center border-top border-bottom mb-5">
+  <li class="{{isSelected 'home' menu_category}} nav-item">
+    <a href="#" class="nav-link">Home</a>
+    <ul>
+      <li><a class="{{menu.home.active}} nav-link" aria-current="page" href="/overview">Overview</a></li>
+      <li><a class="nav-link" aria-current="page" href="/overview">Levels</a></li>
+      <li><a class="nav-link" aria-current="page" href="#" disabled>Profile</a></li>
+      <li><a class="nav-link" aria-current="page" href="#" disabled>Settings</a></li>
+    </ul>
   </li>
-  <li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Battle</a>
-    <div class="dropdown-menu">
-      <a class="nav-link" aria-current="page" href="/attack">Attack</a>
-      <a class="nav-link" aria-current="page" href="/training">Training</a>
-      <a class="nav-link" aria-current="page" href="#" disabled>Upgrades</a>
-      <a class="nav-link" aria-current="page" href="#" disabled>War History</a>
-    </div>
+  <li class="{{isSelected 'battle' menu_category}} nav-item">
+    <a href="#" class="nav-link">Battle</a>
+    <ul>
+      <li><a class="nav-link" aria-current="page" href="/attack">Attack</a><li>
+      <li><a class="nav-link" aria-current="page" href="/training">Training</a><li>
+      <li><a class="nav-link" aria-current="page" href="#" disabled>Upgrades</a><li>
+      <li><a class="nav-link" aria-current="page" href="#" disabled>War History</a><li>
+    </ul>
   </li>
-  <li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Structures</a>
-    <div class="dropdown-menu">
-      <a class="nav-link" aria-current="page" href="/bank/deposit">Bank</a>
-      <a class="nav-link" aria-current="page" href="/armory">Armory</a>
-      <a class="nav-link" aria-current="page" href="#" disabled>Upgrades</a>
-      <a class="nav-link" aria-current="page" href="#" disabled>Housing</a>
-      <a class="nav-link" aria-current="page" href="/repair" disabled>Repair</a>
-    </div>
+  <li class="{{isSelected 'structures' menu_category}} nav-item">
+    <a href="#" class="nav-link">Structures</a>
+    <ul>
+      <li><a class="nav-link" aria-current="page" href="/bank/deposit">Bank</a></li>
+      <li><a class="nav-link" aria-current="page" href="/armory">Armory</a></li>
+      <li><a class="nav-link" aria-current="page" href="#" disabled>Upgrades</a></li>
+      <li><a class="nav-link" aria-current="page" href="#" disabled>Housing</a></li>
+      <li><a class="nav-link" aria-current="page" href="/repair" disabled>Repair</a></li>
+    </ul>
   </li>
   <li class="nav-item">
     <a class="nav-link" aria-current="page" href="/signout">Signout</a>
+    <ul>
+    </ul>
   </li>
 </ul>

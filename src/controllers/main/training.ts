@@ -23,6 +23,8 @@ export default {
       layout: 'main',
       pageTitle: 'Training',
       sidebarData: req.sidebarData,
+      menu_category: 'battle',
+      menu_link: 'training',
 
       gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
       goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),

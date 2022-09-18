@@ -20,9 +20,14 @@ export default {
     };
 
     res.render('page/main/repair', {
+      layout: 'main',
+      pageTitle: 'Repair',
+      menu_category: 'structures',
+      menu_link: 'repair',
       fort: userFort(),
       gold: user.gold,
       goldInBank: user.goldInBank,
+      sidebarData: req.sidebarData,
     });
     return;
   },

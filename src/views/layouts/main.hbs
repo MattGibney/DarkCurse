@@ -19,6 +19,40 @@
   <style>
     .nav ul {list-style-type:none; margin:0; padding:0;} 
     .nav li { float: left; margin: 0 5px; } 
+    .nav a {
+      display:block;
+      text-decoration:none;
+    }
+    .nav a:active, .nav a:focus, .nav a:hover {
+      background:#777;
+    }
+    .nav li.current {
+      background:#777
+    }
+    .nav li.current ul {
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+    .nav ul {
+      position:absolute;
+      left:-999em;
+      list-style:none;
+      padding:.9em 0 0;
+    }
+    .nav ul li {
+      width:auto;
+      margin:0 15px 0 0;
+    }
+    .nav ul a {
+      height:auto;
+      padding:0 8px;
+    }
+    .nav li:active ul, .nav li:hover ul { 
+      left: 50%;
+      /* bring your own prefixes */
+      transform: translate(-50%, 0);
+      background:#fff;
+    }
   </style>
 </head>
 <body>

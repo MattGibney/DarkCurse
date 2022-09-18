@@ -35,6 +35,8 @@ export default {
     res.render('page/main/attack/turns', {
       layout: 'main',
       pageTitle: `Attack ${defender.id}`,
+      menu_category: 'battle',
+      menu_link: 'attack',
       sidebarData: req.sidebarData,
       turns: attacker.attackTurns,
       defender: defender,
@@ -126,6 +128,8 @@ export default {
     res.render('page/main/attack/stat', {
       layout: 'main',
       pageTitle: 'Attack Results',
+      menu_category: 'battle',
+      menu_link: 'war_history',
       sidebarData: {
         gold: attacker.gold,
         citizens: attacker.citizens,
@@ -180,6 +184,8 @@ export default {
       layout: 'main',
       pageTitle: 'Attack Results',
       sidebarData: req.sidebarData,
+      menu_category: 'battle',
+      menu_link: 'war_history',
       winner: battleLog.winner,
       attacker: {
         id: attacker.id,
@@ -217,6 +223,8 @@ export default {
       layout: 'main',
       pageTitle: 'Attack List',
       sidebarData: req.sidebarData,
+      menu_category: 'battle',
+      menu_link: 'attack',
 
       players: players.map((player) => ({
         id: player.id,

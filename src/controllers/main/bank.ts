@@ -12,6 +12,8 @@ async function bankPage(req: Request, res: Response, alert?: PageAlert) {
     layout: 'main',
     pageTitle: 'Bank',
     sidebarData: req.sidebarData,
+    menu_category: 'structures',
+    menu_link: 'bank',
 
     gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
     goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
@@ -47,6 +49,8 @@ async function historyPage(req: Request, res: Response) {
     layout: 'main',
     pageTitle: 'Bank',
     sidebarData: req.sidebarData,
+    menu_category: 'structures',
+    menu_link: 'bank',
 
     history: await Promise.all(
       transactionHistory.map(async (transaction) => ({
