@@ -406,7 +406,7 @@ class UserModel {
 
   async addTurns(amount: number): Promise<void> {
     this.attackTurns += amount;
-    await this.daoFactory.user.setTurns(this.id, this.attackTurns)
+    await this.daoFactory.user.setTurns(this.id, this.attackTurns);
   }
 
   async addXP(amount: number): Promise<void> {
@@ -484,14 +484,19 @@ class UserModel {
    *
    * TODO: This is a rather in-elegant approach. Make it better.
    */
-  async trainNewUnits(newUnits: PlayerUnit[]): Promise<void> {
+  async trainNewUnits(
+    newUnits: PlayerUnit[],
+    spendCitizens = true
+  ): Promise<void> {
     // Add Citizens
     const totalNewUnits = newUnits.reduce(
       (acc, unit) => acc + unit.quantity,
       0
     );
-    const citizenUnits = this.units.find((unit) => unit.type === 'CITIZEN');
-    citizenUnits.quantity -= totalNewUnits;
+    if (spendCitizens) {
+      const citizenUnits = this.units.find((unit) => unit.type === 'CITIZEN');
+      citizenUnits.quantity -= totalNewUnits;
+    }
 
     // Update existing units
     const unitsToUpdate = this.units.filter((unit) =>

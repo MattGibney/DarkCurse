@@ -83,7 +83,7 @@ cron.schedule('0,30 * * * *', async () => {
   logger.info('Finish: Processing game ticks');
 });
 
-cron.schedule('0 0 * * *', async () => {
+cron.schedule('* * * * *', async () => {
   // Runs every day.
   logger.info('Start: Processing daily game ticks');
   const allUsers = await modelFactory.user.fetchAll(
@@ -99,6 +99,6 @@ cron.schedule('0 0 * * *', async () => {
       type: 'CITIZEN',
       quantity: user.recruitingBonus,
     };
-    await user.trainNewUnits([newCitizen]);
+    await user.trainNewUnits([newCitizen], false);
   }
 });
