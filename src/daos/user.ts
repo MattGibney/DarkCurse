@@ -199,6 +199,7 @@ class UserDao {
       gold: parseInt(userRow.gold),
       goldInBank: parseInt(userRow.gold_in_bank),
       fortLevel: userRow.fort_level,
+      houseLevel: userRow.house_level,
       fortHitpoints: userRow.fort_hitpoints,
       attackTurns: parseInt(userRow.attack_turns),
       last_active: userRow.last_active,
