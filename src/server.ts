@@ -83,7 +83,7 @@ cron.schedule('0,30 * * * *', async () => {
   logger.info('Finish: Processing game ticks');
 });
 
-cron.schedule('* * * * *', async () => {
+cron.schedule('0 0 * * *', async () => {
   // Runs every day.
   logger.info('Start: Processing daily game ticks');
   const allUsers = await modelFactory.user.fetchAll(
