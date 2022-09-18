@@ -140,8 +140,8 @@ class UserModel {
     ).reduce(function (count, stat) {
       return count + stat.bonusAmount;
     }, 0);
-    const houseBonus = HouseUpgrades[this.houseLevel];
-    return recruiting + houseBonus;
+    const houseBonus = HouseUpgrades[this.houseLevel].citizensDaily;
+    return parseInt(recruiting + houseBonus);
   }
 
   get casualtyBonus() {
