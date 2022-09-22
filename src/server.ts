@@ -92,7 +92,7 @@ cron.schedule('0 0 * * *', async () => {
   );
   for await (const user of allUsers) {
     //Add Citizens
-    logger.debug(`Adding ${user.recruitingBonus} citizens for id${user.id}`);
+    logger.debug(`Adding ${user.recruitingBonus} citizens for id ${user.id}`);
     const newCitizen: PlayerUnit = {
       level: 1,
       type: 'CITIZEN',

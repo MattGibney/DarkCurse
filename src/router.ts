@@ -19,9 +19,8 @@ import attack from './controllers/main/attack';
 const router = express.Router();
 
 // Home
-router.get('/', middleware.authenticate, (req, res, next) => {
-  console.log(req.user);
-  if (req.user){
+router.get('/', (req, res, next) => {
+  if (req.user != undefined){
     res.redirect('/overview');
   }
   next();
@@ -38,71 +37,85 @@ router.post('/signup', marketingSignupController.signupAction);
 // Signout
 router.get('/signout', marketingSignoutController.signoutAction);
 
-router.get(
+// View User Profile
+router.get('/userprofile/:userId', userProfileController.renderUserProfile);
+
+const authedRouter = express.Router();
+
+authedRouter.use((req, res, next) => {
+  if (!req.user) {
+
+    return res.redirect('/login?err=auth');
+    //return res.sendStatus(401);
+  }
+  next();
+});
+
+authedRouter.get(
   '/attack',
-  middleware.authenticate,
   attackController.renderAttackList
 );
-router.post(
+authedRouter.post(
   '/attack/:id/status',
-  middleware.authenticate,
   attackController.handleAttack
 );
-router.get('/attack/status/:id', middleware.authenticate, attackController.renderAttackLogPage);
-router.get('/bank/deposit', middleware.authenticate, (req, res) =>
+authedRouter.get('/attack/status/:id',  attackController.renderAttackLogPage);
+authedRouter.get('/bank/deposit',  (req, res) =>
   bankController.bankPage(req, res)
 );
-router.post('/bank/deposit', middleware.authenticate, (req, res) =>
+authedRouter.post('/bank/deposit',  (req, res) =>
   bankController.bankDepositGold(req, res, bankController.bankPage)
 );
-router.get('/bank/history', middleware.authenticate, (req, res) =>
+authedRouter.get('/bank/history',  (req, res) =>
   bankController.historyPage(req, res)
 );
-router.get('/repair', middleware.authenticate, (req, res) =>
+authedRouter.get('/repair',  (req, res) =>
   repairController.renderRepairPage(req, res)
 );
-router.get(
+authedRouter.get(
   '/overview',
-  middleware.authenticate,
+  
   overviewController.overviewPage
 );
-router.get(
+authedRouter.get(
   '/training',
-  middleware.authenticate,
+  
   trainingController.trainingPage
 );
-router.get(
+authedRouter.get(
   '/armory',
-  middleware.authenticate,
+  
   armoryController.armoryPage
 )
 
-router.get(
+authedRouter.get(
   '/attack/:id',
-  middleware.authenticate,
+  
   attackController.renderAttackPage
 )
 
-router.post(
+authedRouter.post(
   '/training/train',
-  middleware.authenticate,
+  
   trainingController.trainUnitsAction
 );
-router.post(
+authedRouter.post(
   '/training/untrain',
-  middleware.authenticate,
+  
   trainingController.untrainUnitsAction,
 );
-router.post(
+authedRouter.post(
   '/armory/equip',
-  middleware.authenticate,
+  
   armoryController.equipItemAction
 );
-router.post(
+authedRouter.post(
   '/armory/unequip',
-  middleware.authenticate,
+  
   armoryController.unequipItemsAction,
 );
-router.get('/userprofile/:userId', userProfileController.renderUserProfile);
+
+
+router.use(authedRouter);
 
 export default router;
