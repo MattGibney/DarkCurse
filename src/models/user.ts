@@ -5,7 +5,6 @@ import DaoFactory from '../daoFactory';
 import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
 import { SidebarData } from '../../types/typings';
-import { HouseUpgrades } from '../constants';
 
 import {
   PlayerRace,
@@ -16,6 +15,7 @@ import {
   PlayerBonus,
   Weapon,
   PlayerItem,
+  Fortification,
 } from '../../types/typings';
 import {
   Fortifications,
@@ -23,6 +23,8 @@ import {
   UnitTypes,
   Bonuses,
   WeaponTypes,
+  HouseUpgrades,
+  ArmoryUpgrades,
 } from '../constants';
 
 class UserModel {
@@ -336,8 +338,16 @@ class UserModel {
     );
   }
 
+  get availableDefenseBattleUpgrades(): Fortification[] {
+    return Fortifications.filter((fort) => fort.level <= this.fortLevel + 1);
+  }
+
   get maximumBankDeposits(): number {
     return 1;
+  }
+
+  async userRecruitingLink(): Promise<string> {
+    return await this.daoFactory.user.fetchRecruitingLink(this.id);
   }
 
   /**

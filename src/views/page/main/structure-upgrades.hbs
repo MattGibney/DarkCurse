@@ -1,0 +1,158 @@
+<div class="d-flex justify-content-around my-5" id='alertMSG' name='alertMSG' style="display:none">
+  
+</div>
+
+<div class="d-flex justify-content-around my-5">
+  <p class="mb-0">Untrained Citizens: <span id="citizens">{{citizens}}</span></p>
+  <p class="mb-0">Gold On Hand: <span id="gold">{{gold}}</span></p>
+  <p class="mb-0">Banked Gold: <span id="goldInBank">{{goldInBank}}</span></p>
+  
+</div>
+
+<form name="training" id="training" class="mb-5">
+  <h3>Offense</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=offensiveArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=offensiveBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=offensiveBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=offensiveShield}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+</form>
+<form name="training" id="training" class="mb-5">
+  <h3>Defense</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=defensiveWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=defensiveHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=defensiveArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=defensiveBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=defensiveBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=defensiveShield}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+</form>
+<form name="training" id="training" class="mb-5">
+  <h3>Spy</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=offensiveArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=offensiveBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=offensiveBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=offensiveShield}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+</form>
+<form name="training" id="training" class="mb-5">
+  <h3>Sentry</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=offensiveArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=offensiveBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=offensiveBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=offensiveShield}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+</form>
+
+<script>
+  $('#untrainSubmit').click(function(e) {
+      e.preventDefault();
+      const form = $('#training');
+      $.ajax({
+        url: '/training/untrain',
+        type: 'POST',
+        data: form.serialize(),
+        success: function(response) {
+          if(response.error){
+            console.log('Failed')
+            Toast.create(
+              "Error",
+              response.error,
+              TOAST_STATUS.DANGER,
+              3000
+            );
+          }else if(response.success){
+            Toast.create(
+              "Success",
+              response.success,
+              TOAST_STATUS.SUCCESS,
+              3000
+            );
+            $('[id=gold]').text(response.stats.gold);
+            $('[id=goldInBank]').text(response.stats.goldInBank);
+            $('[id=citizens]').text(response.stats.citizens);
+            for(let i = 0; i < response.stats.workerUnits.length; i++){
+              $('[id='+response.stats.workerUnits[i].id+'_owned]').text(response.stats.workerUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.defensiveUnits.length; i++){
+              $('[id='+response.stats.defensiveUnits[i].id+'_owned]').text(response.stats.defensiveUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.offensiveUnits.length; i++){
+              $('[id='+response.stats.offensiveUnits[i].id+'_owned]').text(response.stats.offensiveUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.spyUnits.length; i++){
+              $('[id='+response.stats.spyUnits[i].id+'_owned]').text(response.stats.spyUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.sentryUnits.length; i++){
+              $('[id='+response.stats.sentryUnits[i].id+'_owned]').text(response.stats.sentryUnits[i].ownedUnits)
+            }
+          }
+        }
+      });
+      return false;
+    });
+    $('#trainSubmit').click(function(e) {
+      e.preventDefault();
+      const form = $('#training');
+      $.ajax({
+        url: '/training/train',
+        type: 'POST',
+        data: form.serialize(),
+        success: function(response) {
+          if(response.error){
+            console.log('Failed')
+            Toast.create(
+              "Error",
+              response.error,
+              TOAST_STATUS.DANGER,
+              3000
+            );
+          }else if(response.success){
+            Toast.create(
+              "Success",
+              response.success,
+              TOAST_STATUS.SUCCESS,
+              3000
+            );
+            $('[id=gold]').text(response.stats.gold);
+            $('[id=goldInBank]').text(response.stats.goldInBank);
+            $('[id=citizens]').text(response.stats.citizens);
+            for(let i = 0; i < response.stats.workerUnits.length; i++){
+              $('[id='+response.stats.workerUnits[i].id+'_owned]').text(response.stats.workerUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.defensiveUnits.length; i++){
+              $('[id='+response.stats.defensiveUnits[i].id+'_owned]').text(response.stats.defensiveUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.offensiveUnits.length; i++){
+              $('[id='+response.stats.offensiveUnits[i].id+'_owned]').text(response.stats.offensiveUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.spyUnits.length; i++){
+              $('[id='+response.stats.spyUnits[i].id+'_owned]').text(response.stats.spyUnits[i].ownedUnits)
+            }
+            for(let i = 0; i < response.stats.sentryUnits.length; i++){
+              $('[id='+response.stats.sentryUnits[i].id+'_owned]').text(response.stats.sentryUnits[i].ownedUnits)
+            }
+          }
+        }
+      });
+      return false;
+    });
+</script>

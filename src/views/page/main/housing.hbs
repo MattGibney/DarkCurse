@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-around my-5" id='alertMSG' name='alertMSG' style="display:none">
+  
+</div>
+
+<div class="d-flex justify-content-around my-5">
+  <p class="mb-0">Untrained Citizens: <span id="citizens">{{citizens}}</span></p>
+  <p class="mb-0">Gold On Hand: <span id="gold">{{gold}}</span></p>
+  <p class="mb-0">Banked Gold: <span id="goldInBank">{{goldInBank}}</span></p>
+  
+</div>
+
+<form name="training" id="training" class="mb-5">
+  <h3>Offense</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+</form>

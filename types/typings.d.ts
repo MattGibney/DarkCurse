@@ -64,6 +64,36 @@ export type Weapon = {
   cost: number;
   race: PlayerRace;
 };
+export type Fortification = {
+  name: string;
+  level: number;
+  levelRequirement: number;
+  hitpoints: number;
+  costPerRepairPoint: number;
+  goldPerTurn: number;
+  defenseBonusPercentage: number;
+  cost: number;
+};
+export type OffensiveUpgradeType = {
+  name: string;
+  fortLevelRequirement: number;
+  offenseBonusPercentage: number;
+  cost: number;
+};
+export type SpyUpgradeType = {
+  name: string;
+  fortLevelRequirement: number;
+  offenseBonusPercentage: number;
+  maxInfiltrations: number;
+  maxAssassinations: number;
+  cost: number;
+};
+export type SentryUpgradeType = {
+  name: string;
+  fortLevelRequirement: number;
+  defenseBonusPercentage: number;
+  cost: number;
+};
 export type PlayerBonus = {
   race: PlayerRace | PlayerClass;
   bonusType: BonusType;

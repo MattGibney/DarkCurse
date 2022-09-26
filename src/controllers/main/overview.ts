@@ -14,6 +14,8 @@ export default {
       return;
     }
 
+    const link = await user.userRecruitingLink();
+
     res.render('page/main/overview', {
       layout: 'main',
       pageTitle: 'Overview',
@@ -58,6 +60,7 @@ export default {
       },
       spyVictories: 0,
       sentryVictories: 0,
+      recruitmentLink: link,
     });
     return;
   },

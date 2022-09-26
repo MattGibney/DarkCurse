@@ -1,0 +1,38 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th class="col-4">{{heading}}</th>
+      <th class="col-2">Level Required</th>
+      <th class="col-2">Bonus</th>
+      <th class="col-2">Repair Cost</th>
+      <th class="col-2">Max Health</th>
+      <th class="col-2">Gold per Turn</th>
+      <th class="col-2">Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each units as |unit|}}
+        {{#if unit.enabled}}
+        <tr>
+          <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
+          <td class="align-middle">Level {{unit.levelRequirement}}</td>
+          <td class="align-middle">+{{unit.defenseBonusPercentage}}% Defense</td>
+          <td class="align-middle">{{unit.costPerRepairPoint}}</td>
+          <td class="align-middle">{{unit.hitpoints}}</td>
+          <td class="align-middle">{{unit.goldPerTurn}}</td>
+          <td class="align-middle">{{unit.cost}}</td>
+        </tr>
+        {{else}}
+        <tr>
+          <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
+          <td class="align-middle"></td>
+          <td class="align-middle"></td>
+          <td class="align-middle"></td>
+          <td class="align-middle"></td>
+          <td class="align-middle"></td>
+          <td class="align-middle">Unlocked at Fort Level: {{unit.level}}</td>
+        </tr>
+        {{/if}}
+      {{/each}}
+  </tbody>
+</table>

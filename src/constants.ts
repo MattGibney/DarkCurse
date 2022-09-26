@@ -1,8 +1,9 @@
-import { Unit, PlayerBonus, Weapon } from '../types/typings';
+import { Unit, PlayerBonus, Weapon, Fortification, OffensiveUpgradeType, SpyUpgradeType, SentryUpgradeType } from '../types/typings';
 
-export const Fortifications = {
-  1: {
+export const Fortifications: Fortification[] = [
+  {
     name: 'Manor',
+    level: 1,
     levelRequirement: 0,
     hitpoints: 50,
     costPerRepairPoint: 5,
@@ -10,8 +11,9 @@ export const Fortifications = {
     defenseBonusPercentage: 5,
     cost: 0,
   },
-  2: {
+  {
     name: 'Village',
+    level: 2,
     levelRequirement: 5,
     hitpoints: 100,
     costPerRepairPoint: 15,
@@ -19,8 +21,9 @@ export const Fortifications = {
     defenseBonusPercentage: 10,
     cost: 100000,
   },
-  3: {
+  {
     name: 'Town',
+    level: 3,
     levelRequirement: 10,
     hitpoints: 200,
     costPerRepairPoint: 35,
@@ -28,8 +31,9 @@ export const Fortifications = {
     defenseBonusPercentage: 15,
     cost: 250000,
   },
-  4: {
+  {
     name: 'Outpost',
+    level: 4,
     levelRequirement: 15,
     hitpoints: 300,
     costPerRepairPoint: 75,
@@ -37,8 +41,9 @@ export const Fortifications = {
     defenseBonusPercentage: 20,
     cost: 500000,
   },
-  5: {
+  {
     name: 'Outpost Level 2',
+    level: 5,
     levelRequirement: 20,
     hitpoints: 500,
     costPerRepairPoint: 125,
@@ -46,8 +51,9 @@ export const Fortifications = {
     defenseBonusPercentage: 25,
     cost: 1000000,
   },
-  6: {
+  {
     name: 'Outpost Level 3',
+    level: 6,
     levelRequirement: 25,
     hitpoints: 750,
     costPerRepairPoint: 225,
@@ -55,8 +61,9 @@ export const Fortifications = {
     defenseBonusPercentage: 30,
     cost: 2000000,
   },
-  7: {
+  {
     name: 'Stronghold',
+    level: 7,
     levelRequirement: 30,
     hitpoints: 1000,
     costPerRepairPoint: 325,
@@ -64,8 +71,9 @@ export const Fortifications = {
     defenseBonusPercentage: 35,
     cost: 3000000,
   },
-  8: {
+  {
     name: 'Stronghold Level 2',
+    level: 8,
     levelRequirement: 35,
     hitpoints: 1500,
     costPerRepairPoint: 450,
@@ -73,8 +81,9 @@ export const Fortifications = {
     defenseBonusPercentage: 40,
     cost: 4000000,
   },
-  9: {
+  {
     name: 'Stronghold Level 3',
+    level: 9,
     levelRequirement: 40,
     hitpoints: 2000,
     costPerRepairPoint: 550,
@@ -82,8 +91,9 @@ export const Fortifications = {
     defenseBonusPercentage: 45,
     cost: 5000000,
   },
-  10: {
+  {
     name: 'Fortress',
+    level: 10,
     levelRequirement: 45,
     hitpoints: 2500,
     costPerRepairPoint: 675,
@@ -91,8 +101,9 @@ export const Fortifications = {
     defenseBonusPercentage: 50,
     cost: 7500000,
   },
-  11: {
+  {
     name: 'Fortress Level 2',
+    level: 11,
     levelRequirement: 50,
     hitpoints: 3000,
     costPerRepairPoint: 750,
@@ -100,8 +111,9 @@ export const Fortifications = {
     defenseBonusPercentage: 55,
     cost: 10000000,
   },
-  12: {
+  {
     name: 'Fortress Level 3',
+    level: 12,
     levelRequirement: 55,
     hitpoints: 3500,
     costPerRepairPoint: 875,
@@ -109,8 +121,9 @@ export const Fortifications = {
     defenseBonusPercentage: 60,
     cost: 15000000,
   },
-  13: {
+  {
     name: 'Citadel',
+    level: 13,
     levelRequirement: 60,
     hitpoints: 4000,
     costPerRepairPoint: 1150,
@@ -118,8 +131,9 @@ export const Fortifications = {
     defenseBonusPercentage: 65,
     cost: 20000000,
   },
-  14: {
+  {
     name: 'Citadel Level 2',
+    level: 14,
     levelRequirement: 65,
     hitpoints: 4500,
     costPerRepairPoint: 1550,
@@ -127,8 +141,9 @@ export const Fortifications = {
     defenseBonusPercentage: 70,
     cost: 30000000,
   },
-  15: {
+  {
     name: 'Citadel Level 3',
+    level: 15,
     levelRequirement: 70,
     hitpoints: 5000,
     costPerRepairPoint: 1850,
@@ -136,8 +151,9 @@ export const Fortifications = {
     defenseBonusPercentage: 75,
     cost: 40000000,
   },
-  16: {
+  {
     name: 'Castle',
+    level: 16,
     levelRequirement: 75,
     hitpoints: 5500,
     costPerRepairPoint: 2100,
@@ -145,8 +161,9 @@ export const Fortifications = {
     defenseBonusPercentage: 80,
     cost: 50000000,
   },
-  17: {
+  {
     name: 'Castle Level 2',
+    level: 17,
     levelRequirement: 80,
     hitpoints: 6000,
     costPerRepairPoint: 2900,
@@ -154,8 +171,9 @@ export const Fortifications = {
     defenseBonusPercentage: 85,
     cost: 75000000,
   },
-  18: {
+  {
     name: 'Castle Level 3',
+    level: 18,
     levelRequirement: 85,
     hitpoints: 6500,
     costPerRepairPoint: 3600,
@@ -163,8 +181,9 @@ export const Fortifications = {
     defenseBonusPercentage: 90,
     cost: 100000000,
   },
-  19: {
+  {
     name: 'Kingdom',
+    level: 19,
     levelRequirement: 90,
     hitpoints: 7000,
     costPerRepairPoint: 5000,
@@ -172,8 +191,9 @@ export const Fortifications = {
     defenseBonusPercentage: 95,
     cost: 150000000,
   },
-  20: {
+  {
     name: 'Kingdom Level 2',
+    level: 20,
     levelRequirement: 95,
     hitpoints: 7500,
     costPerRepairPoint: 6750,
@@ -181,8 +201,9 @@ export const Fortifications = {
     defenseBonusPercentage: 100,
     cost: 200000000,
   },
-  21: {
+  {
     name: 'Kingdom Level 3',
+    level: 21,
     levelRequirement: 100,
     hitpoints: 8000,
     costPerRepairPoint: 7500,
@@ -190,8 +211,9 @@ export const Fortifications = {
     defenseBonusPercentage: 105,
     cost: 250000000,
   },
-  22: {
+  {
     name: 'Empire',
+    level: 22,
     levelRequirement: 105,
     hitpoints: 8500,
     costPerRepairPoint: 8250,
@@ -199,8 +221,9 @@ export const Fortifications = {
     defenseBonusPercentage: 110,
     cost: 300000000,
   },
-  23: {
+  {
     name: 'Empire Level 2',
+    level: 23,
     levelRequirement: 110,
     hitpoints: 9000,
     costPerRepairPoint: 9000,
@@ -208,8 +231,9 @@ export const Fortifications = {
     defenseBonusPercentage: 115,
     cost: 350000000,
   },
-  24: {
+  {
     name: 'Empire Level 3',
+    level: 24,
     levelRequirement: 115,
     hitpoints: 9500,
     costPerRepairPoint: 9750,
@@ -217,7 +241,36 @@ export const Fortifications = {
     defenseBonusPercentage: 120,
     cost: 400000000,
   },
-};
+];
+
+export const OffenseiveUpgrades: OffensiveUpgradeType[] = [
+  {
+    name: 'Dagger Training',
+    fortLevelRequirement: 1,
+    offenseBonusPercentage: 0,
+    cost: 0,
+  },
+];
+
+export const SpyUpgrades: SpyUpgradeType[] = [
+  {
+    name: 'Sling Training',
+    fortLevelRequirement: 1,
+    offenseBonusPercentage: 0,
+    maxAssassinations: 0,
+    maxInfiltrations: 0,
+    cost: 0,
+  },
+];
+
+export const SentryUpgrades: SentryUpgradeType[] = [
+  {
+    name: 'Sling Training',
+    fortLevelRequirement: 1,
+    defenseBonusPercentage: 0,
+    cost: 0,
+  },
+];
 
 export const ArmoryUpgrades = {
   1: {

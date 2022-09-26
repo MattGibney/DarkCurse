@@ -14,17 +14,21 @@ import userProfileController from './controllers/main/userProfile';
 import armoryController from './controllers/main/armory';
 import repairController from './controllers/main/repair';
 import middleware from './middleware';
-import attack from './controllers/main/attack';
+import battleUpgradeController from './controllers/main/battle-upgrades';
 
 const router = express.Router();
 
 // Home
-router.get('/', (req, res, next) => {
-  if (req.user != undefined){
-    res.redirect('/overview');
-  }
-  next();
-}, marketingHomeController.renderHomePage);
+router.get(
+  '/',
+  (req, res, next) => {
+    if (req.user != undefined) {
+      res.redirect('/overview');
+    }
+    next();
+  },
+  marketingHomeController.renderHomePage
+);
 
 // Login
 router.get('/login', marketingLoginController.renderLoginPage);
@@ -44,77 +48,46 @@ const authedRouter = express.Router();
 
 authedRouter.use((req, res, next) => {
   if (!req.user) {
-
     return res.redirect('/login?err=auth');
     //return res.sendStatus(401);
   }
   next();
 });
 
-authedRouter.get(
-  '/attack',
-  attackController.renderAttackList
-);
-authedRouter.post(
-  '/attack/:id/status',
-  attackController.handleAttack
-);
-authedRouter.get('/attack/status/:id',  attackController.renderAttackLogPage);
-authedRouter.get('/bank/deposit',  (req, res) =>
+authedRouter.get('/attack', attackController.renderAttackList);
+authedRouter.post('/attack/:id/status', attackController.handleAttack);
+authedRouter.get('/attack/status/:id', attackController.renderAttackLogPage);
+authedRouter.get('/bank/deposit', (req, res) =>
   bankController.bankPage(req, res)
 );
-authedRouter.post('/bank/deposit',  (req, res) =>
+authedRouter.post('/bank/deposit', (req, res) =>
   bankController.bankDepositGold(req, res, bankController.bankPage)
 );
-authedRouter.get('/bank/history',  (req, res) =>
+authedRouter.get('/bank/history', (req, res) =>
   bankController.historyPage(req, res)
 );
-authedRouter.get('/repair',  (req, res) =>
+authedRouter.get('/repair', (req, res) =>
   repairController.renderRepairPage(req, res)
 );
-authedRouter.get(
-  '/overview',
-  
-  overviewController.overviewPage
-);
-authedRouter.get(
-  '/training',
-  
-  trainingController.trainingPage
-);
-authedRouter.get(
-  '/armory',
-  
-  armoryController.armoryPage
-)
+authedRouter.get('/overview', overviewController.overviewPage);
+authedRouter.get('/training', trainingController.trainingPage);
+authedRouter.get('/armory', armoryController.armoryPage);
 
-authedRouter.get(
-  '/attack/:id',
-  
-  attackController.renderAttackPage
-)
+authedRouter.get('/attack/:id', attackController.renderAttackPage);
+authedRouter.get('/war-history', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/my-profile', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/settings', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/levels', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/battle-upgrades', (req, res) => battleUpgradeController.battleUpgrades(req, res));
+authedRouter.get('/structure-upgrades', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/housing', (req, res) => res.send('Not Implemented Yet'));
 
-authedRouter.post(
-  '/training/train',
-  
-  trainingController.trainUnitsAction
-);
-authedRouter.post(
-  '/training/untrain',
-  
-  trainingController.untrainUnitsAction,
-);
-authedRouter.post(
-  '/armory/equip',
-  
-  armoryController.equipItemAction
-);
-authedRouter.post(
-  '/armory/unequip',
-  
-  armoryController.unequipItemsAction,
-);
 
+
+authedRouter.post('/training/train', trainingController.trainUnitsAction);
+authedRouter.post('/training/untrain', trainingController.untrainUnitsAction);
+authedRouter.post('/armory/equip', armoryController.equipItemAction);
+authedRouter.post('/armory/unequip', armoryController.unequipItemsAction);
 
 router.use(authedRouter);
 
