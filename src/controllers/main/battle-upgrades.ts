@@ -1,15 +1,28 @@
 import { Request, Response } from 'express';
-import { Fortification, UnitType } from '../../../types/typings';
+import {
+  Fortification,
+  OffensiveUpgradeType,
+  SentryUpgradeType,
+  SpyUpgradeType,
+  UnitType,
+} from '../../../types/typings';
+import { Fortifications, SpyUpgrades } from '../../constants';
 // import { UnitTypes } from '../../constants';
 
 export default {
   async battleUpgrades(req: Request, res: Response) {
-    const upgradeMapFunction = (unit: Fortification, idPrefix: string) => {
+    const defenseUpgradeMapFunction = (
+      unit: Fortification,
+      idPrefix: string
+    ) => {
       return {
         id: `${idPrefix}_${unit.level}`,
         name: unit.name,
         level: unit.level,
         levelRequirement: unit.levelRequirement,
+        levelRequirementName: Fortifications.filter((fort) => {
+          return fort.level == unit.levelRequirement;
+        })[0],
         hitpoints: unit.hitpoints,
         costPerRepairPoint: unit.costPerRepairPoint,
         goldPerTurn: unit.goldPerTurn,
@@ -19,22 +32,78 @@ export default {
       };
     };
 
+    const offenseUpgradeMapFunction = (
+      unit: OffensiveUpgradeType,
+      idPrefix: string
+    ) => {
+      return {
+        id: `${idPrefix}_${unit.name}`,
+        name: unit.name,
+        levelRequirement: unit.fortLevelRequirement,
+        levelRequirementName: Fortifications.filter((fort) => {
+          return fort.level == unit.fortLevelRequirement;
+        })[0],
+        offenseBonusPercentage: unit.offenseBonusPercentage,
+        cost: new Intl.NumberFormat('en-GB').format(unit.cost),
+        enabled: unit.fortLevelRequirement <= req.user.fortLevel ? true : false,
+      };
+    };
+
+    const spyoffenseUpgradeMapFunction = (
+      unit: SpyUpgradeType,
+      idPrefix: string
+    ) => {
+      return {
+        id: `${idPrefix}_${unit.name}`,
+        name: unit.name,
+        levelRequirement: unit.fortLevelRequirement,
+        levelRequirementName: Fortifications.filter((fort) => {
+          return fort.level == unit.fortLevelRequirement;
+        })[0],
+        offenseBonusPercentage: unit.offenseBonusPercentage,
+        maxInfiltrations: unit.maxInfiltrations,
+        maxAssassinations: unit.maxAssassinations,
+        cost: new Intl.NumberFormat('en-GB').format(unit.cost),
+        enabled: unit.fortLevelRequirement <= req.user.fortLevel ? true : false,
+      };
+    };
+
+    const spydefenseUpgradeMapFunction = (
+      unit: SentryUpgradeType,
+      idPrefix: string
+    ) => {
+      return {
+        id: `${idPrefix}_${unit.name}`,
+        name: unit.name,
+        levelRequirement: unit.fortLevelRequirement,
+        defenseBonusPercentage: unit.defenseBonusPercentage,
+        cost: new Intl.NumberFormat('en-GB').format(unit.cost),
+        enabled: unit.fortLevelRequirement <= req.user.fortLevel ? true : false,
+      };
+    };
+
     return res.render('page/main/battle-upgrades', {
       layout: 'main',
-      pageTitle: 'Training',
+      pageTitle: 'Battle Upgrades',
       sidebarData: req.sidebarData,
       menu_category: 'battle',
-      menu_link: 'training',
+      menu_link: 'upgrades',
 
       gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
       goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
       citizens: req.user.citizens,
 
       defensiveUpgrade: req.user.availableDefenseBattleUpgrades.map((unit) =>
-        upgradeMapFunction(unit, 'DEFENSE')
+        defenseUpgradeMapFunction(unit, 'DEFENSE')
       ),
-      offensiveUpgrade: req.user.availableDefenseBattleUpgrades.map((unit) =>
-        upgradeMapFunction(unit, 'DEFENSE')
+      offensiveUpgrade: req.user.availableOffenseBattleUpgrades.map((unit) =>
+        offenseUpgradeMapFunction(unit, 'DEFENSE')
+      ),
+      spyUpgrade: req.user.availableSpyBattleUpgrades.map((unit) =>
+        spyoffenseUpgradeMapFunction(unit, 'DEFENSE')
+      ),
+      sentryUpgrade: req.user.availableSentryBattleUpgrades.map((unit) =>
+        spydefenseUpgradeMapFunction(unit, 'DEFENSE')
       ),
     });
   },

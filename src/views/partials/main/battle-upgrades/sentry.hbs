@@ -5,7 +5,6 @@
       <th class="col-2">Bonus</th>
       <th class="col-2">You Have</th>
       <th class="col-2">Cost</th>
-      <th class="col-2">Quantity</th>
     </tr>
   </thead>
   <tbody>
@@ -16,17 +15,13 @@
           <td class="align-middle">+{{unit.bonus}} {{../heading}}</td>
           <td class="align-middle"><span id='{{unit.id}}_owned'>{{unit.owneditems}}</span></td>
           <td class="align-middle">{{unit.cost}}</td>
-          <td>
-            <input type="number" aria-labelledby={{unit.id}} name={{unit.id}} class="form-control">
-          </td>
         </tr>
         {{else}}
         <tr>
           <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
           <td class="align-middle"></td>
           <td class="align-middle"></td>
-          <td class="align-middle"></td>
-          <td class="align-middle">Unlocked at Fort Level: {{unit.level}}</td>
+          <td class="align-middle" colspan="2" style="text-align: end">Unlocked at Fort Level: {{unit.level}}</td>
         </tr>
         {{/if}}
       {{/each}}
