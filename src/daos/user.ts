@@ -98,6 +98,18 @@ class UserDao {
     return rank[0].rank;
   }
 
+  async fetchRecruitingLink(id: number): Promise<string> {
+    const link = await this.database<UserRow>('users')
+      .column('link')
+      .from(
+        this.database.raw(
+          '(select md5(row(id)::TEXT) as link, id from users) as link'
+        )
+      )
+      .where('id', id);
+    return link[0].link;
+  }
+
   // SELECT row_number FROM
   //	(
   //		SELECT id, row_number() OVER (ORDER BY experience desc, display_name) FROM users
