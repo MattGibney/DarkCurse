@@ -65,19 +65,22 @@
   </div>
 
   {{> main/navigation}}
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-2">
-
-        {{> main/statsSidebar sidebarData=sidebarData}}
-
+  <main>
+    <section>
+      <div class="container">
+        <div class="content">
+          <div class="row">
+            <div class="col-lg-2">
+              {{> main/statsSidebar sidebarData=sidebarData}}
+            </div>
+            <div class="col-lg-10">
+              {{{body}}}
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-10">
-        {{{body}}}
-      </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
 <script>
     //Credit: https://codepen.io/luci/pen/EEavVR
