@@ -4,7 +4,7 @@ import pino from 'pino';
 import DaoFactory from '../daoFactory';
 import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
-import { SidebarData } from '../../types/typings';
+import { OffensiveUpgradeType, SentryUpgradeType, SidebarData, SpyUpgradeType } from '../../types/typings';
 
 import {
   PlayerRace,
@@ -25,6 +25,9 @@ import {
   WeaponTypes,
   HouseUpgrades,
   ArmoryUpgrades,
+  OffenseiveUpgrades,
+  SpyUpgrades,
+  SentryUpgrades,
 } from '../constants';
 
 class UserModel {
@@ -340,6 +343,24 @@ class UserModel {
 
   get availableDefenseBattleUpgrades(): Fortification[] {
     return Fortifications.filter((fort) => fort.level <= this.fortLevel + 1);
+  }
+
+  get availableOffenseBattleUpgrades(): OffensiveUpgradeType[] {
+    return OffenseiveUpgrades.filter(
+      (fort) => fort.fortLevelRequirement <= this.fortLevel + 1
+    );
+  }
+
+  get availableSpyBattleUpgrades(): SpyUpgradeType[] {
+    return SpyUpgrades.filter(
+      (fort) => fort.fortLevelRequirement <= this.fortLevel + 1
+    );
+  }
+
+  get availableSentryBattleUpgrades(): SentryUpgradeType[] {
+    return SentryUpgrades.filter(
+      (fort) => fort.fortLevelRequirement <= this.fortLevel + 1
+    );
   }
 
   get maximumBankDeposits(): number {
