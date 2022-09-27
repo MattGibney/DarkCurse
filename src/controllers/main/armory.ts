@@ -50,6 +50,7 @@ export default {
       gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
       goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
       citizens: req.user.citizens,
+      units: req.user.unitTotals[0],
       itemTypes: ['WEAPON', 'HELM', 'ARMOR', 'BOOTS', 'BRACERS', 'SHIELD'], //TODO: this is me being lazy
       offensiveWeapons: req.user.availableItemTypes
         .filter((unit) => unit.usage === 'OFFENSE' && unit.type == 'WEAPON')
@@ -144,19 +145,23 @@ export default {
   },
 
   async equipItemAction(req: Request, res: Response) {
+    console.log(req.user.availableItemTypes);
     const body = req.body;
-
+    console.log(body);
     const unitsToTrain: {
       type: string;
+      unitType: string;
       level: number;
       cost: number;
       quantity: number;
+      
     }[] = req.user.availableItemTypes
       .map((unit) => {
-        const quantity = body[`${unit.type}_${unit.level}`];
+        const quantity = body[`${unit.type}_${unit.usage}_${unit.level}`];
         if (quantity) {
           return {
             type: unit.type,
+            unitType: unit.usage,
             level: unit.level,
             cost: unit.cost,
             quantity: parseInt(quantity),

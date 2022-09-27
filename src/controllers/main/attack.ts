@@ -21,7 +21,7 @@ export default {
     if (
       defender.level >= attacker.level + 5 ||
       defender.level <= attacker.level - 5 ||
-      defender.offense != 0
+      defender.offense == 0
     ) {
       const err =
         defender.level <= attacker.level - 5
@@ -60,7 +60,7 @@ export default {
     if (
       defender.level >= attacker.level + 5 ||
       defender.level <= attacker.level - 5 ||
-      defender.offense != 0
+      defender.offense == 0
     ) {
       const err =
         defender.level <= attacker.level - 5

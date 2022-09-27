@@ -6,14 +6,14 @@
   <p class="mb-0">Untrained Citizens: <span id="citizens">{{citizens}}</span></p>
   <p class="mb-0">Gold On Hand: <span id="gold">{{gold}}</span></p>
   <p class="mb-0">Banked Gold: <span id="goldInBank">{{goldInBank}}</span></p>
-  <p class="mb-0">Offensive Units: <span id="offenseUnits">{{offensiveUnits}}</span></p>
-  <p class="mb-0">Defensive Units: <span id="defenseUnits">{{defensiveUnits}}</span></p>
-  <p class="mb-0">Spy Units: <span id="spyUnits">{{spyUnits}}</span></p>
-  <p class="mb-0">Sentry Units: <span id="sentryUnits">{{sentryUnits}}</span></p>
+  <p class="mb-0">Offensive Units: <span id="offenseUnits">{{units.offense}}</span></p>
+  <p class="mb-0">Defensive Units: <span id="defenseUnits">{{units.defense}}</span></p>
+  <p class="mb-0">Spy Units: <span id="spyUnits">{{units.spies}}</span></p>
+  <p class="mb-0">Sentry Units: <span id="sentryUnits">{{units.sentries}}</span></p>
   
 </div>
 
-<form name="training" id="training" class="mb-5">
+<form name="armory" id="armory" class="mb-5">
   <h3>Offense</h3>
   {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
   {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
@@ -26,7 +26,7 @@
     <button class="btn btn-primary" id="trainSubmit">Train</button>
   </div>
 </form>
-<form name="training" id="training" class="mb-5">
+<form name="armory" id="armory" class="mb-5">
   <h3>Defense</h3>
   {{> main/armory/itemSection heading="Weapon"   units=defensiveWeapons}}
   {{> main/armory/itemSection heading="Helm"     units=defensiveHelm}}
@@ -39,7 +39,7 @@
     <button class="btn btn-primary" id="trainSubmit">Train</button>
   </div>
 </form>
-<form name="training" id="training" class="mb-5">
+<form name="armory" id="armory" class="mb-5">
   <h3>Spy</h3>
   {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
   {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
@@ -52,7 +52,7 @@
     <button class="btn btn-primary" id="trainSubmit">Train</button>
   </div>
 </form>
-<form name="training" id="training" class="mb-5">
+<form name="armory" id="armory" class="mb-5">
   <h3>Sentry</h3>
   {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
   {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
@@ -69,9 +69,9 @@
 <script>
   $('#untrainSubmit').click(function(e) {
       e.preventDefault();
-      const form = $('#training');
+      const form = $('#armory');
       $.ajax({
-        url: '/training/untrain',
+        url: '/armory/unequip',
         type: 'POST',
         data: form.serialize(),
         success: function(response) {
@@ -115,9 +115,9 @@
     });
     $('#trainSubmit').click(function(e) {
       e.preventDefault();
-      const form = $('#training');
+      const form = $('#armory');
       $.ajax({
-        url: '/training/train',
+        url: '/armory/equip',
         type: 'POST',
         data: form.serialize(),
         success: function(response) {
