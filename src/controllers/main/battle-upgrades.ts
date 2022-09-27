@@ -76,6 +76,9 @@ export default {
         id: `${idPrefix}_${unit.name}`,
         name: unit.name,
         levelRequirement: unit.fortLevelRequirement,
+        levelRequirementName: Fortifications.filter((fort) => {
+          return fort.level == unit.fortLevelRequirement;
+        })[0],
         defenseBonusPercentage: unit.defenseBonusPercentage,
         cost: new Intl.NumberFormat('en-GB').format(unit.cost),
         enabled: unit.fortLevelRequirement <= req.user.fortLevel ? true : false,
@@ -92,6 +95,7 @@ export default {
       gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
       goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
       citizens: req.user.citizens,
+      units: req.user.unitTotals[0],
 
       defensiveUpgrade: req.user.availableDefenseBattleUpgrades.map((unit) =>
         defenseUpgradeMapFunction(unit, 'DEFENSE')

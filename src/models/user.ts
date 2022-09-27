@@ -4,7 +4,12 @@ import pino from 'pino';
 import DaoFactory from '../daoFactory';
 import { UserData } from '../daos/user';
 import ModelFactory from '../modelFactory';
-import { OffensiveUpgradeType, SentryUpgradeType, SidebarData, SpyUpgradeType } from '../../types/typings';
+import {
+  OffensiveUpgradeType,
+  SentryUpgradeType,
+  SidebarData,
+  SpyUpgradeType,
+} from '../../types/typings';
 
 import {
   PlayerRace,
@@ -29,6 +34,7 @@ import {
   SpyUpgrades,
   SentryUpgrades,
 } from '../constants';
+import { off } from 'process';
 
 class UserModel {
   private modelFactory: ModelFactory;
@@ -259,6 +265,41 @@ class UserModel {
       .reduce((acc, gold) => acc + gold, 0);
 
     return offenseStat;
+  }
+
+  get unitTotals(): unknown {
+    const units = this.units;
+    const untrained = this.citizens;
+    const workers = units
+      .filter((units) => units.type === 'WORKER')
+      .map((unit) => unit.quantity)
+      .reduce((acc, quant) => acc + quant, 0);
+    const offense = units
+      .filter((units) => units.type === 'OFFENSE')
+      .map((unit) => unit.quantity)
+      .reduce((acc, quant) => acc + quant, 0);
+    const defense = units
+      .filter((units) => units.type === 'DEFENSE')
+      .map((unit) => unit.quantity)
+      .reduce((acc, quant) => acc + quant, 0);
+    const spies = units
+      .filter((units) => units.type === 'SPY')
+      .map((unit) => unit.quantity)
+      .reduce((acc, quant) => acc + quant, 0);
+    const sentries = units
+      .filter((units) => units.type === 'SENTRY')
+      .map((unit) => unit.quantity)
+      .reduce((acc, quant) => acc + quant, 0);
+    return [
+      {
+        citizens: untrained,
+        workers: workers,
+        offense: offense,
+        defense: defense,
+        spies: spies,
+        sentries: sentries,
+      },
+    ];
   }
 
   get level(): number {
