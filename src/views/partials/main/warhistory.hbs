@@ -1,0 +1,27 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th class="col-4">Outcome</th>
+      <th class="col-2">{{heading}}</th>
+      <th class="col-2">Pillage and Experience</th>
+      <th class="col-2">Casualties</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#if logs.length}}
+      {{#each logs as |log|}}
+        <tr>
+          <td class="text-center">{{log.outcome}}</td>
+          <td class="text-center">{{log.user}}</td>
+          <td class="text-center">{{log.goldPillaged}}</span></td>
+          <td class="text-center">{{log.casualties}}</td>
+        </tr>
+      {{/each}}
+    {{else}}
+      <tr>
+        <td class="text-center" colspan="4">You do not have any {{type}} logged.</td>
+      </tr>
+    {{/if}}
+      
+  </tbody>
+</table>

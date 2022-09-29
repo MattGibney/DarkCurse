@@ -1,0 +1,12 @@
+<div class="d-flex justify-content-around my-5" id='alertMSG' name='alertMSG' style="display:none">
+  
+</div>
+
+  <h3 class="text-center">Attack Log</h3>
+  {{> main/warhistory heading="Attacked " type="attack missions"   logs=attackLogs}}
+  <h3 class="text-center">Defense Log</h3>
+  {{> main/warhistory heading="Attacked By " type="attack missions against you"   logs=defenseLogs}}
+  <h3 class="text-center">Spy Log</h3>
+  {{> main/warhistory heading="Spied On "  type="spy missions" logs=spyLogs}}
+  <h3 class="text-center">Sentry Log</h3>
+  {{> main/warhistory heading="Spied On By " type="spy missions against you" logs=sentryLogs}}

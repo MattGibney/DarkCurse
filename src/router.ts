@@ -15,6 +15,7 @@ import armoryController from './controllers/main/armory';
 import repairController from './controllers/main/repair';
 import middleware from './middleware';
 import battleUpgradeController from './controllers/main/battle-upgrades';
+import warhistoryController from './controllers/main/war-history'; 
 
 const router = express.Router();
 
@@ -74,7 +75,7 @@ authedRouter.get('/training', trainingController.trainingPage);
 authedRouter.get('/armory', armoryController.armoryPage);
 
 authedRouter.get('/attack/:id', attackController.renderAttackPage);
-authedRouter.get('/war-history', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/war-history', (req, res) => warhistoryController.warhistoryPage(req, res));
 authedRouter.get('/my-profile', (req, res) => res.send('Not Implemented Yet'));
 authedRouter.get('/settings', (req, res) => res.send('Not Implemented Yet'));
 authedRouter.get('/levels', (req, res) => res.send('Not Implemented Yet'));
