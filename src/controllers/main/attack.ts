@@ -38,6 +38,7 @@ export default {
       menu_category: 'battle',
       menu_link: 'attack',
       sidebarData: req.sidebarData,
+      userDataFiltered: await req.user.formatUsersStats(req.user),
       turns: attacker.attackTurns,
       defender: defender,
     });
@@ -139,6 +140,7 @@ export default {
         attackTurns: attacker.attackTurns,
         nextTurnTimeStamp: attacker.getTimeToNextTurn(),
       },
+      userDataFiltered: await req.user.formatUsersStats(req.user),
       winner: winner,
       attacker: {
         id: attacker.id,
@@ -187,6 +189,7 @@ export default {
       menu_category: 'battle',
       menu_link: 'war_history',
       winner: battleLog.winner,
+      userDataFiltered: await req.user.formatUsersStats(req.user),
       attacker: {
         id: attacker.id,
         displayName: attacker.displayName,
@@ -223,6 +226,7 @@ export default {
       layout: 'main',
       pageTitle: 'Attack List',
       sidebarData: req.sidebarData,
+      userDataFiltered: await req.user.formatUsersStats(req.user),
       menu_category: 'battle',
       menu_link: 'attack',
 

@@ -435,6 +435,55 @@ class UserModel {
     return this.maximumBankDeposits - bankingActions.length;
   }
 
+  async formatUsersStats(data): Promise<any> {
+    const gold = new Intl.NumberFormat('en-GB').format(data.gold);
+    const goldInBank = new Intl.NumberFormat('en-GB').format(data.goldInBank);
+    const citizens = new Intl.NumberFormat('en-GB').format(data.citizens);
+    const displayName = data.displayName;
+    const race = data.race;
+    const Uclass = data.class;
+    const attackTurns = new Intl.NumberFormat('en-GB').format(data.attackTurns);
+    const rank = data.rank;
+    const population = new Intl.NumberFormat('en-GB').format(data.population);
+    const armySize = new Intl.NumberFormat('en-GB').format(data.armySize);
+    const experience = new Intl.NumberFormat('en-GB').format(data.experience);
+    const level = new Intl.NumberFormat('en-GB').format(data.level);
+    const xpToNextLevel = new Intl.NumberFormat('en-GB').format(
+      data.xpToNextLevel
+    );
+    const fortHealth = {
+      current: new Intl.NumberFormat('en-GB').format(data.fortHealth.current),
+      max: new Intl.NumberFormat('en-GB').format(data.fortHealth.max),
+      percentage: data.fortHealth.percentage,
+    };
+    const goldPerTurn = new Intl.NumberFormat('en-GB').format(data.goldPerTurn);
+    const offense = new Intl.NumberFormat('en-GB').format(data.offense);
+    const defense = new Intl.NumberFormat('en-GB').format(data.defense);
+    const spyOffense = new Intl.NumberFormat('en-GB').format(data.spy);
+    const spyDefense = new Intl.NumberFormat('en-GB').format(data.sentry);
+    return {
+      gold: gold,
+      goldInBank: goldInBank,
+      goldPerTurn: goldPerTurn,
+      citizens: citizens,
+      displayName: displayName,
+      race: race,
+      class: Uclass,
+      attackTurns: attackTurns,
+      rank: rank,
+      population: population,
+      armySize: armySize,
+      experience: experience,
+      level: level,
+      xpToNextLevel: xpToNextLevel,
+      fortHealth: fortHealth,
+      offense: offense,
+      defense: defense,
+      spyOffense: spyOffense,
+      spyDefense: spyDefense,
+    };
+  }
+
   async validatePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.passwordHash);
   }

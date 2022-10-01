@@ -57,6 +57,7 @@ export default {
       sidebarData: req.sidebarData,
       id: userProfile.id,
       displayName: userProfile.displayName,
+      userDataFiltered: await req.user.formatUsersStats(req.user),
       race: userProfile.race,
       class: userProfile.class,
       level: userProfile.level,

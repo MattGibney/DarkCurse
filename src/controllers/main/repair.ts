@@ -28,6 +28,7 @@ export default {
       gold: user.gold,
       goldInBank: user.goldInBank,
       sidebarData: req.sidebarData,
+      userDataFiltered: await req.user.formatUsersStats(req.user),
     });
     return;
   },

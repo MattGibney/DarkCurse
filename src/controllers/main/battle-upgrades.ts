@@ -91,6 +91,7 @@ export default {
       sidebarData: req.sidebarData,
       menu_category: 'battle',
       menu_link: 'upgrades',
+      userDataFiltered: await req.user.formatUsersStats(req.user),
 
       gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
       goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),

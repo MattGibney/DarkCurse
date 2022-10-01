@@ -33,6 +33,7 @@ export default {
       pageTitle: 'Overview',
       menu_category: 'home',
       menu_link: 'overview',
+      userDataFiltered: await req.user.formatUsersStats(req.user),
       attackLogs: await Promise.all(
         offenseLog.map(async (log) => ({
           outcome: log.winner == req.user.id ? 'Won' : 'Lost',

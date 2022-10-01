@@ -46,10 +46,8 @@ export default {
       menu_category: 'battle',
       menu_link: 'armory',
       sidebarData: req.sidebarData,
+      userDataFiltered: await req.user.formatUsersStats(req.user),
 
-      gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
-      goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
-      citizens: req.user.citizens,
       units: req.user.unitTotals[0],
       itemTypes: ['WEAPON', 'HELM', 'ARMOR', 'BOOTS', 'BRACERS', 'SHIELD'], //TODO: this is me being lazy
       offensiveWeapons: req.user.availableItemTypes

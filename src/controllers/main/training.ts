@@ -30,6 +30,7 @@ export default {
       goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
       citizens: req.user.citizens,
 
+      userDataFiltered: await req.user.formatUsersStats(req.user),
       units: req.user.unitTotals[0],
       workerUnits: req.user.availableUnitTypes
         .filter((unit) => unit.type === 'WORKER')
