@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table table-dark table-striped">
   <thead>
     <tr>
       <th class="col-4">{{heading}}</th>
@@ -18,8 +18,7 @@
         {{else}}
         <tr>
           <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
-          <td class="align-middle"></td>
-          <td class="align-middle" colspan="2" style="text-align: end">Unlock with {{unit.levelRequirementName.name}}</td>
+          <td class="align-middle text-center" colspan="2">Unlock with {{unit.levelRequirementName.name}}</td>
         </tr>
         {{/if}}
       {{/each}}

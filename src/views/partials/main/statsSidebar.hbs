@@ -1,5 +1,5 @@
-<div class="d-none d-lg-block">
-  <div class="card">
+<div class="d-sm-block">
+  <div class="card mt-3 advisor">
     <div class="card-body">
       <h6 class="text-center">Advisor</h6>
       <p class="small">This is a hint, it will rotate out.</p>
@@ -15,31 +15,4 @@
       </ul>
     </div>
   </div>
-</div>
-<div class="d-lg-none">
-  <div class="card">
-    <a class="d-lg-none" 
-        data-bs-toggle="collapse" 
-        aria-expanded="false" 
-        aria-controls="advisor" 
-        href="#advisor" 
-        role="button"
-        style="text-align: center;"><div class="card-header">
-      Advisor<i class="icon-arrow-down filter-caret"></i>
-    </div></a>
-    <div id="advisor" class="collapse">
-        <div class="card-body">
-          <p class="small">This is a hint, it will rotate out.</p>
-          <h6 class="text-center">Stats</h6>
-          <ul class="list-unstyled">
-            <li>Gold: <span id='gold'>{{sidebarData.gold}}</span></li>
-            <li>Citizens: <span id='citizens'>{{sidebarData.citizens}}</span></li>
-            <li>Level: <span id='level'>{{sidebarData.level}}</span></li>
-            <li>Experience: <span id='experience'>{{sidebarData.experience}} (next level in <span id='xpToNextLevel'>{{sidebarData.xpToNextLevel}}</span>)</li>
-            <li>Turns Available: <span id='attackTurns'>{{sidebarData.attackTurns}}</span></li>
-            <li>Time Until Next Turn: <span id="nextTurnTimestamp">{{sidebarData.nextTurnTimestamp}}</li>
-          </ul>
-        </div>
-    </div>
-</div>
 </div>

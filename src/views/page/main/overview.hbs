@@ -1,10 +1,10 @@
-<h1>Overview</h1>
+<h2>Overview</h2>
 <p class="text-center">
-  {{> main/userTitle displayName=displayName race=race class=class}} <br />
+  {{> main/userTitle displayName=userDataFiltered.displayName race=userDataFiltered.race class=userDataFiltered.class}} <br />
   Share this link to gain up to 200 citizens per day: {{recruitmentLink}}
 </p>
 
-<table class="table">
+<table class="table table-dark table-striped">
   <thead>
     <tr>
       <td colspan="4">Statistics</td>
@@ -13,32 +13,32 @@
   <tbody>
     <tr>
       <td>Population</td>
-      <td>{{population}}</td>
+      <td>{{userDataFiltered.population}}</td>
       <td>Fort Health</td>
-      <td>{{fortHealth.current}}/{{fortHealth.max}}({{fortHealth.percentage}}%)</td>
+      <td>{{userDataFiltered.fortHealth.current}}/{{userDataFiltered.fortHealth.max}}({{userDataFiltered.fortHealth.percentage}}%)</td>
     </tr>
     <tr>
       <td>Army Size</td>
-      <td>{{armySize}}</td>
+      <td>{{userDataFiltered.armySize}}</td>
       <td>Gold</td>
-      <td>{{gold}}</td>
+      <td>{{userDataFiltered.gold}}</td>
     </tr>
     <tr>
       <td>Level</td>
-      <td>{{level}}</td>
+      <td>{{userDataFiltered.level}}</td>
       <td>Gold Per Turn</td>
-      <td>{{goldPerTurn}}</td>
+      <td>{{userDataFiltered.goldPerTurn}}</td>
     </tr>
     <tr>
       <td>XP to Next Level</td>
-      <td>{{xpToNextLevel}}</td>
+      <td>{{userDataFiltered.xpToNextLevel}}</td>
       <td>Gold in Bank</td>
-      <td>{{goldInBank}}</td>
+      <td>{{userDataFiltered.goldInBank}}</td>
     </tr>
   </tbody>
 </table>
 
-<table class="table">
+<table class="table table-dark table-striped">
   <thead>
     <tr>
       <td colspan="4">War Statistics</td>
@@ -47,25 +47,25 @@
   <tbody>
     <tr>
       <td>Offense</td>
-      <td>{{offense}}</td>
+      <td>{{userDataFiltered.offense}}</td>
       <td>Attacks Won</td>
       <td>{{attacks.won}}/{{attacks.total}}({{attacks.percentage}}%)</td>
     </tr>
     <tr>
       <td>Defense</td>
-      <td>{{defense}}</td>
+      <td>{{userDataFiltered.defense}}</td>
       <td>Defends Won</td>
       <td>{{defends.won}}/{{defends.total}}({{defends.percentage}}%)</td>
     </tr>
     <tr>
       <td>Spy Offense</td>
-      <td>{{spyOffense}}</td>
+      <td>{{userDataFiltered.spyOffense}}</td>
       <td>Spy Victories</td>
       <td>{{spyVictories}}</td>
     </tr>
     <tr>
       <td>Spy Defense</td>
-      <td>{{spyDefense}}</td>
+      <td>{{userDataFiltered.spyDefense}}</td>
       <td>Sentry Victories</td>
       <td>{{sentryVictories}}</td>
     </tr>

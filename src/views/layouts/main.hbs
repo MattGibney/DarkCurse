@@ -20,67 +20,26 @@
   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
   <!-- Menu CSS -->
-  <style>
-    .nav ul {list-style-type:none; margin:0; padding:0;} 
-    .nav li { float: left; margin: 0 5px; } 
-    .nav a {
-      display:block;
-      text-decoration:none;
-    }
-    .nav a:active, .nav a:focus, .nav a:hover {
-      
-    }
-    .nav li.current {
-      
-    }
-    .nav li.current ul {
-      left: 50%;
-      transform: translate(-50%, 0);
-    }
-    .nav ul {
-      position:absolute;
-      left:-999em;
-      list-style:none;
-      padding:.9em 0 0;
-    }
-    .nav ul li {
-      width:auto;
-      margin:0 15px 0 0;
-    }
-    .nav ul a {
-      height:auto;
-      padding:0 8px;
-    }
-    .nav li:active ul, .nav li:hover ul { 
-      left: 50%;
-      transform: translate(-50%, 0);
-      background:#fff;
-    }
-  </style>
+  <link href="/css/{{userDataFiltered.race}}.css" rel="stylesheet" />
+  <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
-
-  <div class="container d-flex justify-content-center align-items-center">
-    <h1 class="my-4 pb-0">Dark Curse</h1>
+  <div class="container d-flex justify-content-center align-items-center heading">
+    <h1 class="my-5 pb-0">Dark Curse</h1>
   </div>
 
   {{> main/navigation}}
-  <main>
-    <section>
-      <div class="container">
-        <div class="content">
-          <div class="row">
-            <div class="col-lg-2">
-              {{> main/statsSidebar sidebarData=sidebarData}}
-            </div>
-            <div class="col-lg-10">
-              {{{body}}}
-            </div>
-          </div>
+  
+  <div class="container">
+      <div class="row">
+        <div class="col-sm-3 sidebar">
+          {{> main/statsSidebar sidebarData=sidebarData}}
+        </div>
+        <div class="col-sm-9 mainArea">
+          {{{body}}}
         </div>
       </div>
-    </section>
-  </main>
+  </div>
 
 <script>
     //Credit: https://codepen.io/luci/pen/EEavVR
@@ -112,5 +71,27 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-toaster@4.0.1/js/bootstrap-toaster.min.js"></script>
+  <script>
+  // TODO: I am not happy with using jQuery for this
+  $(document).ready(function() {
+    $('#button').mouseenter(function() {
+      $('#demo1').hide();
+      $('#demo2').hide();
+      $('#demo3').hide();
+    });
+    $('#button').mouseleave(function() {
+      $('#demo1').show();
+      $('#demo2').show();
+      $('#demo3').show();
+    });
+    $('#demo1,#home').mouseenter(function() {
+      $('#demo2').hide();
+      $('#demo1').show();
+    });
+    $('#demo1,#home').mouseleave(function() {
+      $('#demo1').hide();
+      $('#demo2').show();
+    });
+  })</script> 
 </body>
 </html>

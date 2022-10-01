@@ -1,0 +1,7 @@
+.form-control-dark{
+    color: var(--bs-table-striped-color);
+    background: transparent;
+}
+.bottom-tier{
+    width: max-content;
+}

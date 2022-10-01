@@ -1,11 +1,11 @@
-<table class="table">
+<table class="table table-dark table-striped">
   <thead>
     <tr>
-      <th class="col-4">{{heading}}</th>
-      <th class="col-2">Level Required</th>
+      <th class="col-3">{{heading}}</th>
+      <th class="col-1">Level Required</th>
       <th class="col-2">Bonus</th>
-      <th class="col-2">Repair Cost</th>
-      <th class="col-2">Max Health</th>
+      <th class="col-1">Repair Cost</th>
+      <th class="col-1">Max Health</th>
       <th class="col-2">Gold per Turn</th>
       <th class="col-2">Cost</th>
     </tr>
@@ -25,10 +25,7 @@
         {{else}}
         <tr>
           <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
-          <td class="align-middle"></td>
-          <td class="align-middle"></td>
-          <td class="align-middle"></td>
-          <td class="align-middle" colspan="3" style="text-align: end">Unlock with {{unit.levelRequirementName.name}}</td>
+          <td class="align-middle text-center" colspan="6">Unlock with {{unit.levelRequirementName.name}}</td>
         </tr>
         {{/if}}
       {{/each}}

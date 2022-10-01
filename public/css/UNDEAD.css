@@ -1,0 +1,88 @@
+:root {
+  font-size: 14px;
+}
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+.nav li {
+  float: left;
+  margin: 0px;
+}
+.nav a {
+  display: block;
+  text-decoration: none;
+  font-size: 20px;
+  margin: 0px;
+  color: rgb(253, 226, 101);
+  font-family: 'Trirong', serif;
+}
+.nav a:active,
+.nav a:focus,
+.nav a:hover {
+  background-color: rgb(13, 97, 46);
+}
+
+.nav li.current ul {
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.nav ul {
+  position: absolute;
+  left: -999em;
+  list-style: none;
+  padding: 0;
+}
+.nav ul li {
+  width: auto;
+  margin: 0;
+}
+.nav ul a {
+  height: auto;
+  padding: 0 15px;
+}
+.nav li:active ul,
+.nav li:hover ul {
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: rgb(13, 97, 46);
+}
+.menu-container {
+  background-color: rgb(10, 61, 31);
+}
+.menu-second-tier {
+  height: 40px;
+  background-color: rgb(13, 97, 46);
+}
+.sidebar {
+  background-color: rgb(33, 33, 33);
+  color: yellow;
+}
+.heading {
+  background-color: rgb(33, 33, 33);
+}
+.advisor {
+  background-color: #b5a565; /*blue*/
+  color: black;
+  font-size: 130%;
+  font-weight: bold;
+  border-color: bisque;
+}
+.mainArea {
+  background-color: black;
+  color: rgb(255, 255, 92);
+}
+body {
+  background-color: black;
+}
+.active {
+  background-color: rgb(13, 97, 46);
+}
+h1 {
+  font-family: 'Sofia', sans-serif;
+  text-shadow: 3px 3px 3px #ababab;
+  color: rgb(221, 149, 63);
+  font-size: 500%;
+}

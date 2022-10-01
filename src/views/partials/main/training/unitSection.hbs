@@ -1,4 +1,4 @@
-<table class="table my-5">
+<table class="table my-5 table-dark table-striped">
   <thead>
     <tr>
       <th class="col-4">{{heading}}</th>
@@ -17,16 +17,14 @@
         <td class="align-middle"><span id='{{unit.id}}_owned'>{{unit.ownedUnits}}</span></td>
         <td class="align-middle">{{unit.cost}}</td>
         <td>
-          <input type="number" aria-labelledby={{unit.id}} name={{unit.id}} class="form-control">
+          <input type="number" aria-labelledby={{unit.id}} name={{unit.id}} class="form-control form-control-dark">
         </td>
       </tr>
       {{else}}
       <tr>
         <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
         <td class="align-middle"></td>
-        <td class="align-middle"></td>
-        <td class="align-middle"></td>
-        <td class="align-middle">Unlocked at Fort Level: {{unit.level}}</td>
+        <td class="align-middle text-center" colspan="3">Unlocked at Fort Level: {{unit.level}}</td>
       </tr>
       {{/if}}
     {{/each}}
