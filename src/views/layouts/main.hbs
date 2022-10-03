@@ -74,24 +74,19 @@
   <script>
   // TODO: I am not happy with using jQuery for this
   $(document).ready(function() {
-    $('#button').mouseenter(function() {
-      $('#demo1').hide();
-      $('#demo2').hide();
-      $('#demo3').hide();
-    });
-    $('#button').mouseleave(function() {
-      $('#demo1').show();
-      $('#demo2').show();
-      $('#demo3').show();
-    });
-    $('#demo1,#home').mouseenter(function() {
-      $('#demo2').hide();
-      $('#demo1').show();
-    });
-    $('#demo1,#home').mouseleave(function() {
-      $('#demo1').hide();
-      $('#demo2').show();
-    });
+    function hideAllandReset(link="reset"){
+      $('.nav > li > ul').hide();
+      if(link == 'reset')
+        $('.current > ul').show()
+      else
+        $('.nav > li > ul#' + link + '-second').show()
+    }
+    $('ul.nav > li').mouseenter(function() {
+      hideAllandReset(this.children[0].id);
+    })
+    $('.menu-container').mouseleave(function(){
+      hideAllandReset()
+    })
   })</script> 
 </body>
 </html>
