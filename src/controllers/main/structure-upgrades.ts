@@ -10,7 +10,7 @@ import { Fortifications, SpyUpgrades } from '../../constants';
 // import { UnitTypes } from '../../constants';
 
 export default {
-  async battleUpgrades(req: Request, res: Response) {
+  async strcutureUpgradesPage(req: Request, res: Response) {
     const defenseUpgradeMapFunction = (
       unit: Fortification,
       idPrefix: string
@@ -85,11 +85,11 @@ export default {
       };
     };
 
-    return res.render('page/main/battle-upgrades', {
+    return res.render('page/main/structure-upgrades', {
       layout: 'main',
-      pageTitle: 'Battle Upgrades',
+      pageTitle: 'Structure Upgrades',
       sidebarData: req.sidebarData,
-      menu_category: 'battle',
+      menu_category: 'structures',
       menu_link: 'upgrades',
       userDataFiltered: await req.user.formatUsersStats(req.user),
 

@@ -4,3 +4,68 @@
   Share this link to gain up to 200 citizens per day: {{recruitmentLink}}
 </p>
 
+  <div class="card-dark">
+  <div class="card-header-dark"><b>Change Password</b>
+  </div>
+  <div class="card-body">
+    <form id="changePassword">
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="enterCurrentPassword" type="password" placeholder="Enter Current Password" />
+            <label for="enterCurrentPassword">Enter Current Password</label>
+            <div class="invalid-feedback">Enter Current Password is required.</div>
+        </div>
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="newPassword" type="password" placeholder="New Password"/>
+            <label for="newPassword">New Password</label>
+            <div class="invalid-feedback">New Password is required.</div>
+        </div>
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="confirmPassword" type="password" placeholder="Confirm Password"/>
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="invalid-feedback" >Confirm Password is required.</div>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary-dark btn-lg disabled" id="submitButton" type="submit">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="card-dark">
+  <div class="card-header-dark"><b>Change Email</b>
+  </div>
+  <div class="card-body">
+    <form id="changeEmail">
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="currentEmail" type="email" value="{{email}}" disabled/>
+            <label for="currentEmail">Current Email</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="newEmail" type="email" placeholder="New Email"/>
+            <label for="newEmail">New Email</label>
+            <div class="invalid-feedback">New Email is required.</div>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary-dark btn-lg disabled" id="submitButton" type="submit">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="card-dark">
+  <div class="card-header-dark"><b>Layout Options</b>
+  </div>
+  <div class="card-body">
+    <form id="changeEmail">
+        <div class="form-floating mb-3">
+            <select class="form-select form-select-dark" id="colorScheme" aria-label="Color Scheme">
+                <option value="Elf">Elf</option>
+                <option value="Goblin">Goblin</option>
+                <option value="Human">Human</option>
+                <option value="Undead">Undead</option>
+            </select>
+            <label for="colorScheme">Color Scheme</label>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary-dark btn-lg disabled" id="submitButton" type="submit">Save</button>
+        </div>
+    </form>
+</div>

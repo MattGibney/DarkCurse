@@ -14,8 +14,9 @@ import userProfileController from './controllers/main/userProfile';
 import armoryController from './controllers/main/armory';
 import repairController from './controllers/main/repair';
 import middleware from './middleware';
-import battleUpgradeController from './controllers/main/battle-upgrades';
+import structureUpgradeController from './controllers/main/structure-upgrades';
 import warhistoryController from './controllers/main/war-history'; 
+import settingsController from './controllers/main/settings';
 
 const router = express.Router();
 
@@ -77,10 +78,10 @@ authedRouter.get('/armory', armoryController.armoryPage);
 authedRouter.get('/attack/:id', attackController.renderAttackPage);
 authedRouter.get('/war-history', (req, res) => warhistoryController.warhistoryPage(req, res));
 authedRouter.get('/my-profile', (req, res) => res.send('Not Implemented Yet'));
-authedRouter.get('/settings', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/settings', (req, res) => settingsController.settingsPage(req, res));
 authedRouter.get('/levels', (req, res) => res.send('Not Implemented Yet'));
-authedRouter.get('/battle-upgrades', (req, res) => battleUpgradeController.battleUpgrades(req, res));
-authedRouter.get('/structure-upgrades', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/battle-upgrades', (req, res) => res.send('Not Implemented Yet'));
+authedRouter.get('/structure-upgrades', (req, res) => structureUpgradeController.strcutureUpgradesPage(req, res));
 authedRouter.get('/housing', (req, res) => res.send('Not Implemented Yet'));
 
 
