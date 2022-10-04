@@ -190,7 +190,8 @@ export default {
         ? false
         : true;
     });
-    if (issue) {
+    console.log(issue[0]);
+    if (issue[0]) {
       req.logger.debug('Not enough units to untrain');
       return res.json({
         error: 'You do not have enough units to untrain',
