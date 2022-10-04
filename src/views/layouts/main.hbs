@@ -73,20 +73,29 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-toaster@4.0.1/js/bootstrap-toaster.min.js"></script>
   <script>
   // TODO: I am not happy with using jQuery for this
-  $(document).ready(function() {
-    function hideAllandReset(link="reset"){
-      $('.nav > li > ul').hide();
-      if(link == 'reset')
-        $('.current > ul').show()
-      else
-        $('.nav > li > ul#' + link + '-second').show()
+  document.addEventListener("DOMContentLoaded", function(event) {
+    const allElems = document.querySelectorAll('ul.nav > li')
+    for(let i =0; i < allElems.length -1; i++){
+      allElems[i].onmouseover = allElems[i].onmouseleave = handler 
     }
-    $('ul.nav > li').mouseenter(function() {
-      hideAllandReset(this.children[0].id);
-    })
-    $('.menu-container').mouseleave(function(){
-      hideAllandReset()
-    })
+    document.querySelector('.menu-container').onmouseleave = function(){hideAllandReset()};
+    function hideAllandReset(link="reset"){
+      document.querySelector('.nav > li > ul').style.display = "none";;
+      if(link == 'reset')
+        document.querySelector('.current > ul').style.display = "block";
+      else
+        document.querySelector('.nav > li > ul#' + link + '-second').style.display = "block";
+    }
+    function handler(event) {
+      console.log(event);
+      if (event.type == 'mouseover') {
+        console.log('mouseover');
+        hideAllandReset(this.children[0].id);
+      }
+      if (event.type == 'mouseout') {
+        hideAllandReset()
+      }
+    }
   })</script> 
 </body>
 </html>
