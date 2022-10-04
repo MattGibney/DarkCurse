@@ -22,96 +22,105 @@
 </form>
 
 <script>
-  $('#untrainSubmit').click(function(e) {
+document.addEventListener("DOMContentLoaded", function(event) {
+  function serialize (data) {
+    let obj = {};
+    for (let [key, value] of data) {
+      if (obj[key] !== undefined) {
+        if (!Array.isArray(obj[key])) {
+          obj[key] = [obj[key]];
+        }
+        obj[key].push(value);
+      } else {
+        obj[key] = value;
+      }
+    }
+    return obj;
+  }
+  var notyf = new Notyf();
+  document.querySelector('#untrainSubmit').onclick = function(e) {
       e.preventDefault();
-      const form = $('#training');
-      $.ajax({
-        url: '/training/untrain',
-        type: 'POST',
-        data: form.serialize(),
-        success: function(response) {
-          if(response.error){
-            console.log('Failed')
-            Toast.create(
-              "Error",
-              response.error,
-              TOAST_STATUS.DANGER,
-              3000
-            );
-          }else if(response.success){
-            Toast.create(
-              "Success",
-              response.success,
-              TOAST_STATUS.SUCCESS,
-              3000
-            );
-            $('[id=gold]').text(response.stats.gold);
-            $('[id=goldInBank]').text(response.stats.goldInBank);
-            $('[id=citizens]').text(response.stats.citizens);
-            for(let i = 0; i < response.stats.workerUnits.length; i++){
-              $('[id='+response.stats.workerUnits[i].id+'_owned]').text(response.stats.workerUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.defensiveUnits.length; i++){
-              $('[id='+response.stats.defensiveUnits[i].id+'_owned]').text(response.stats.defensiveUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.offensiveUnits.length; i++){
-              $('[id='+response.stats.offensiveUnits[i].id+'_owned]').text(response.stats.offensiveUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.spyUnits.length; i++){
-              $('[id='+response.stats.spyUnits[i].id+'_owned]').text(response.stats.spyUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.sentryUnits.length; i++){
-              $('[id='+response.stats.sentryUnits[i].id+'_owned]').text(response.stats.sentryUnits[i].ownedUnits)
-            }
+      const form = document.querySelector('#training');
+      fetch('/training/untrain', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(serialize(new FormData(form)))
+      }).then((response) => 
+          response.json()
+      ).then((data) =>{
+        if(data.error){
+          console.log('Failed')
+          notyf.error(
+            data.error
+          );
+        }else if(data.success){
+          notyf.success(
+            data.success
+          );
+          document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
+          document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
+          document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
+          for(let i = 0; i < data.stats.workerUnits.length; i++){
+            document.querySelector('#'+data.stats.workerUnits[i].id+'_owned').innerHTML = data.stats.workerUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.defensiveUnits.length; i++){
+            document.querySelector('#'+data.stats.defensiveUnits[i].id+'_owned').innerHTML = data.stats.defensiveUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.offensiveUnits.length; i++){
+            document.querySelector('#'+data.stats.offensiveUnits[i].id+'_owned').innerHTML = data.stats.offensiveUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.spyUnits.length; i++){
+            document.querySelector('#'+data.stats.spyUnits[i].id+'_owned').innerHTML = data.stats.spyUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.sentryUnits.length; i++){
+            document.querySelector('#'+data.stats.sentryUnits[i].id+'_owned').innerHTML = data.stats.sentryUnits[i].ownedUnits
           }
         }
       });
       return false;
-    });
-    $('#trainSubmit').click(function(e) {
+    };
+    document.querySelector('#trainSubmit').onclick = function(e) {
       e.preventDefault();
-      const form = $('#training');
-      $.ajax({
-        url: '/training/train',
-        type: 'POST',
-        data: form.serialize(),
-        success: function(response) {
-          if(response.error){
-            console.log('Failed')
-            Toast.create(
-              "Error",
-              response.error,
-              TOAST_STATUS.DANGER,
-              3000
-            );
-          }else if(response.success){
-            Toast.create(
-              "Success",
-              response.success,
-              TOAST_STATUS.SUCCESS,
-              3000
-            );
-            $('[id=gold]').text(response.stats.gold);
-            $('[id=goldInBank]').text(response.stats.goldInBank);
-            $('[id=citizens]').text(response.stats.citizens);
-            for(let i = 0; i < response.stats.workerUnits.length; i++){
-              $('[id='+response.stats.workerUnits[i].id+'_owned]').text(response.stats.workerUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.defensiveUnits.length; i++){
-              $('[id='+response.stats.defensiveUnits[i].id+'_owned]').text(response.stats.defensiveUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.offensiveUnits.length; i++){
-              $('[id='+response.stats.offensiveUnits[i].id+'_owned]').text(response.stats.offensiveUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.spyUnits.length; i++){
-              $('[id='+response.stats.spyUnits[i].id+'_owned]').text(response.stats.spyUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.sentryUnits.length; i++){
-              $('[id='+response.stats.sentryUnits[i].id+'_owned]').text(response.stats.sentryUnits[i].ownedUnits)
-            }
+      const form = document.querySelector('#training');
+      fetch('/training/train', {
+        method: 'POST',
+        body: JSON.stringify(serialize(new FormData(form)))
+      }).then((response) => 
+          response.json()
+      ).then((data) =>{
+        if(data.error){
+          console.log('Failed')
+          notyf.error(
+            data.error
+          );
+        }else if(data.success){
+          notyf.success(
+            data.success
+          );
+          document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
+          document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
+          document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
+          for(let i = 0; i < data.stats.workerUnits.length; i++){
+            document.querySelector('#'+data.stats.workerUnits[i].id+'_owned').innerHTML = data.stats.workerUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.defensiveUnits.length; i++){
+            document.querySelector('#'+data.stats.defensiveUnits[i].id+'_owned').innerHTML = data.stats.defensiveUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.offensiveUnits.length; i++){
+            document.querySelector('#'+data.stats.offensiveUnits[i].id+'_owned').innerHTML = data.stats.offensiveUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.spyUnits.length; i++){
+            document.querySelector('#'+data.stats.spyUnits[i].id+'_owned').innerHTML = data.stats.spyUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.sentryUnits.length; i++){
+            document.querySelector('#'+data.stats.sentryUnits[i].id+'_owned').innerHTML = data.stats.sentryUnits[i].ownedUnits
           }
         }
       });
       return false;
-    });
+    };
+});
 </script>
