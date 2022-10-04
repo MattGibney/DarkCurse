@@ -4,12 +4,10 @@
 .nav ul {
   list-style-type: none;
   margin: 0;
-  padding: 0;
-  font-size: 20px;
 }
 .nav li {
   float: left;
-  margin: 0px;
+  margin: 0;
 }
 .nav a {
   display: block;
@@ -21,13 +19,16 @@
 }
 .nav a:active,
 .nav a:focus,
-.nav a:hover {
-  background-color: rgb(13, 97, 46);
+.nav a:hover,
+.nav li.current {
+  background-color: #c0532e;
 }
 
 .nav li.current ul {
   left: 50%;
   transform: translate(-50%, 0);
+  padding-top: 4px;
+  z-index:0;
 }
 .nav ul {
   position: absolute;
@@ -43,28 +44,31 @@
   height: auto;
   padding: 0 15px;
 }
-.nav li:active ul,
 .nav li:hover ul {
   left: 50%;
   transform: translate(-50%, 0);
-  background: rgb(13, 97, 46);
+  background: #70301a;
+  padding-top: 4px;
+  z-index:1
 }
 .menu-container {
-  background-color: rgb(10, 61, 31);
+  background-color: rgb(45, 12, 12);
 }
 .menu-second-tier {
   height: 40px;
-  background-color: rgb(13, 97, 46);
+  background-color: #70301a;
+  margin-left: -10px;
+  margin-right:-10px;
 }
 .sidebar {
-  background-color: rgb(45, 12, 12); /*blue*/
+  background-color: rgb(45, 12, 12);
   color: yellow;
 }
 .heading {
   background-color: #70301a;
 }
 .advisor {
-  background-color: #b5a565; /*blue*/
+  background-color: #b5a565;
   color: black;
   font-size: 130%;
   font-weight: bold;

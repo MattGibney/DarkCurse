@@ -15,20 +15,20 @@ export default {
       unit: Fortification,
       idPrefix: string
     ) => {
+      console.log(unit);
       return {
         id: `${idPrefix}_${unit.level}`,
         name: unit.name,
         level: unit.level,
         levelRequirement: unit.levelRequirement,
-        levelRequirementName: Fortifications.filter((fort) => {
-          return fort.level == unit.levelRequirement;
-        })[0],
+        levelRequirementName: 'Level ' + unit.levelRequirement,
         hitpoints: unit.hitpoints,
         costPerRepairPoint: unit.costPerRepairPoint,
         goldPerTurn: unit.goldPerTurn,
         defenseBonusPercentage: unit.defenseBonusPercentage,
         cost: new Intl.NumberFormat('en-GB').format(unit.cost),
-        enabled: unit.level <= req.user.fortLevel ? true : false,
+        enabled: unit.level <= req.user.fortLevel + 1 ? true : false,
+        owned: unit.level == req.user.fortLevel ? true : false,
       };
     };
 

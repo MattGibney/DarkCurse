@@ -78,18 +78,19 @@
     for(let i =0; i < allElems.length -1; i++){
       allElems[i].onmouseover = allElems[i].onmouseleave = handler 
     }
-    document.querySelector('.menu-container').onmouseleave = function(){hideAllandReset()};
+    document.querySelector('.menu-container').onmouseleave = function(){
+      hideAllandReset()
+    };
     function hideAllandReset(link="reset"){
-      document.querySelector('.nav > li > ul').style.display = "none";;
+      const allMenu = document.querySelectorAll('.nav > li > ul')
+      allMenu.forEach((link)=>{link.style.display = "none"})
       if(link == 'reset')
         document.querySelector('.current > ul').style.display = "block";
       else
         document.querySelector('.nav > li > ul#' + link + '-second').style.display = "block";
     }
     function handler(event) {
-      console.log(event);
       if (event.type == 'mouseover') {
-        console.log('mouseover');
         hideAllandReset(this.children[0].id);
       }
       if (event.type == 'mouseout') {
