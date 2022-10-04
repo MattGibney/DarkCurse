@@ -154,7 +154,6 @@ export default {
 
   async untrainUnitsAction(req: Request, res: Response) {
     const body = req.body;
-
     const unitsToTrain: {
       type: string;
       level: number;

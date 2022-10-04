@@ -86,8 +86,12 @@ authedRouter.get('/housing', (req, res) => res.send('Not Implemented Yet'));
 
 
 
-authedRouter.post('/training/train', trainingController.trainUnitsAction);
-authedRouter.post('/training/untrain', trainingController.untrainUnitsAction);
+authedRouter.post('/training/train', (req, res) => {
+  trainingController.trainUnitsAction(req, res)
+});
+authedRouter.post('/training/untrain', (req, res) => {
+  trainingController.untrainUnitsAction(req, res)
+});
 authedRouter.post('/armory/equip', armoryController.equipItemAction);
 authedRouter.post('/armory/unequip', armoryController.unequipItemsAction);
 
