@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UnitType } from '../../../types/typings';
+import { Fortifications } from '../../constants';
 // import { UnitTypes } from '../../constants';
 
 export default {
@@ -13,6 +14,9 @@ export default {
           req.user.units.find(
             (u) => u.type === unit.type && u.level === unit.level
           )?.quantity || 0,
+        fortName: Fortifications.filter((fort) => {
+          return fort.level == unit.level;
+        })[0].name,
         cost: new Intl.NumberFormat('en-GB').format(unit.cost),
         enabled: unit.level <= req.user.fortLevel ? true : false,
         level: unit.level,
@@ -52,7 +56,6 @@ export default {
 
   async trainUnitsAction(req: Request, res: Response) {
     const body = req.body;
-
     const unitsToTrain: {
       type: string;
       level: number;
@@ -61,7 +64,7 @@ export default {
     }[] = req.user.availableUnitTypes
       .map((unit) => {
         const quantity = body[`${unit.type}_${unit.level}`];
-        if (quantity) {
+        if (quantity > 0) {
           return {
             type: unit.type,
             level: unit.level,
@@ -71,7 +74,6 @@ export default {
         }
       })
       .filter((unit) => !!unit);
-
     req.logger.debug('Units to be trained', unitsToTrain);
     if (unitsToTrain.length === 0) {
       req.logger.debug('No units to train');
@@ -162,7 +164,7 @@ export default {
     }[] = req.user.availableUnitTypes
       .map((unit) => {
         const quantity = body[`${unit.type}_${unit.level}`];
-        if (quantity) {
+        if (quantity > 0) {
           return {
             type: unit.type,
             level: unit.level,
@@ -181,21 +183,19 @@ export default {
       });
     }
 
-    /*
-     * TODO: This needs to check for the units being available to be untrained
-     */
-    /*
-    const totalRequestedUnits = unitsToTrain.reduce(
-      (total, unit) => total + unit.quantity,
-      0
-    );
-    if (totalRequestedUnits > req.user.citizens) {
-      req.logger.debug('Not enough citizens to train requested units');
+    const issue = unitsToTrain.map((unit) => {
+      return req.user.units.find(
+        (u) => u.type === unit.type && u.level === unit.level
+      )?.quantity > unit.quantity
+        ? false
+        : true;
+    });
+    if (issue) {
+      req.logger.debug('Not enough units to untrain');
       return res.json({
-        error: 'Not enough citizens to train the requested units',
+        error: 'You do not have enough units to untrain',
       });
     }
-    */
 
     /*
      * This should be decided if untraining should cost gold

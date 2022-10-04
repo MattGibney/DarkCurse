@@ -17,14 +17,14 @@
         <td class="align-middle"><span id='{{unit.id}}_owned'>{{unit.ownedUnits}}</span></td>
         <td class="align-middle">{{unit.cost}}</td>
         <td>
-          <input type="number" aria-labelledby={{unit.id}} name={{unit.id}} class="form-control form-control-dark">
+          <input type="number" aria-labelledby={{unit.id}} name={{unit.id}} value="0" class="form-control form-control-dark">
         </td>
       </tr>
       {{else}}
       <tr>
         <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
         <td class="align-middle"></td>
-        <td class="align-middle text-center" colspan="3">Unlocked at Fort Level: {{unit.level}}</td>
+        <td class="align-middle text-center" colspan="3">Unlocked with {{unit.fortName}}</td>
       </tr>
       {{/if}}
     {{/each}}

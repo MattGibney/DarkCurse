@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
     return obj;
   }
-  var notyf = new Notyf();
+  var notyf = new Notyf({duration: 2000});
   document.querySelector('#untrainSubmit').onclick = function(e) {
       e.preventDefault();
       const form = document.querySelector('#training');
@@ -87,6 +87,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       const form = document.querySelector('#training');
       fetch('/training/train', {
         method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(serialize(new FormData(form)))
       }).then((response) => 
           response.json()
