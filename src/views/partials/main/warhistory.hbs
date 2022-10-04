@@ -1,6 +1,7 @@
-<table class="table table-dark table-striped">
+<table class="table table-dark table-striped history">
   <thead>
     <tr>
+      <th class="col-2 text-center">DateTime</th>
       <th class="col-2 text-center">Outcome</th>
       <th class="col-3 text-center">{{heading}}</th>
       <th class="col-3 text-center">Pillage and Experience</th>
@@ -11,6 +12,7 @@
     {{#if logs.length}}
       {{#each logs as |log|}}
         <tr>
+          <td class="text-center">{{log.timestamp}}</td>
           <td class="text-center">{{log.outcome}}</td>
           <td class="text-center">{{log.user}}</td>
           <td class="text-center">{{log.goldPillaged}}</span></td>
@@ -25,3 +27,13 @@
       
   </tbody>
 </table>
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+  const table = new simpleDatatables.DataTable(".history", {
+    searchable: false,
+    perPage: 5,
+    lengthChange: false,
+    sortable: true
+  })
+});
+</script>

@@ -24,11 +24,12 @@
   </tbody>
 </table>
 <script>
-$(document).ready(function () {
-    const table = $('#attackList').DataTable({
-      searching: false,
-      lengthChange: false,
-      pageLength: 50
-    });
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  const table = new simpleDatatables.DataTable("#attackList", {
+    searchable: false,
+    pageLength: 50,
+    lengthChange: false
+  })
 });
 </script>

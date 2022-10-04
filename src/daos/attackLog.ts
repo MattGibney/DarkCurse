@@ -49,7 +49,8 @@ class AttackLogDao {
   async fetchUserDefenseHistory(defenderId: number): Promise<AttackLogData[]> {
     const AttackLogRows = await this.database<AttackLogRow>('attack_log')
       .where({ defender_id: defenderId })
-      .select();
+      .select()
+      .orderBy('timestamp', 'desc');
     return AttackLogRows.map((historyRow) =>
       this.mapAttackLogRowToAttackLogData(historyRow)
     );
@@ -58,7 +59,8 @@ class AttackLogDao {
   async fetchUserOffenseHistory(attackerId: number): Promise<AttackLogData[]> {
     const AttackLogRows = await this.database<AttackLogRow>('attack_log')
       .where({ attacker_id: attackerId })
-      .select();
+      .select()
+      .orderBy('timestamp', 'desc');
     return AttackLogRows.map((historyRow) =>
       this.mapAttackLogRowToAttackLogData(historyRow)
     );

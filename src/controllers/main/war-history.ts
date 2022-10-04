@@ -47,6 +47,7 @@ export default {
           ).displayName,
           goldPillaged: log.stats[0],
           casualties: 'N/A',
+          timestamp: new Date(log.timestamp.toLocaleString()),
         }))
       ),
       defenseLogs: await Promise.all(
@@ -62,6 +63,7 @@ export default {
           ).displayName,
           goldPillaged: log.stats,
           casualties: 'N/A',
+          timestamp: new Date(log.timestamp),
         }))
       ),
       sidebarData: req.sidebarData,
