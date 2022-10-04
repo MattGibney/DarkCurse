@@ -1,3 +1,69 @@
+:root {
+  font-size: 14px;
+}
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+}
+.nav li {
+  float: left;
+  margin: 0;
+}
+.nav a {
+  display: block;
+  text-decoration: none;
+  font-size: 20px;
+  margin: 0px;
+  font-family: 'Trirong', serif;
+}
+
+.nav li.current ul {
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding-top: 0px;
+  z-index:0;
+}
+.nav ul {
+  position: absolute;
+  left: -999em;
+  list-style: none;
+  padding: 0;
+}
+.nav ul li {
+  width: auto;
+  margin: 0;
+}
+.nav ul a {
+  height: auto;
+  padding: 0 15px;
+}
+.nav li:hover ul {
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding-top: 0px;
+  z-index:1
+}
+.menu-second-tier {
+  height: 30px;
+  margin-left: -10px;
+  margin-right:-10px;
+}
+.sidebar {
+  color: yellow;
+}
+.heading {
+}
+.advisor {
+  font-size: 130%;
+  font-weight: bold;
+}
+body {
+  background-color: black;
+}
+h1 {
+  font-family: 'Sofia', sans-serif;
+  font-size: 500%;
+}
 .form-control-dark {
   color: var(--bs-table-striped-color);
   background: transparent;

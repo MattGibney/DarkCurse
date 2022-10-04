@@ -30,9 +30,9 @@ export default {
 
     res.render('page/main/war-history', {
       layout: 'main',
-      pageTitle: 'Overview',
-      menu_category: 'home',
-      menu_link: 'overview',
+      pageTitle: 'War History',
+      menu_category: 'battle',
+      menu_link: 'war-history',
       userDataFiltered: await req.user.formatUsersStats(req.user),
       attackLogs: await Promise.all(
         offenseLog.map(async (log) => ({

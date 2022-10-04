@@ -100,7 +100,12 @@ export default (
       },
       isSelected(v1, v2) {
         if (v1 == v2) {
-          return 'current';
+          return 'current ';
+        }
+      },
+      isActive(v1, v2) {
+        if (v1 == v2) {
+          return 'active ';
         }
       },
     },
