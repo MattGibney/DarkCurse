@@ -6,6 +6,7 @@ import {
   OffensiveUpgradeType,
   SpyUpgradeType,
   SentryUpgradeType,
+  UnitUpgradeType,
 } from '../types/typings';
 
 export const Fortifications: Fortification[] = [
@@ -251,138 +252,171 @@ export const Fortifications: Fortification[] = [
   },
 ];
 
+export const BattleUpgrades: UnitUpgradeType[] = [
+  {
+    type: 'OFFENSE',
+    name: 'Steeds',
+    StructureUpgradeLevelRequired: 1,
+    level: 1,
+    offenseBonus: 200,
+    cost: 100000,
+  },
+];
+
 export const OffenseiveUpgrades: OffensiveUpgradeType[] = [
   {
     name: 'Dagger Training',
     fortLevelRequirement: 1,
     offenseBonusPercentage: 0,
     cost: 0,
+    level: 1,
   },
   {
     name: 'Hand To Hand Combat',
     fortLevelRequirement: 2,
     offenseBonusPercentage: 5,
     cost: 100000,
+    level: 2,
   },
   {
     name: 'Mastery',
     fortLevelRequirement: 3,
     offenseBonusPercentage: 10,
     cost: 250000,
+    level: 3,
   },
   {
     name: 'Ladders',
     fortLevelRequirement: 4,
     offenseBonusPercentage: 15,
     cost: 500000,
+    level: 4,
   },
   {
     name: 'Hatchet Training',
     fortLevelRequirement: 5,
     offenseBonusPercentage: 20,
     cost: 1000000,
+    level: 5,
   },
   {
     name: 'Battle Upgrades Level 1',
     fortLevelRequirement: 6,
     offenseBonusPercentage: 25,
     cost: 2000000,
+    level: 6,
   },
   {
     name: 'Hatchet Mastery',
     fortLevelRequirement: 7,
     offenseBonusPercentage: 30,
     cost: 3000000,
+    level: 7,
   },
   {
     name: 'Mounted Combat Training',
     fortLevelRequirement: 8,
     offenseBonusPercentage: 35,
     cost: 4000000,
+    level: 8,
   },
   {
     name: 'Quarterstaff Training',
     fortLevelRequirement: 9,
     offenseBonusPercentage: 40,
     cost: 5000000,
+    level: 9,
   },
   {
     name: 'Sapping',
     fortLevelRequirement: 10,
     offenseBonusPercentage: 45,
     cost: 7500000,
+    level: 10,
   },
   {
     name: 'Quarterstaff Mastery',
     fortLevelRequirement: 11,
     offenseBonusPercentage: 50,
     cost: 10000000,
+    level: 11,
   },
   {
     name: 'Battering Rams',
     fortLevelRequirement: 12,
     offenseBonusPercentage: 55,
     cost: 15000000,
+    level: 12,
   },
   {
     name: 'Mace Training',
     fortLevelRequirement: 13,
     offenseBonusPercentage: 60,
     cost: 20000000,
+    level: 13,
   },
   {
     name: 'Pole Mace',
     fortLevelRequirement: 14,
     offenseBonusPercentage: 65,
     cost: 30000000,
+    level: 14,
   },
   {
     name: 'Mace Mastery',
     fortLevelRequirement: 15,
     offenseBonusPercentage: 70,
     cost: 40000000,
+    level: 15,
   },
   {
     name: 'Battle Upgrades Level 2',
     fortLevelRequirement: 75,
     offenseBonusPercentage: 50000000,
     cost: 0,
+    level: 16,
   },
   {
     name: 'Short Sword Training',
     fortLevelRequirement: 17,
     offenseBonusPercentage: 80,
     cost: 75000000,
+    level: 17,
   },
   {
     name: 'War Commanders',
     fortLevelRequirement: 18,
     offenseBonusPercentage: 85,
     cost: 100000000,
+    level: 18,
   },
   {
     name: 'Short Sword Mastery',
     fortLevelRequirement: 19,
     offenseBonusPercentage: 90,
     cost: 150000000,
+    level: 19,
   },
   {
     name: 'Wyrm',
     fortLevelRequirement: 20,
     offenseBonusPercentage: 95,
     cost: 200000000,
+    level: 20,
   },
   {
     name: 'Morning Star Training',
     fortLevelRequirement: 21,
     offenseBonusPercentage: 100,
     cost: 250000000,
+    level: 21,
   },
   {
     name: 'Ballistas',
     fortLevelRequirement: 22,
     offenseBonusPercentage: 105,
     cost: 300000000,
+    level: 22,
   },
 ];
 

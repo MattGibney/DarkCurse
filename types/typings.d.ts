@@ -79,6 +79,7 @@ export type OffensiveUpgradeType = {
   fortLevelRequirement: number;
   offenseBonusPercentage: number;
   cost: number;
+  level: number;
 };
 export type SpyUpgradeType = {
   name: string;
@@ -92,6 +93,14 @@ export type SentryUpgradeType = {
   name: string;
   fortLevelRequirement: number;
   defenseBonusPercentage: number;
+  cost: number;
+};
+export type UnitUpgradeType = {
+  type: UnitType;
+  name: string;
+  StructureUpgradeLevelRequired: number;
+  level: number;
+  offenseBonus: number;
   cost: number;
 };
 export type PlayerBonus = {
