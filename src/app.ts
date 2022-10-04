@@ -1,6 +1,5 @@
 import * as express from 'express';
 import { create } from 'express-handlebars';
-import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino';
@@ -41,8 +40,8 @@ export default (
 
     next();
   });
-
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
 
   app.use(middleware.authenticate);
