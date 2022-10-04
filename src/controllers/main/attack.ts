@@ -21,7 +21,7 @@ export default {
     if (
       defender.level >= attacker.level + 5 ||
       defender.level <= attacker.level - 5 ||
-      defender.offense == 0
+      attacker.offense == 0
     ) {
       const err =
         defender.level <= attacker.level - 5
@@ -61,7 +61,7 @@ export default {
     if (
       defender.level >= attacker.level + 5 ||
       defender.level <= attacker.level - 5 ||
-      defender.offense == 0
+      attacker.offense == 0
     ) {
       const err =
         defender.level <= attacker.level - 5
@@ -118,13 +118,13 @@ export default {
         await attacker.addGold(availablePillage);
         await defender.subtractGold(availablePillage);
       }
-      await req.modelFactory.attackLog.createHistory(
-        req.modelFactory,
-        req.daoFactory,
-        req.logger,
-        attackLogData
-      );
     }
+    await req.modelFactory.attackLog.createHistory(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      attackLogData
+    );
 
     res.render('page/main/attack/stat', {
       layout: 'main',

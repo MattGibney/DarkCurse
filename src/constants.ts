@@ -343,7 +343,7 @@ export const OffenseiveUpgrades: OffensiveUpgradeType[] = [
     cost: 40000000,
   },
   {
-    name: 'Battle Upgrades 16',
+    name: 'Battle Upgrades Level 2',
     fortLevelRequirement: 75,
     offenseBonusPercentage: 50000000,
     cost: 0,

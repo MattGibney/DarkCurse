@@ -72,6 +72,17 @@
   background-color: #005e46;
   border-color: #007154;
 }
+.table-hover > tbody > tr:hover > * {
+  --bs-table-accent-bg: var(--bs-table-hover-bg);
+  color: var(--bs-table-hover-color);
+}
+
+.table > :not(caption) > * > * {
+  padding: 0.5rem 0.5rem;
+  background-color: var(--bs-table-bg);
+  border-bottom-width: 1px;
+  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+}
 .form-floating > .form-control,
 .form-floating > .form-select {
   height: calc(3.5rem);

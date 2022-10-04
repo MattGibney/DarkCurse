@@ -12,7 +12,7 @@
   </thead>
   <tbody>
     {{#each players as |player|}}
-      <tr {{#if player.is_player}}style="background-color: lightgray"{{/if}}>
+      <tr {{#if player.is_player}} class="table-primary"{{/if}}>
         <td>{{player.rank}}</td>
         <td><a href="/userprofile/{{player.id}}">{{player.displayName}}</a></td>
         <td>{{player.gold}}</td>
