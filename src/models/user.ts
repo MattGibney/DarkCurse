@@ -35,6 +35,7 @@ import {
   SentryUpgrades,
 } from '../constants';
 import { off } from 'process';
+import WarHistoryModel from './warHistory';
 
 class UserModel {
   private modelFactory: ModelFactory;
@@ -646,21 +647,95 @@ class UserModel {
     await this.daoFactory.user.setUnits(this.id, this.units);
   }
 
-  // get attackLogs(): WarHistoryModel[] {
-  //   return [];
-  // }
+  async equipNewItems(newitems: PlayerItem[]): Promise<void> {
+    // Update existing units
+    const unitsToUpdate = this.items.filter((unit) =>
+      newitems.find(
+        (newItem) =>
+          newItem.type === unit.type &&
+          newItem.level === unit.level &&
+          newItem.unitType == unit.unitType
+      )
+    );
+    unitsToUpdate.forEach((unit) => {
+      const newUnit = newitems.find(
+        (newItem) =>
+          newItem.type === unit.type &&
+          newItem.level === unit.level &&
+          newItem.unitType === unit.unitType
+      );
+      unit.quantity += newUnit.quantity;
+    });
 
-  // get defendLogs(): WarHistoryModel[] {
-  //   return [];
-  // }
+    this.items = Object.assign(unitsToUpdate, this.items);
 
-  // get spyLogs(): WarHistoryModel[] {
-  //   return [];
-  // }
+    // Add new units
+    const newUnitsToAdd = newitems.filter(
+      (newItem) =>
+        !this.items.find(
+          (unit) =>
+            unit.type === newItem.type &&
+            unit.level === newItem.level &&
+            unit.unitType === newItem.unitType
+        )
+    );
+    this.items = this.items.concat(newUnitsToAdd);
 
-  // get sentryLogs(): WarHistoryModel[] {
-  //   return [];
-  // }
+    await this.daoFactory.user.setItems(this.id, this.items);
+  }
+
+  async unequipNewItems(newitems: PlayerItem[]): Promise<void> {
+    // Update existing units
+    const unitsToUpdate = this.items.filter((unit) =>
+      newitems.find(
+        (newItem) =>
+          newItem.type === unit.type &&
+          newItem.level === unit.level &&
+          newItem.unitType == unit.unitType
+      )
+    );
+    unitsToUpdate.forEach((unit) => {
+      const newUnit = newitems.find(
+        (newItem) =>
+          newItem.type === unit.type &&
+          newItem.level === unit.level &&
+          newItem.unitType === unit.unitType
+      );
+      unit.quantity -= newUnit.quantity;
+    });
+
+    this.items = Object.assign(unitsToUpdate, this.items);
+
+    // Add new units
+    const newUnitsToAdd = newitems.filter(
+      (newItem) =>
+        !this.items.find(
+          (unit) =>
+            unit.type === newItem.type &&
+            unit.level === newItem.level &&
+            unit.unitType === newItem.unitType
+        )
+    );
+    this.items = this.items.concat(newUnitsToAdd);
+
+    await this.daoFactory.user.setItems(this.id, this.items);
+  }
+
+  get attackLogs(): WarHistoryModel[] {
+    return [];
+  }
+
+  get defendLogs(): WarHistoryModel[] {
+    return [];
+  }
+
+  get spyLogs(): WarHistoryModel[] {
+    return [];
+  }
+
+  get sentryLogs(): WarHistoryModel[] {
+    return [];
+  }
 
   static async fetchById(
     modelFactory: ModelFactory,

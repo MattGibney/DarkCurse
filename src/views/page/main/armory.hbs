@@ -28,8 +28,6 @@
     <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
     <button class="btn btn-primary" id="trainSubmit">Train</button>
   </div>
-</form>
-<form name="armory" id="armory" class="mb-5">
   <h3>Defense</h3>
   {{> main/armory/itemSection heading="Weapon"   units=defensiveWeapons}}
   {{> main/armory/itemSection heading="Helm"     units=defensiveHelm}}
@@ -41,28 +39,24 @@
     <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
     <button class="btn btn-primary" id="trainSubmit">Train</button>
   </div>
-</form>
-<form name="armory" id="armory" class="mb-5">
   <h3>Spy</h3>
-  {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
-  {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
-  {{> main/armory/itemSection heading="Armor"     units=offensiveArmor}}
-  {{> main/armory/itemSection heading="Boots"     units=offensiveBoots}}
-  {{> main/armory/itemSection heading="Bracers"     units=offensiveBracers}}
-  {{> main/armory/itemSection heading="Shield"     units=offensiveShield}}
+  {{> main/armory/itemSection heading="Weapon"   units=spyWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=spyHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=spyArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=spyBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=spyBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=spyShield}}
   <div class="d-flex gap-2 justify-content-end">
     <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
     <button class="btn btn-primary" id="trainSubmit">Train</button>
   </div>
-</form>
-<form name="armory" id="armory" class="mb-5">
   <h3>Sentry</h3>
-  {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
-  {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
-  {{> main/armory/itemSection heading="Armor"     units=offensiveArmor}}
-  {{> main/armory/itemSection heading="Boots"     units=offensiveBoots}}
-  {{> main/armory/itemSection heading="Bracers"     units=offensiveBracers}}
-  {{> main/armory/itemSection heading="Shield"     units=offensiveShield}}
+  {{> main/armory/itemSection heading="Weapon"   units=sentryWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=sentryHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=sentryArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=sentryBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=sentryBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=sentryShield}}
   <div class="d-flex gap-2 justify-content-end">
     <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
     <button class="btn btn-primary" id="trainSubmit">Train</button>
@@ -70,96 +64,126 @@
 </form>
 
 <script>
-  $('#untrainSubmit').click(function(e) {
-      e.preventDefault();
-      const form = $('#armory');
-      $.ajax({
-        url: '/armory/unequip',
-        type: 'POST',
-        data: form.serialize(),
-        success: function(response) {
-          if(response.error){
-            console.log('Failed')
-            Toast.create(
-              "Error",
-              response.error,
-              TOAST_STATUS.DANGER,
-              3000
-            );
-          }else if(response.success){
-            Toast.create(
-              "Success",
-              response.success,
-              TOAST_STATUS.SUCCESS,
-              3000
-            );
-            $('[id=gold]').text(response.stats.gold);
-            $('[id=goldInBank]').text(response.stats.goldInBank);
-            $('[id=citizens]').text(response.stats.citizens);
-            for(let i = 0; i < response.stats.workerUnits.length; i++){
-              $('[id='+response.stats.workerUnits[i].id+'_owned]').text(response.stats.workerUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.defensiveUnits.length; i++){
-              $('[id='+response.stats.defensiveUnits[i].id+'_owned]').text(response.stats.defensiveUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.offensiveUnits.length; i++){
-              $('[id='+response.stats.offensiveUnits[i].id+'_owned]').text(response.stats.offensiveUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.spyUnits.length; i++){
-              $('[id='+response.stats.spyUnits[i].id+'_owned]').text(response.stats.spyUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.sentryUnits.length; i++){
-              $('[id='+response.stats.sentryUnits[i].id+'_owned]').text(response.stats.sentryUnits[i].ownedUnits)
-            }
-          }
-        }
-      });
-      return false;
-    });
-    $('#trainSubmit').click(function(e) {
-      e.preventDefault();
-      const form = $('#armory');
-      $.ajax({
-        url: '/armory/equip',
-        type: 'POST',
-        data: form.serialize(),
-        success: function(response) {
-          if(response.error){
-            console.log('Failed')
-            Toast.create(
-              "Error",
-              response.error,
-              TOAST_STATUS.DANGER,
-              3000
-            );
-          }else if(response.success){
-            Toast.create(
-              "Success",
-              response.success,
-              TOAST_STATUS.SUCCESS,
-              3000
-            );
-            $('[id=gold]').text(response.stats.gold);
-            $('[id=goldInBank]').text(response.stats.goldInBank);
-            $('[id=citizens]').text(response.stats.citizens);
-            for(let i = 0; i < response.stats.workerUnits.length; i++){
-              $('[id='+response.stats.workerUnits[i].id+'_owned]').text(response.stats.workerUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.defensiveUnits.length; i++){
-              $('[id='+response.stats.defensiveUnits[i].id+'_owned]').text(response.stats.defensiveUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.offensiveUnits.length; i++){
-              $('[id='+response.stats.offensiveUnits[i].id+'_owned]').text(response.stats.offensiveUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.spyUnits.length; i++){
-              $('[id='+response.stats.spyUnits[i].id+'_owned]').text(response.stats.spyUnits[i].ownedUnits)
-            }
-            for(let i = 0; i < response.stats.sentryUnits.length; i++){
-              $('[id='+response.stats.sentryUnits[i].id+'_owned]').text(response.stats.sentryUnits[i].ownedUnits)
-            }
-          }
-        }
-      });
-      return false;
-    });
+  document.addEventListener("DOMContentLoaded", function(event) {
+	function serialize(data) {
+		let obj = {};
+		for (let [key, value] of data) {
+			if (obj[key] !== undefined) {
+				if (!Array.isArray(obj[key])) {
+					obj[key] = [obj[key]];
+				}
+				obj[key].push(value);
+			} else {
+				obj[key] = value;
+			}
+		}
+		return obj;
+	}
+	var notyf = new Notyf({
+		duration: 2000
+	});
+	const handleUnEquip = function(e) {
+		e.preventDefault();
+		const form = document.querySelector('#armory');
+		fetch('/armory/unequip',{
+			method: 'POST',
+			headers: {
+			  'Accept': 'application/json, text/plain, */*',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(serialize(new FormData(form)))
+			}).then((response) => 
+				response.json()
+			).then((data) =>{
+				if(data.error){
+					notyf.error(
+						data.error
+					);
+				 }else if(data.success){
+					document.querySelectorAll("#armory>table>tbody>tr>td>input").forEach((elem)=>elem.value = 0);
+					notyf.success(
+						data.success
+					);
+					document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
+					document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
+					document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
+					for (let i = 0; i < data.stats.defensiveUnits.length; i++) {
+						document.querySelector('#'+data.stats.defensiveUnits[i].id + '_owned').innerHTML = data.stats.defensiveUnits[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveUnits.length; i++) {
+						document.querySelector('#'+data.stats.offensiveUnits[i].id + '_owned').innerHTML = data.stats.offensiveUnits[i].owneditems
+					}
+					for (let i = 0; i < data.stats.spyUnits.length; i++) {
+						document.querySelector('#'+data.stats.spyUnits[i].id + '_owned').innerHTML = data.stats.spyUnits[i].owneditems
+					}
+					for (let i = 0; i < data.stats.sentryUnits.length; i++) {
+						document.querySelector('#'+data.stats.sentryUnits[i].id + '_owned').innerHTML = data.stats.sentryUnits[i].owneditems
+					}
+				}
+			});
+		};
+	const handleEquip = function(e) {
+		e.preventDefault();
+		const form = document.querySelector('#armory');
+		fetch('/armory/equip',{
+			method: 'POST',
+			headers: {
+			  'Accept': 'application/json, text/plain, */*',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(serialize(new FormData(form)))
+			}).then((response) => 
+				response.json()
+			).then((data) =>{
+				if(data.error){
+					notyf.error(
+						data.error
+					);
+				 }else if(data.success){
+					document.querySelectorAll("#armory>table>tbody>tr>td>input").forEach((elem)=>elem.value = 0);
+					notyf.success(
+						data.success
+					);
+					document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
+					document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
+					document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
+					console.log(data.stats)
+					for (let i = 0; i < data.stats.offensiveWeapons.length; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveWeapons[i].id + '_owned'))
+						console.log(data.stats.offensiveWeapons[i].id)
+						document.querySelector('#'+data.stats.offensiveWeapons[i].id + '_owned').innerHTML = data.stats.offensiveWeapons[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveHelm.length; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveHelm[i].id + '_owned'))
+						console.log(data.stats.offensiveHelm[i].id)
+						document.querySelector('#'+data.stats.offensiveHelm[i].id + '_owned').innerHTML = data.stats.offensiveHelm[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveArmor.length; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveArmor[i].id + '_owned'))
+						console.log(data.stats.offensiveArmor[i].id)
+						document.querySelector('#'+data.stats.offensiveArmor[i].id + '_owned').innerHTML = data.stats.offensiveArmor[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveBoots.length; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveBoots[i].id + '_owned'))
+						console.log(data.stats.offensiveBoots[i].id)
+						document.querySelector('#'+data.stats.offensiveBoots[i].id + '_owned').innerHTML = data.stats.offensiveBoots[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveBracers.length; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveBracers[i].id + '_owned'))
+						console.log(data.stats.offensiveBracers[i].id)
+						document.querySelector('#'+data.stats.offensiveBracers[i].id + '_owned').innerHTML = data.stats.offensiveBracers[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveShield.length; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveShield[i].id + '_owned'))
+						console.log(data.stats.offensiveShield[i].id)
+						document.querySelector('#'+data.stats.offensiveShield[i].id + '_owned').innerHTML = data.stats.offensiveShield[i].owneditems
+					}
+					
+				}
+			});
+		};
+  
+	document.querySelectorAll('#trainSubmit').forEach((elem)=>{elem.onclick = handleEquip;});
+  	document.querySelectorAll('#untrainSubmit').forEach((elem)=>{elem.onclick = handleUnEquip});
+});
 </script>

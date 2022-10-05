@@ -92,8 +92,8 @@ authedRouter.post('/training/train', (req, res) => {
 authedRouter.post('/training/untrain', (req, res) => {
   trainingController.untrainUnitsAction(req, res)
 });
-authedRouter.post('/armory/equip', armoryController.equipItemAction);
-authedRouter.post('/armory/unequip', armoryController.unequipItemsAction);
+authedRouter.post('/armory/equip', (req, res) => {armoryController.equipItemAction(req,res)});
+authedRouter.post('/armory/unequip', (req, res) => {armoryController.unequipItemAction(req, res)});
 
 router.use(authedRouter);
 

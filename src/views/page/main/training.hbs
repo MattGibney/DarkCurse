@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             data.error
           );
         }else if(data.success){
+          document.querySelectorAll("#training>table>tbody>tr>td>input").forEach((elem)=>elem.value = 0);
           notyf.success(
             data.success
           );
@@ -101,9 +102,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
             data.error
           );
         }else if(data.success){
+          document.querySelectorAll("#training>table>tbody>tr>td>input").forEach((elem)=>elem.value = 0);
           notyf.success(
             data.success
           );
+
           document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
           document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
           document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
