@@ -6,24 +6,23 @@
 .nav a:hover,
 .nav a.active,
 .nav li.current {
-  background-color: rgb(13, 97, 46);
+  background-color: v;
 }
-.nav li:active ul,
 .nav li:hover ul {
-  background: rgb(13, 97, 46);
+  background: rgb(77, 77, 77);
 }
 .menu-container {
-  background-color: rgb(10, 61, 31);
+  background-color: rgb(33, 33, 33);
 }
 .menu-second-tier {
-  background-color: rgb(13, 97, 46);
+  background-color: rgb(77, 77, 77);
 }
 .sidebar {
   background-color: rgb(33, 33, 33);
   color: yellow;
 }
 .heading {
-  background-color: rgb(33, 33, 33);
+  background-color: rgb(77, 77, 77);
 }
 .advisor {
   background-color: #b5a565; /*blue*/
@@ -36,9 +35,6 @@
 }
 body {
   background-color: black;
-}
-.active {
-  background-color: rgb(13, 97, 46);
 }
 h1 {
   text-shadow: 3px 3px 3px #ababab;

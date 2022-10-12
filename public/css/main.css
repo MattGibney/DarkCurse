@@ -14,7 +14,7 @@
   text-decoration: none;
   font-size: 20px;
   margin: 0px;
-  font-family: 'Trirong', serif;
+  font-family: 'Book Antiqua', Georgia, Serif;
 }
 
 .nav li.current ul {
@@ -51,7 +51,9 @@
 .sidebar {
   color: yellow;
 }
-.heading {
+.heading h1 {
+  font-family: 'Chomsky', 'Book Antiqua', Georgia, Serif;
+  text-shadow: 3px 0px black;
 }
 .advisor {
   font-size: 130%;
@@ -61,7 +63,7 @@ body {
   background-color: black;
 }
 h1 {
-  font-family: 'Sofia', sans-serif;
+  font-family: 'Book Antiqua', Georgia, Serif;
   font-size: 500%;
 }
 .form-control-dark {
