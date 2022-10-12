@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { PlayerUnit } from '../../../types/typings';
 import { Fortifications } from '../../constants';
 
 interface PageAlert {
@@ -29,26 +30,41 @@ export default {
       cantAttack = false;
     }
 
-
     let messages: PageAlert;
     if (req.query.err) {
       const err = req.query.err;
-      console.log(err);
-      if (err == 'TooHigh')
-        messages = {
-          type: 'danger',
-          message: 'That player is too high for you to attack!',
-        };
-      else if (err == 'TooLow')
-        messages = {
-          type: 'danger',
-          message: 'That player is too low for you to attack!',
-        };
-      else
-        messages = {
-          type: 'danger',
-          message: 'You need to train soldiers to be able to attack!!',
-        };
+      switch (err) {
+        case 'TooHigh':
+          messages = {
+            type: 'danger',
+            message: 'That player is too high for you to attack!',
+          };
+          break;
+        case 'TooLow':
+          messages = {
+            type: 'danger',
+            message: 'That player is too low for you to attack!',
+          };
+          break;
+        case 'OwnLink':
+          messages = {
+            type: 'danger',
+            message: 'You can not recruit yourself!',
+          };
+          break;
+        case 'Recruited':
+          messages = {
+            type: 'success',
+            message: `You've recruited ${userProfile.displayName}!`,
+          };
+          break;
+        default:
+          messages = {
+            type: 'danger',
+            message: 'You need to train soldiers to be able to attack!!',
+          };
+          break;
+      }
     }
 
     return res.render('page/main/userProfile', {
@@ -75,5 +91,62 @@ export default {
           : true,
       isPlayer: userProfileId == req.user.id ? true : false,
     });
+  },
+
+  async renderRecruitPage(req: Request, res: Response) {
+    const recruitmentCode = req.params.id;
+    const mylink = await req.user.userRecruitingLink();
+    if (recruitmentCode == mylink) return res.redirect('/overview?err=ownLink');
+    console.log(recruitmentCode);
+    const recruitedPlayerID = await req.daoFactory.user.fetchIDByRecruitingLink(
+      recruitmentCode
+    );
+    const recruitedPlayer = await req.modelFactory.user.fetchById(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      recruitedPlayerID
+    );
+    const recruitedHistory =
+      await req.modelFactory.recruitHistory.fetchCountClicksToID(
+        req.modelFactory,
+        req.daoFactory,
+        req.logger,
+        recruitedPlayerID
+      );
+    if (recruitedHistory == 25) {
+      return res.send('User is over their daily limit');
+    }
+    const myIP =
+      req.headers['cf-connecting-ip'] ||
+      req.headers['x-forwarded-for'] ||
+      req.socket.remoteAddress;
+
+    const myClicks = await req.modelFactory.recruitHistory.fetchCountClicksByIP(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      myIP.toString()
+    );
+    if (myClicks == 250) {
+      return res.send('You have recruited too many players today');
+    }
+    const newCitizen: PlayerUnit = {
+      level: 1,
+      type: 'CITIZEN',
+      quantity: 1,
+    };
+    await recruitedPlayer.trainNewUnits([newCitizen], false);
+    await req.modelFactory.recruitHistory.createHistory(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      {
+        to_user: recruitedPlayerID,
+        from_user: req.user?.id || 0,
+        ip_addr: myIP.toString(),
+      }
+    );
+    return res.redirect(`/userprofile/${recruitedPlayerID}?err=Recruited`);
   },
 };

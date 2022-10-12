@@ -46,6 +46,8 @@ router.get('/signout', marketingSignoutController.signoutAction);
 // View User Profile
 router.get('/userprofile/:userId', userProfileController.renderUserProfile);
 
+router.get('/recruit/:id', userProfileController.renderRecruitPage);
+
 const authedRouter = express.Router();
 
 authedRouter.use((req, res, next) => {
@@ -84,7 +86,9 @@ authedRouter.get('/battle-upgrades', (req, res) => res.send('Not Implemented Yet
 authedRouter.get('/structure-upgrades', (req, res) => structureUpgradeController.strcutureUpgradesPage(req, res));
 authedRouter.get('/housing', (req, res) => res.send('Not Implemented Yet'));
 
-
+authedRouter.post('/structure-upgrades/upgrade', (req, res) => {
+  res.json({error: 'Not configured ' + req.body.type });
+})
 
 authedRouter.post('/training/train', (req, res) => {
   trainingController.trainUnitsAction(req, res)
