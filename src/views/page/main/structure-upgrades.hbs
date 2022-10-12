@@ -30,3 +30,44 @@
   <h3>Sentry</h3>
   {{> main/battle-upgrades/sentry heading="Sentry Training"   units=sentryUpgrade}}
 </form>
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+  function serialize (data) {
+    let obj = {};
+    for (let [key, value] of data) {
+      if (obj[key] !== undefined) {
+        if (!Array.isArray(obj[key])) {
+          obj[key] = [obj[key]];
+        }
+        obj[key].push(value);
+      } else {
+        obj[key] = value;
+      }
+    }
+    return obj;
+  }
+var notyf = new Notyf({duration: 2000});
+document.querySelectorAll('#upgradeSubmit').forEach((elem)=>{
+  elem.onclick = function(e){
+    e.preventDefault();
+    fetch('/structure-upgrades/upgrade',{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({type: elem.parentNode.children[0].name})
+    }).then((response) => 
+      response.json()
+    ).then((data) => {
+      if(data.error){
+        console.log('Failed')
+        notyf.error(data.error);
+      }else if(data.success){
+        window.refresh();
+      }
+    })
+  }
+})
+});
+</script>

@@ -26,8 +26,8 @@ export default {
         goldPerTurn: unit.goldPerTurn,
         defenseBonusPercentage: unit.defenseBonusPercentage,
         cost: new Intl.NumberFormat('en-GB').format(unit.cost),
-        enabled: unit.level <= req.user.fortLevel ? true : false,
-        owned: unit.level == req.user.fortLevel ? true : false,
+        enabled: unit.level <= req.user.fortLevel + 1 ? true : false,
+        owned: unit.level <= req.user.fortLevel ? true : false,
       };
     };
 

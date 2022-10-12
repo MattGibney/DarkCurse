@@ -147,7 +147,6 @@
 					document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
 					document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
 					document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
-					console.log(data.stats)
 					for (let i = 0; i < data.stats.offensiveWeapons.length; i++) {
 						console.log(document.querySelector('#'+data.stats.offensiveWeapons[i].id + '_owned'))
 						console.log(data.stats.offensiveWeapons[i].id)

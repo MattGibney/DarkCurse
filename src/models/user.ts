@@ -384,7 +384,7 @@ class UserModel {
   }
 
   get availableDefenseBattleUpgrades(): Fortification[] {
-    return Fortifications.filter((fort) => fort.level <= this.fortLevel + 1);
+    return Fortifications.filter((fort) => fort.level <= this.fortLevel + 2);
   }
 
   get availableOffenseBattleUpgrades(): OffensiveUpgradeType[] {

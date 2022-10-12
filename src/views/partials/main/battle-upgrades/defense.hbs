@@ -26,7 +26,7 @@
             {{#if unit.owned}}
               <button class="btn btn-secondary disabled w-100" id="upgradeSubmit" disabled>Owned</button></td>
             {{else}}
-              <button class="btn btn-secondary w-100" id="upgradeSubmit">Buy</button></td>
+              <button class="btn btn-secondary w-100" name="{{unit.id}}" data-upgrade-type="DEFENSE" id="upgradeSubmit">Buy</button></td>
             {{/if}}
         </tr>
         {{else}}
