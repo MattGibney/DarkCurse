@@ -47,6 +47,7 @@ router.get('/signout', marketingSignoutController.signoutAction);
 router.get('/userprofile/:userId', userProfileController.renderUserProfile);
 
 router.get('/recruit/:id', userProfileController.renderRecruitPage);
+router.post('/recruit/:id', userProfileController.handleRecruitment);
 
 const authedRouter = express.Router();
 

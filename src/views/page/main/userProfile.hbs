@@ -38,17 +38,21 @@
 
   </div>
   <div class="col-6">
-
+    {{#if hideSidebar}}
+    <div class="list-group mb-4">
+      <a href="/recruit/{{recruitLink}}" class="list-group-item list-group-item-action">Recruit this Player</a>
+    </div>    
+    {{else}}
     <div class="list-group mb-4">
       <a href="#" class="list-group-item list-group-item-action disabled">Message this Player</a>
       <a href="/attack/{{id}}" class="list-group-item list-group-item-action {{#if cantAttack }}disabled{{/if}}">Attack this Player</a>
       <a href="#" class="list-group-item list-group-item-action disabled">Spy Missions</a>
       <a href="#" class="list-group-item list-group-item-action disabled">Transfer Gold</a>
-      <a href="#" class="list-group-item list-group-item-action disabled">Recruit this Player</a>
+      <a href="/recruit/{{recruitLink}}" class="list-group-item list-group-item-action">Recruit this Player</a>
       <a href="#" class="list-group-item list-group-item-action disabled">Add to Friends List</a>
       <a href="#" class="list-group-item list-group-item-action disabled">Add to Enemies List</a>
     </div>
-
+    {{/if}}
     <table class="table mb-5 table-striped table-dark">
       <thead>
         <tr>

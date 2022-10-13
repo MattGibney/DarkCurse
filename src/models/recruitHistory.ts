@@ -65,6 +65,17 @@ export class RecruitHistory {
     return count;
   }
 
+  static async fetchCountClicksByIPtoID(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    ip_addr: string,
+    user_id: number
+  ): Promise<number> {
+    const count = await daoFactory.recruitHistory.fetchCountClicksByIPtoID(ip_addr, user_id);
+    return count;
+  }
+
   static async fetchCountClicksToID(
     modelFactory: ModelFactory,
     daoFactory: DaoFactory,

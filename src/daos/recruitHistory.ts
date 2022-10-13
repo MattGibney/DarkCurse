@@ -46,7 +46,24 @@ export class RecruitHistoryDao {
       .andWhere(
         'timestamp',
         '>=',
+        // eslint-disable-next-line prettier/prettier
         this.database.raw('now() - (?*\'1 HOUR\'::INTERVAL)', [24])
+      )
+      .count('id as clicks');
+    return Number(clicks[0].clicks);
+  }
+
+  async fetchCountClicksByIPtoID(
+    ip_addr: string,
+    user_id: number
+  ): Promise<number> {
+    const clicks = await this.database('recruit_history')
+      .where({ ip_addr: ip_addr, to_user: user_id })
+      .andWhere(
+        'timestamp',
+        '>=',
+        // eslint-disable-next-line prettier/prettier
+        this.database.raw('now() - (?*\'1 HOUR\'::INTERVAL)', [22])
       )
       .count('id as clicks');
     return Number(clicks[0].clicks);
