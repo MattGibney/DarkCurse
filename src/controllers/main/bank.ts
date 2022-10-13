@@ -1,9 +1,5 @@
 import { Request, Response } from 'express';
-
-interface PageAlert {
-  type: 'SUCCESS' | 'DANGER';
-  message: string;
-}
+import { PageAlert } from '../../../types/typings';
 
 async function bankPage(req: Request, res: Response, alert?: PageAlert) {
   const availableBankDeposits = await req.user.fetchAvailableBankDeposits();

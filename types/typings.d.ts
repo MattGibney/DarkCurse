@@ -22,6 +22,11 @@ export type BonusType =
   | 'INTEL'
   | 'INCOME';
 
+export interface PageAlert {
+  type: 'SUCCESS' | 'DANGER' | 'INFO';
+  message: string;
+}
+
 export type SidebarData = {
   gold: string;
   citizens: string;
