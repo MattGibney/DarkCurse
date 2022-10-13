@@ -4,10 +4,10 @@
 </div>
 
   <h3 class="text-center">Attack Log</h3>
-  {{> main/warhistory heading="Attacked " type="attack missions"   logs=attackLogs}}
+  {{> main/warhistory heading="Attacked " msg="attack missions" logs=attackLogs type="offense"}}
   <h3 class="text-center">Defense Log</h3>
-  {{> main/warhistory heading="Attacked By " type="attack missions against you"   logs=defenseLogs}}
+  {{> main/warhistory heading="Attacked By " msg="attack missions against you"   logs=defenseLogs type="defense"}}
   <h3 class="text-center">Spy Log</h3>
-  {{> main/warhistory heading="Spied On "  type="spy missions" logs=spyLogs}}
+  {{> main/warhistory heading="Spied On "  msg="spy missions" logs=spyLogs type="spy"}}
   <h3 class="text-center">Sentry Log</h3>
-  {{> main/warhistory heading="Spied On By " type="spy missions against you" logs=sentryLogs}}
+  {{> main/warhistory heading="Spied On By " msg="spy missions against you" logs=sentryLogs type="sentry"}}

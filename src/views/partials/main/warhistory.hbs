@@ -1,4 +1,4 @@
-<table class="table table-dark table-striped history">
+<table class="table table-dark table-striped {{type}}-history">
   <thead>
     <tr>
       <th class="col-2 text-center">DateTime</th>
@@ -21,7 +21,7 @@
       {{/each}}
     {{else}}
       <tr>
-        <td class="text-center" colspan="4">You do not have any {{type}} logged.</td>
+        <td class="text-center" colspan="5">You do not have any {{msg}} logged.</td>
       </tr>
     {{/if}}
       
@@ -29,7 +29,7 @@
 </table>
 <script>
 document.addEventListener("DOMContentLoaded", function(event) {
-  const table = new simpleDatatables.DataTable(".history", {
+  const table = new simpleDatatables.DataTable(".{{type}}-history", {
     searchable: false,
     perPage: 5,
     lengthChange: false,
