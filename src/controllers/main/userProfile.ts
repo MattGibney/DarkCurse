@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { PlayerUnit, PageAlert } from '../../../types/typings';
 import { Fortifications } from '../../constants';
+import { marked } from 'marked';
 
 export default {
   async renderUserProfile(req: Request, res: Response) {
@@ -61,6 +62,26 @@ export default {
             break;
         }
       }
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        pedantic: false,
+        gfm: true,
+        breaks: false,
+        sanitize: false,
+        smartypants: false,
+        xhtml: false,
+      });
+      const renderer = {
+        table(header: string, body: string) {
+          return `
+            <table class="table table-striped table-dark">
+            ${body}
+            </table>      
+          `;
+        },
+      };
+      marked.use({ renderer });
+      const bio = userProfile.bio === null ? '' : userProfile.bio;
       return res.render('page/main/userProfile', {
         layout: 'main',
         pageTitle: `Profile ${userProfile.displayName}`,
@@ -77,7 +98,7 @@ export default {
         fortification: Fortifications[userProfile.fortLevel].name,
         gold: new Intl.NumberFormat('en-GB').format(userProfile.gold),
         recruitLink: await userProfile.userRecruitingLink(),
-        bio: 'THIS IS A BIO',
+        bio: marked.parse(bio),
         cantAttack: cantAttack,
         messages: messages,
         isOnline:

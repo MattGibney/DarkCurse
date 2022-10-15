@@ -100,6 +100,8 @@ authedRouter.post('/training/untrain', (req, res) => {
 authedRouter.post('/armory/equip', (req, res) => {armoryController.equipItemAction(req,res)});
 authedRouter.post('/armory/unequip', (req, res) => {armoryController.unequipItemAction(req, res)});
 
+authedRouter.post('/settings', (req, res) => {settingsController.handleSave(req, res)});
+
 router.use(authedRouter);
 
 export default router;

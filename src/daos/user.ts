@@ -31,6 +31,8 @@ interface UserRow {
   updated_date: Date;
   last_active: Date;
   rank: number;
+  bio: string;
+  colorScheme: string;
 }
 
 export interface UserData {
@@ -52,6 +54,8 @@ export interface UserData {
   attackTurns: number;
   last_active: Date;
   rank: number;
+  bio: string;
+  colorScheme: string;
 }
 
 class UserDao {
@@ -162,6 +166,14 @@ class UserDao {
     return userRows.map(this.mapUserRowToUserData);
   }
 
+  async getSalt(userId: number): Promise<string> {
+    const userRow = await this.database<UserRow>('users')
+      .where({ id: userId })
+      .first();
+    if (!userRow) return null;
+    return userRow.salt;
+  }
+
   async setLastActive(userId: number): Promise<void> {
     await this.database<UserRow>('users')
       .where({ id: userId })
@@ -211,6 +223,18 @@ class UserDao {
       });
   }
 
+  async setColorScheme(userId: number, colorScheme: PlayerRace): Promise<void> {
+    await this.database<UserRow>('users').where({ id: userId }).update({
+      colorScheme: colorScheme,
+    });
+  }
+
+  async updatePassword(userId: number, password_hash: string): Promise<void> {
+    await this.database<UserRow>('user').where({ id: userId }).update({
+      password_hash: password_hash,
+    });
+  }
+
   mapUserRowToUserData(userRow: UserRow): UserData {
     return {
       id: userRow.id,
@@ -237,6 +261,8 @@ class UserDao {
       attackTurns: parseInt(userRow.attack_turns),
       last_active: userRow.last_active,
       rank: userRow.rank,
+      bio: userRow.bio,
+      colorScheme: userRow.colorScheme,
     };
   }
 }
