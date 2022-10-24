@@ -147,35 +147,67 @@
 					document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
 					document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
 					document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
-					for (let i = 0; i < data.stats.offensiveWeapons.length; i++) {
+					console.log(data.stats);
+					for (let i = 0; i < data.stats.offensiveWeapons.length - 1; i++) {
 						console.log(document.querySelector('#'+data.stats.offensiveWeapons[i].id + '_owned'))
 						console.log(data.stats.offensiveWeapons[i].id)
 						document.querySelector('#'+data.stats.offensiveWeapons[i].id + '_owned').innerHTML = data.stats.offensiveWeapons[i].owneditems
 					}
-					for (let i = 0; i < data.stats.offensiveHelm.length; i++) {
+					for (let i = 0; i < data.stats.offensiveHelm.length - 1; i++) {
 						console.log(document.querySelector('#'+data.stats.offensiveHelm[i].id + '_owned'))
 						console.log(data.stats.offensiveHelm[i].id)
 						document.querySelector('#'+data.stats.offensiveHelm[i].id + '_owned').innerHTML = data.stats.offensiveHelm[i].owneditems
 					}
-					for (let i = 0; i < data.stats.offensiveArmor.length; i++) {
+					for (let i = 0; i < data.stats.offensiveArmor.length - 1; i++) {
 						console.log(document.querySelector('#'+data.stats.offensiveArmor[i].id + '_owned'))
 						console.log(data.stats.offensiveArmor[i].id)
 						document.querySelector('#'+data.stats.offensiveArmor[i].id + '_owned').innerHTML = data.stats.offensiveArmor[i].owneditems
 					}
-					for (let i = 0; i < data.stats.offensiveBoots.length; i++) {
+					for (let i = 0; i < data.stats.offensiveBoots.length -1; i++) {
 						console.log(document.querySelector('#'+data.stats.offensiveBoots[i].id + '_owned'))
 						console.log(data.stats.offensiveBoots[i].id)
 						document.querySelector('#'+data.stats.offensiveBoots[i].id + '_owned').innerHTML = data.stats.offensiveBoots[i].owneditems
 					}
-					for (let i = 0; i < data.stats.offensiveBracers.length; i++) {
+					for (let i = 0; i < data.stats.offensiveBracers.length -1; i++) {
 						console.log(document.querySelector('#'+data.stats.offensiveBracers[i].id + '_owned'))
 						console.log(data.stats.offensiveBracers[i].id)
 						document.querySelector('#'+data.stats.offensiveBracers[i].id + '_owned').innerHTML = data.stats.offensiveBracers[i].owneditems
 					}
-					for (let i = 0; i < data.stats.offensiveShield.length; i++) {
+					for (let i = 0; i < data.stats.offensiveShield.length -1; i++) {
 						console.log(document.querySelector('#'+data.stats.offensiveShield[i].id + '_owned'))
 						console.log(data.stats.offensiveShield[i].id)
 						document.querySelector('#'+data.stats.offensiveShield[i].id + '_owned').innerHTML = data.stats.offensiveShield[i].owneditems
+					}
+
+					for (let i = 0; i < data.stats.defensiveWeapons.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveWeapons[i].id + '_owned'))
+						console.log(data.stats.defensiveWeapons[i].id)
+						document.querySelector('#'+data.stats.defensiveWeapons[i].id + '_owned').innerHTML = data.stats.defensiveWeapons[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveHelm.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveHelm[i].id + '_owned'))
+						console.log(data.stats.defensiveHelm[i].id)
+						document.querySelector('#'+data.stats.defensiveHelm[i].id + '_owned').innerHTML = data.stats.defensiveHelm[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveArmor.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveArmor[i].id + '_owned'))
+						console.log(data.stats.defensiveArmor[i].id)
+						document.querySelector('#'+data.stats.defensiveArmor[i].id + '_owned').innerHTML = data.stats.defensiveArmor[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveBoots.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveBoots[i].id + '_owned'))
+						console.log(data.stats.defensiveBoots[i].id)
+						document.querySelector('#'+data.stats.defensiveBoots[i].id + '_owned').innerHTML = data.stats.defensiveBoots[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveBracers.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveBracers[i].id + '_owned'))
+						console.log(data.stats.defensiveBracers[i].id)
+						document.querySelector('#'+data.stats.defensiveBracers[i].id + '_owned').innerHTML = data.stats.defensiveBracers[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveShield.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveShield[i].id + '_owned'))
+						console.log(data.stats.defensiveShield[i].id)
+						document.querySelector('#'+data.stats.defensiveShield[i].id + '_owned').innerHTML = data.stats.defensiveShield[i].owneditems
 					}
 					
 				}

@@ -71,6 +71,22 @@ class AttackLog {
     );
   }
 
+  static async canAttackUser(
+    modelFactory: ModelFactory,
+    daoFactory: DaoFactory,
+    logger: pino.Logger,
+    toUser: UserModel,
+    fromUser: UserModel
+  ): Promise<boolean> {
+    const numberOfAttacks =
+      await daoFactory.attackLog.countAttacksToUserByUser24Hours(
+        fromUser.id,
+        toUser.id
+      );
+    console.log(numberOfAttacks);
+    return numberOfAttacks >= 5 ? false : true;
+  }
+
   static async createHistory(
     modelFactory: ModelFactory,
     daoFactory: DaoFactory,

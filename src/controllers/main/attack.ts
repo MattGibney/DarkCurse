@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Stats } from 'fs';
 import { AttackLogStats, AttackLogData } from '../../daos/attackLog';
+import UserModel from '../../models/user';
 
 export default {
   async renderAttackPage(req: Request, res: Response) {
@@ -72,6 +72,19 @@ export default {
       res.redirect(`/userprofile/${defender.id}?err=${err}`);
     }
 
+    const canAttack = await req.modelFactory.attackLog.canAttackUser(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      defender,
+      attacker
+    );
+    console.log('can attack? ', canAttack);
+    if (canAttack === false) {
+      const err = 'TooMany';
+      res.redirect(`/userprofile/${defender.id}?err=${err}`);
+    }
+
     if (attacker.attackTurns < 1 || attacker.offense == 0) {
       const err =
         attacker.attackTurns < 1
@@ -84,21 +97,111 @@ export default {
 
     const winner = attacker.offense > defender.defense ? attacker : defender;
     const availablePillage =
-      Math.floor(Math.random() * (defender.gold * 0.8 + 1)) +
-      0 * (parseInt(req.body.turnsAmount) / 100);
+      Math.floor(Math.random() * (defender.gold * 0.8 + 1)) *
+      (parseInt(req.body.turnsAmount) / 100);
 
     await attacker.subtractTurns(parseInt(req.body?.turnsAmount));
+
+    // Ported from old ezRPG 1.2.x Attack module
+    // Clone of the PHP Rand function
+    const rand = (min?: number, max?: number) => {
+      const minn = min || 0;
+      const maxx = max || Number.MAX_SAFE_INTEGER;
+      return Math.floor(Math.random() * (maxx - minn + 1)) + minn;
+    };
+
+    const damage = (user: UserModel, victor: boolean, victim: UserModel) => {
+      return {
+        defender: {
+          hp: Math.round(
+            (victor
+              ? rand(
+                  victim.fortHealth.current /
+                    (victim.level < user.level
+                      ? rand(user.level - victim.level + 1, 5)
+                      : rand(victim.level - user.level + 1, 8)),
+                  victim.fortHealth.current
+                )
+              : rand(
+                  user.fortHealth.current /
+                    (user.level < victim.level
+                      ? rand(victim.level - user.level + 1, 5)
+                      : rand(user.level - victim.level + 1, 8)),
+                  victim.fortHealth.current
+                )) *
+              (parseInt(req.body.turnsAmount) / 10)
+          ),
+          xp:
+            (victor
+              ? 0
+              : user.level > defender.level
+              ? rand(victim.experience, user.experience - victim.experience + 1)
+              : user.experience > victim.experience
+              ? rand(
+                  user.experience - victim.experience + 1,
+                  user.experience + 1
+                )
+              : rand(
+                  victim.experience - user.experience + 1,
+                  victim.experience + 1
+                )) *
+            (parseInt(req.body.turnsAmount) / 10),
+        },
+        attacker: {
+          xp: victor
+            ? Math.round(
+                user.level > defender.level
+                  ? rand(
+                      victim.experience,
+                      user.experience - victim.experience + 1
+                    )
+                  : user.experience > victim.experience
+                  ? rand(
+                      user.experience - victim.experience + 1,
+                      user.experience + 1
+                    )
+                  : rand(
+                      victim.experience - user.experience + 1,
+                      victim.experience + 1
+                    )
+              ) *
+              (parseInt(req.body.turnsAmount) / 10)
+            : 0,
+          hp:
+            (victor
+              ? Math.round(
+                  rand(
+                    user.fortHealth.current /
+                      (user.level < victim.level
+                        ? rand(victim.level - user.level + 1, 5)
+                        : rand(user.level - victim.level + 1, 8)),
+                    victim.fortHealth.current
+                  )
+                )
+              : rand(
+                  Math.round(user.fortHealth.current / 2),
+                  Math.round(user.fortHealth.current + 10)
+                )) *
+            (parseInt(req.body.turnsAmount) / 10),
+        },
+      };
+    };
+
+    const attackerDamage = damage(attacker, attacker === winner, defender);
 
     // TODO: this whole thing needs clean up.
     const stats: AttackLogStats[] = [
       {
         offensePoints: attacker.offense,
         defensePoints: defender.defense,
-        pillagedGold: Math.floor(
-          winner === attacker ? availablePillage : availablePillage * 0.3
-        ),
-        xpEarned: winner === attacker ? 10 : 0, //TODO: Create a formula for XP
+        pillagedGold: Math.floor(winner === attacker ? availablePillage : 0),
+        xpEarned: Math.round(attackerDamage.attacker.xp),
         offenseXPStart: attacker.experience,
+        hpDamage: attackerDamage.defender.hp,
+        offenseUnitsCount: 0,
+        offenseUnitsLost: [],
+        defenseUnitsCount: 0,
+        defenseUnitsLost: [],
       },
     ];
     const attackLogData: AttackLogData = {
@@ -108,7 +211,6 @@ export default {
       stats: stats,
       timestamp: new Date(),
     };
-
     const earnedNewLevel =
       stats[0].xpEarned >= attacker.xpToNextLevel ? true : false;
     if (stats[0].xpEarned !== 0) attacker.addXP(stats[0].xpEarned);
@@ -138,20 +240,20 @@ export default {
         experience: attacker.experience,
         xpToNextLevel: attacker.xpToNextLevel,
         attackTurns: attacker.attackTurns,
-        nextTurnTimeStamp: attacker.getTimeToNextTurn(),
+        nextTurnTimeStamp: await attacker.getTimeToNextTurn(),
       },
       userDataFiltered: await req.user.formatUsersStats(req.user),
       winner: winner,
       attacker: {
         id: attacker.id,
         displayName: attacker.displayName,
-        offense: attacker.offense,
+        offense: Math.floor(attacker.offense),
         level: attacker.level,
       }, //TODO: the UserData isn't being passed, so this is a crude workaround for now
       defender: {
         id: defender.id,
         displayName: defender.displayName,
-        defense: defender.defense,
+        defense: Math.floor(defender.defense),
         level: defender.level,
       }, //TODO: the UserData isn't being passed, so this is a crude workaround for now
       won: winner.id === attacker.id ? true : false,

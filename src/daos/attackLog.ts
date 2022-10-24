@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { BankAccountType, BankTransferHistoryType } from '../../types/typings';
+import { PlayerUnit } from '../../types/typings';
 
 interface AttackLogRow {
   id: number;
@@ -29,6 +29,11 @@ export type AttackLogStats = {
   pillagedGold: number;
   xpEarned: number;
   offenseXPStart: number;
+  hpDamage: number;
+  offenseUnitsCount: number;
+  offenseUnitsLost: PlayerUnit[];
+  defenseUnitsCount: number;
+  defenseUnitsLost: PlayerUnit[];
 };
 
 class AttackLogDao {
@@ -64,6 +69,17 @@ class AttackLogDao {
     return AttackLogRows.map((historyRow) =>
       this.mapAttackLogRowToAttackLogData(historyRow)
     );
+  }
+
+  async countAttacksToUserByUser24Hours(
+    attackerId: number,
+    victimId: number
+  ): Promise<number> {
+    const AttackLogRows = await this.database<AttackLogRow>('attack_log')
+      .where({ attacker_id: attackerId, defender_id: victimId })
+      .andWhereRaw(`timestamp >= NOW() - INTERVAL '24 HOURS'`)
+      .select();
+    return AttackLogRows.length;
   }
 
   async createHistory(logData: AttackLogData): Promise<AttackLogData> {

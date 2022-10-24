@@ -184,7 +184,7 @@ class UserDao {
   async setGold(userId: number, gold: number): Promise<void> {
     await this.database<UserRow>('users')
       .where({ id: userId })
-      .update({ gold: gold.toString() });
+      .update({ gold: Math.round(gold).toString() });
   }
 
   async setTurns(userId: number, turns: number): Promise<void> {
@@ -194,6 +194,7 @@ class UserDao {
   }
 
   async setXP(userId: number, xp: number): Promise<void> {
+    console.log(xp);
     await this.database<UserRow>('users')
       .where({ id: userId })
       .update({ experience: xp.toString() });

@@ -9,6 +9,7 @@ import {
   SentryUpgradeType,
   SidebarData,
   SpyUpgradeType,
+  UnitType,
 } from '../../types/typings';
 
 import {
@@ -200,76 +201,48 @@ class UserModel {
   }
 
   // TODO: refactor the below Off/Def/Spy/Sentry functions
-  get offense(): number {
-    const offenseUnits = this.units.filter((units) => units.type === 'OFFENSE');
-    const offenseStat = offenseUnits
-      .map((unit) => {
-        return (
-          UnitTypes.find(
-            (unitType) =>
-              unitType.type === unit.type && unitType.level === unit.level
-          ).bonus *
-          unit.quantity *
+  getArmyStat(type: UnitType) {
+    const Units = this.units.filter((units) => units.type === type);
+    const Weapons = this.items.filter((weapon) => weapon.unitType === type);
+    const UnitCounts = Units.map((unit) => {
+      return (
+        UnitTypes.find(
+          (unitType) =>
+            unitType.type === unit.type && unitType.level === unit.level
+        ).bonus *
+          unit.quantity +
+        Weapons.map((weapon) => {
+          return (
+            WeaponTypes.find(
+              (nweapon) =>
+                nweapon.type === weapon.type &&
+                nweapon.level === unit.level &&
+                nweapon.usage === unit.type
+            ).bonus *
+            (weapon.quantity <= unit.quantity ? weapon.quantity : unit.quantity)
+          );
+        }).reduce((acc, off) => acc + off, 0) *
           (1 + parseInt(this.attackBonus.toString()) / 100)
-        );
-      })
-      .reduce((acc, gold) => acc + gold, 0);
+      );
+    });
 
-    return offenseStat;
+    const armyStat = UnitCounts.reduce((acc, off) => acc + off, 0);
+    return armyStat;
+  }
+  get offense(): number {
+    return this.getArmyStat('OFFENSE');
   }
 
   get defense(): number {
-    const offenseUnits = this.units.filter((units) => units.type === 'DEFENSE');
-    let offenseStat = offenseUnits
-      .map(
-        (unit) =>
-          UnitTypes.find(
-            (unitType) =>
-              unitType.type === unit.type && unitType.level === unit.level
-          ).bonus *
-          unit.quantity *
-          (1 + parseInt(this.defenseBonus.toString()) / 100)
-      )
-      .reduce((acc, gold) => acc + gold, 0);
-
-    const fortificationBonus =
-      Fortifications[this.fortLevel].defenseBonusPercentage;
-    offenseStat += offenseStat * fortificationBonus;
-    return offenseStat;
+    return this.getArmyStat('DEFENSE');
   }
 
   get sentry(): number {
-    const offenseUnits = this.units.filter((units) => units.type === 'SENTRY');
-    const offenseStat = offenseUnits
-      .map(
-        (unit) =>
-          UnitTypes.find(
-            (unitType) =>
-              unitType.type === unit.type && unitType.level === unit.level
-          ).bonus *
-          unit.quantity *
-          (1 + parseInt(this.intelBonus.toString()) / 100)
-      )
-      .reduce((acc, gold) => acc + gold, 0);
-
-    return offenseStat;
+    return this.getArmyStat('SENTRY');
   }
 
   get spy(): number {
-    const offenseUnits = this.units.filter((units) => units.type === 'SENTRY');
-    const offenseStat = offenseUnits
-      .map(
-        (unit) =>
-          UnitTypes.find(
-            (unitType) =>
-              unitType.type === unit.type && unitType.level === unit.level
-          ).bonus *
-          unit.quantity *
-          (1 + parseInt(this.intelBonus.toString()) / 100)
-      )
-      .reduce((acc, gold) => acc + gold, 0);
-
-    return offenseStat;
+    return this.getArmyStat('SPY');
   }
 
   get unitTotals(): unknown {
@@ -539,6 +512,12 @@ class UserModel {
   }
 
   async addXP(amount: number): Promise<void> {
+    console.log(
+      'xp %s ||| amount  %s ||| new %s',
+      this.experience,
+      amount,
+      this.experience + amount
+    );
     this.experience += amount;
     await this.daoFactory.user.setXP(this.id, this.experience);
   }
