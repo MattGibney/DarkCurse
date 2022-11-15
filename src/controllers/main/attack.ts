@@ -79,7 +79,6 @@ export default {
       defender,
       attacker
     );
-    console.log('can attack? ', canAttack);
     if (canAttack === false) {
       const err = 'TooMany';
       res.redirect(`/userprofile/${defender.id}?err=${err}`);
@@ -233,15 +232,7 @@ export default {
       pageTitle: 'Attack Results',
       menu_category: 'battle',
       menu_link: 'war_history',
-      sidebarData: {
-        gold: attacker.gold,
-        citizens: attacker.citizens,
-        level: attacker.level,
-        experience: attacker.experience,
-        xpToNextLevel: attacker.xpToNextLevel,
-        attackTurns: attacker.attackTurns,
-        nextTurnTimeStamp: await attacker.getTimeToNextTurn(),
-      },
+      sidebarData: req.sidebarData,
       userDataFiltered: await req.user.formatUsersStats(req.user),
       winner: winner,
       attacker: {
