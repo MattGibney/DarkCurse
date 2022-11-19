@@ -35,7 +35,10 @@
   color: rgb(255, 255, 92);
 }
 body {
-  background-color: black;
+  background-color: rgb(11,32,18);
+}
+.footer {
+  background-color: rgb(10, 61, 31);
 }
 h1 {
   text-shadow: 3px 3px 3px #ababab;

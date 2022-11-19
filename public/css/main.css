@@ -59,9 +59,6 @@
   font-size: 130%;
   font-weight: bold;
 }
-body {
-  background-color: black;
-}
 h1 {
   font-family: 'Book Antiqua', Georgia, Serif;
   font-size: 500%;
@@ -164,7 +161,16 @@ h1 {
 body{
     font-family: 'Book Antiqua', Georgia, Serif
 }
-
+.wrapper {
+  min-height: 100vh-50px;
+}
+.footer {
+  color:yellow;
+  height: 50px;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
 h2{
     -webkit-background-clip: text;
     -moz-background-clip: text;
