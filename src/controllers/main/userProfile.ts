@@ -279,4 +279,13 @@ export default {
       });
     }
   },
+
+  async renderMyProfile(req: Request, res: Response) {
+    return res.render('page/main/profile.hbs', {
+      layout: 'main',
+      pageTitle: 'My Profile',
+      sidebarData: req.sidebarData,
+      userDataFiltered: await req.user.formatUsersStats(req.user),
+    });
+  },
 };

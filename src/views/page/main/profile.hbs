@@ -1,0 +1,23 @@
+<h2>My Profile</h2>
+<p class="text-center">
+  {{> main/userTitle displayName=userDataFiltered.displayName race=userDataFiltered.race class=userDataFiltered.class}} <br />
+  Share this link to gain up to 200 citizens per day: {{recruitmentLink}}
+</p>
+
+<div class="card-dark">
+  <div class="card-header-dark"><b>Change Bio</b>
+  </div>
+  <div class="card-body">
+    <form id="changeBio">
+        <div class="form-floating mb-2">
+            <textarea class="form-control form-control-dark" id="currentBio" name="currentBio" placeholder="Enter Your Bio" > </textarea>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary-dark btn-lg disabled" id="submitPassword" name="submitPassword" type="submit">Save</button>
+        </div>
+    </form>
+</div>
+
+<script>
+var easyMDE = new EasyMDE({ element: document.getElementById("currentBio") });
+</script>
