@@ -1,0 +1,19 @@
+<h2>My Inbox</h2>
+<table class="table table-responsive table-dark table-striped" id="inbox">
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>Subject</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each messages as |message|}}
+      <tr {{#if message.is_unread}} class="table-primary"{{/if}}>
+        <td>{{message.displayName}}</td>
+        <td>{{message.subject}}</td>
+        <td>{{message.date}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
