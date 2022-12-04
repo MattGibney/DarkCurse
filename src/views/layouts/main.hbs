@@ -16,14 +16,14 @@
   <title>Dark Curse | {{pageTitle}}</title>
   <!-- Menu CSS -->
   <link href="/css/{{userDataFiltered.colorScheme}}.css" rel="stylesheet" />
-  <link href="/css/main.css" rel="stylesheet" />
   <!-- Simple DataTables w/out jQuery -->
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
   <!-- A fun Medieval Font -->
   <link href="http://fonts.cdnfonts.com/css/chomsky" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+  <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+  <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
   <div class="container d-flex justify-content-center align-items-center heading">
@@ -93,21 +93,26 @@
       allElems[i].onmouseover = allElems[i].onmouseleave = handler 
     }
     document.querySelector('.menu-container').onmouseleave = function(){
-      hideAllandReset()
+      console.log('left menu-container');
+      //hideAllandReset()
     };
     function hideAllandReset(link="reset"){
       const allMenu = document.querySelectorAll('.nav > li > ul')
       allMenu.forEach((link)=>{link.style.display = "none"})
       if(link == 'reset')
         document.querySelector('.current > ul').style.display = "block";
-      else
+      else{
+        console.log(link)
         document.querySelector('.nav > li > ul#' + link + '-second').style.display = "block";
+      }
     }
     function handler(event) {
       if (event.type == 'mouseover') {
+        console.log('hideAllandReset(%s)', this.children[0].id);
         hideAllandReset(this.children[0].id);
       }
       if (event.type == 'mouseout') {
+        console.log('hideAllandReset()')
         hideAllandReset()
       }
     }
