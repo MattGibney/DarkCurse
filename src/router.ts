@@ -61,7 +61,34 @@ authedRouter.use((req, res, next) => {
 });
 
 authedRouter.get('/attack', attackController.renderAttackList);
-authedRouter.post('/attack/:id/status', attackController.handleAttack);
+authedRouter.post('/attack/:id/status', (req, res) => {
+  if (
+    req.body?.turnsAmount > req.user?.attackTurns ||
+    req.body?.turnsAmount > 10 ||
+    req.body?.turnsAmount <= 0
+  ) {
+    const err =
+      req.body?.turnsAmount > req.user?.attackTurns
+        ? 'TooManyTurns'
+        : req.body?.turnsAmount > 10
+        ? 'OverTen'
+        : '0';
+    return res.redirect(`/userprofile/${req.params.id}?err=${err}`);
+  }
+  if (req.user?.attackTurns < 1 || req.user?.offense == 0) {
+    const err =
+      req.user?.attackTurns < 1
+        ? 'NoTurns'
+        : req.user?.offense == 0
+        ? 'NoOff'
+        : '';
+    return res.redirect(`/userprofile/${req.params.id}?err=${err}`);
+  }
+  attackController.handleAttack(req, res);
+});
+authedRouter.post('/attack/:id/test', (req, res) => {
+  attackController.testAttack(req, res);
+})
 authedRouter.get('/attack/status/:id', attackController.renderAttackLogPage);
 authedRouter.get('/bank/deposit', (req, res) =>
   bankController.bankPage(req, res)

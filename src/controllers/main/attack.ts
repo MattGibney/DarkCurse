@@ -2,7 +2,14 @@ import { Request, Response } from 'express';
 import { AttackLogStats, AttackLogData } from '../../daos/attackLog';
 import UserModel from '../../models/user';
 
+function canAttack(AttackLevel: number, DefenseLevel: number) {
+  if (DefenseLevel > AttackLevel + 5) return false;
+  else if (DefenseLevel < AttackLevel - 5) return false;
+  else return true;
+}
+
 export default {
+  // Render Form for entering Turns
   async renderAttackPage(req: Request, res: Response) {
     const attacker = await req.modelFactory.user.fetchById(
       req.modelFactory,
@@ -18,11 +25,7 @@ export default {
       parseInt(req.params.id)
     );
 
-    if (
-      defender.level >= attacker.level + 5 ||
-      defender.level <= attacker.level - 5 ||
-      attacker.offense == 0
-    ) {
+    if (!canAttack(attacker.level, defender.level) || attacker.offense == 0) {
       const err =
         defender.level <= attacker.level - 5
           ? 'TooLow'
@@ -58,48 +61,33 @@ export default {
       req.user.id
     );
 
-    if (
-      defender.level >= attacker.level + 5 ||
-      defender.level <= attacker.level - 5 ||
-      attacker.offense == 0
-    ) {
+    if (!canAttack(attacker.level, defender.level) || attacker.offense == 0) {
       const err =
         defender.level <= attacker.level - 5
           ? 'TooLow'
           : defender.level >= attacker.level + 5
           ? 'TooHigh'
           : 'NoOffense';
-      res.redirect(`/userprofile/${defender.id}?err=${err}`);
+      return res.redirect(`/userprofile/${defender.id}?err=${err}`);
     }
 
-    const canAttack = await req.modelFactory.attackLog.canAttackUser(
+    const attackQuota = await req.modelFactory.attackLog.canAttackUser(
       req.modelFactory,
       req.daoFactory,
       req.logger,
       defender,
       attacker
     );
-    if (canAttack === false) {
+    if (attackQuota === false) {
       const err = 'TooMany';
-      res.redirect(`/userprofile/${defender.id}?err=${err}`);
+      return res.redirect(`/userprofile/${defender.id}?err=${err}`);
     }
 
-    if (attacker.attackTurns < 1 || attacker.offense == 0) {
-      const err =
-        attacker.attackTurns < 1
-          ? 'NoTurns'
-          : attacker.offense == 0
-          ? 'NoOff'
-          : '';
-      res.redirect(`/userprofile/${defender.id}?err=${err}`);
-    }
-
+    await attacker.subtractTurns(parseInt(req.body?.turnsAmount));
     const winner = attacker.offense > defender.defense ? attacker : defender;
     const availablePillage =
       Math.floor(Math.random() * (defender.gold * 0.8 + 1)) *
       (parseInt(req.body.turnsAmount) / 100);
-
-    await attacker.subtractTurns(parseInt(req.body?.turnsAmount));
 
     // Ported from old ezRPG 1.2.x Attack module
     // Clone of the PHP Rand function
@@ -107,6 +95,62 @@ export default {
       const minn = min || 0;
       const maxx = max || Number.MAX_SAFE_INTEGER;
       return Math.floor(Math.random() * (maxx - minn + 1)) + minn;
+    };
+
+    // Level Mitigation - Courtesy of LuK
+    // Check the level difference for mitigation
+    let levelMitigation = 0;
+    if (attacker.level > defender.level + 5) {
+      levelMitigation = Math.pow(0.96, attacker.level - defender.level - 5);
+    } else {
+      levelMitigation = 1.0;
+    }
+
+    const getHPResults = (
+      user: UserModel,
+      victor: boolean,
+      victim: UserModel
+    ) => {
+      if (victor === true) {
+        return {
+          defender:
+            rand(
+              victim.fortHealth.current /
+                (victim.level < user.level
+                  ? rand(user.level - victim.level + 1, 5)
+                  : rand(victim.level - user.level + 1, 8)),
+              victim.fortHealth.current
+            ) *
+            (parseInt(req.body.turnsAmount) / 10),
+          attacker:
+            rand(
+              user.fortHealth.current /
+                (user.level < victim.level
+                  ? rand(victim.level - user.level + 1, 5)
+                  : rand(user.level - victim.level + 1, 8)),
+              victim.fortHealth.current
+            ) *
+            (parseInt(req.body.turnsAmount) / 10),
+        };
+      } else {
+        return {
+          defender:
+            rand(
+              user.fortHealth.current /
+                (user.level < victim.level
+                  ? rand(victim.level - user.level + 1, 5)
+                  : rand(user.level - victim.level + 1, 8)),
+              victim.fortHealth.current
+            ) *
+            (parseInt(req.body.turnsAmount) / 10),
+          attacker:
+            rand(
+              Math.round(user.fortHealth.current / 2),
+              Math.round(user.fortHealth.current + 10)
+            ) *
+            (parseInt(req.body.turnsAmount) / 10),
+        };
+      }
     };
 
     const damage = (user: UserModel, victor: boolean, victim: UserModel) => {
@@ -334,5 +378,66 @@ export default {
         is_player: player.id == user.id,
       })),
     });
+  },
+
+  async testAttack(req: Request, res: Response) {
+    const defender = await req.modelFactory.user.fetchById(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      parseInt(req.params.id)
+    );
+    const attacker = await req.modelFactory.user.fetchById(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      req.user.id
+    );
+
+    if (!canAttack(attacker.level, defender.level) || attacker.offense == 0) {
+      const err =
+        defender.level <= attacker.level - 5
+          ? 'TooLow'
+          : defender.level >= attacker.level + 5
+          ? 'TooHigh'
+          : 'NoOffense';
+      return res.json({ err: err });
+    }
+
+    const attackQuota = await req.modelFactory.attackLog.canAttackUser(
+      req.modelFactory,
+      req.daoFactory,
+      req.logger,
+      defender,
+      attacker
+    );
+    if (attackQuota === false) {
+      const err = 'TooMany';
+      return res.json({ err: err });
+    }
+
+    const winner = attacker.offense > defender.defense ? attacker : defender;
+    const availablePillage =
+      Math.floor(Math.random() * (defender.gold * 0.8 + 1)) *
+      (parseInt(req.body.turnsAmount) / 100);
+
+    // Ported from old ezRPG 1.2.x Attack module
+    // Clone of the PHP Rand function
+    const rand = (min?: number, max?: number) => {
+      const minn = min || 0;
+      const maxx = max || Number.MAX_SAFE_INTEGER;
+      return Math.floor(Math.random() * (maxx - minn + 1)) + minn;
+    };
+
+    // Level Mitigation - Courtesy of LuK
+    // Check the level difference for mitigation
+    let levelMitigation = 0;
+    if (attacker.level > defender.level + 5) {
+      levelMitigation = Math.pow(0.96, attacker.level - defender.level - 5);
+    } else {
+      levelMitigation = 1.0;
+    }
+
+    return res.json({msg: 'hi', winner: winner.displayName, offense: winner.offense});
   },
 };
