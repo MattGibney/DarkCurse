@@ -43,7 +43,7 @@ export default {
     return res.render('page/main/armory', {
       layout: 'main',
       pageTitle: 'Armory',
-      menu_category: 'battle',
+      menu_category: 'structures',
       menu_link: 'armory',
       sidebarData: req.sidebarData,
       userDataFiltered: await req.user.formatUsersStats(req.user),
