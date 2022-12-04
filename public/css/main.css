@@ -181,3 +181,32 @@ h2{
     background-image: linear-gradient(360deg, orange, darkorange);
     font-weight: bold;
 }
+
+.EasyMDEContainer {
+  background-color: #2d3748 !important;
+}
+
+.CodeMirror, .editor-preview {
+  color: white !important;
+  border-color: #718096 !important;
+  background-color: #2d3748 !important;
+}
+
+.cm-s-easymde .CodeMirror-cursor {
+  border-color: #718096 !important;
+}
+
+.editor-toolbar button i {
+  color: white !important;
+}
+
+.editor-toolbar button.active, .editor-toolbar button:hover {
+  background-color: blue !important;
+}
+
+.editor-preview pre {
+  background-color: #333 !important;
+}
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+  background: transparent !important;
+}
