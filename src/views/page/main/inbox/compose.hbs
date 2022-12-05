@@ -1,0 +1,19 @@
+<h2>Compose a message</h2>
+
+<div class="card-dark">
+  <div class="card-header-dark"><b>{{ActionMessage}}</b>
+  </div>
+  <div class="card-body">
+    <form id="composer">
+        <div class="form-floating mb-2">
+            <textarea class="form-control form-control-dark" id="composeMessage" name="composeMessage" placeholder="Write your message" > </textarea>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary-dark btn-lg disabled" id="submitMessage" name="submitMessage" type="submit">Send</button>
+        </div>
+    </form>
+  </div>
+</div>
+<script>
+var easyMDE = new EasyMDE({ element: document.getElementById("composeMessage") });
+</script>

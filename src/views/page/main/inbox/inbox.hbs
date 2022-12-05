@@ -10,10 +10,20 @@
   <tbody>
     {{#each messages as |message|}}
       <tr {{#if message.is_unread}} class="table-primary"{{/if}}>
-        <td>{{message.displayName}}</td>
+        <td>{{message.from_user.displayName}}</td>
         <td>{{message.subject}}</td>
-        <td>{{message.date}}</td>
+        <td>{{message.date_time}}</td>
       </tr>
     {{/each}}
   </tbody>
 </table>
+<script>
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  const table = new simpleDatatables.DataTable("#inbox", {
+    searchable: false,
+    pageLength: 50,
+    lengthChange: false
+  })
+});
+</script>

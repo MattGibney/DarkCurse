@@ -5,6 +5,7 @@ import {
   PlayerUnit,
   PlayerItem,
 } from '../../types/typings';
+import { marked } from 'marked';
 
 /**
  * This is essentially documentation for the structure of the data in the
@@ -33,6 +34,26 @@ interface UserRow {
   rank: number;
   bio: string;
   colorScheme: string;
+}
+
+interface MessagesRow {
+  id: number;
+  subject: string;
+  from_user_id: number;
+  to_user_id: number;
+  date_time: Date;
+  created_date: Date;
+  updated_date: Date;
+  body: string;
+}
+
+export interface MessageData {
+  id: number;
+  subject: string;
+  from_user: UserData;
+  to_user: UserData;
+  date_time: string;
+  body: string;
 }
 
 export interface UserData {
@@ -234,6 +255,59 @@ class UserDao {
     await this.database<UserRow>('user').where({ id: userId }).update({
       password_hash: password_hash,
     });
+  }
+
+  async fetchMessages(userId: number): Promise<MessageData[]> {
+    const messageRows = await this.database<MessagesRow>('messages').where({
+      to_user_id: userId,
+    });
+    const messages: MessageData[] = [];
+    for (let i = 0; i < messageRows.length; i++) {
+      messages.push({
+        id: messageRows[i].id,
+        date_time: messageRows[i].date_time.toLocaleString(),
+        subject: messageRows[i].subject,
+        body: messageRows[i].body,
+        to_user: await this.fetchById(messageRows[i].to_user_id),
+        from_user: await this.fetchById(messageRows[i].from_user_id),
+      });
+    }
+    return messages;
+  }
+
+  async fetchMessageById(msgId: number): Promise<MessageData> {
+    const messageRow = await this.database<MessagesRow>('messages')
+      .where({
+        id: msgId,
+      })
+      .first();
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      pedantic: false,
+      gfm: true,
+      breaks: false,
+      sanitize: false,
+      smartypants: false,
+      xhtml: false,
+    });
+    const renderer = {
+      table(header: string, body: string) {
+        return `
+          <table class="table table-striped table-dark">
+          ${body}
+          </table>      
+        `;
+      },
+    };
+    marked.use({ renderer });
+    return {
+      id: messageRow.id,
+      subject: messageRow.subject,
+      to_user: await this.fetchById(messageRow.to_user_id),
+      from_user: await this.fetchById(messageRow.from_user_id),
+      body: marked.parse(messageRow.body),
+      date_time: messageRow.date_time.toLocaleString(),
+    };
   }
 
   mapUserRowToUserData(userRow: UserRow): UserData {
