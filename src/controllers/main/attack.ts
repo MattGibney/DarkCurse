@@ -415,11 +415,10 @@ export default {
       const err = 'TooMany';
       return res.json({ err: err });
     }
-
     const winner = attacker.offense > defender.defense ? attacker : defender;
     const availablePillage =
       Math.floor(Math.random() * (defender.gold * 0.8 + 1)) *
-      (parseInt(req.body.turnsAmount) / 100);
+      (parseInt(req.body.turnsAmount) / 10);
 
     // Ported from old ezRPG 1.2.x Attack module
     // Clone of the PHP Rand function
@@ -438,6 +437,20 @@ export default {
       levelMitigation = 1.0;
     }
 
-    return res.json({msg: 'hi', winner: winner.displayName, offense: winner.offense});
+    return res.json({
+      msg: 'hi ' + req.user.displayName,
+      winner: winner.displayName,
+      attacker: attacker.displayName,
+      defender: defender.displayName,
+      defenderUnitDefense: defender.unitTotals[0].defense,
+      attackerUnitOffense: attacker.unitTotals[0].offense,
+      AttackerOffense: attacker.offense,
+      DefenderDefense: defender.defense,
+      levelMitigation: levelMitigation,
+      defenderFortHealth: defender.fortHealth.percentage,
+      defenderFortLevel: defender.fortLevel,
+      defenderGold: defender.gold,
+      availablePillage: availablePillage,
+    });
   },
 };
