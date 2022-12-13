@@ -5,7 +5,6 @@ import {
   PlayerUnit,
   PlayerItem,
 } from '../../types/typings';
-import { marked } from 'marked';
 
 /**
  * This is essentially documentation for the structure of the data in the
@@ -281,31 +280,12 @@ class UserDao {
         id: msgId,
       })
       .first();
-    marked.setOptions({
-      renderer: new marked.Renderer(),
-      pedantic: false,
-      gfm: true,
-      breaks: false,
-      sanitize: false,
-      smartypants: false,
-      xhtml: false,
-    });
-    const renderer = {
-      table(header: string, body: string) {
-        return `
-          <table class="table table-striped table-dark">
-          ${body}
-          </table>      
-        `;
-      },
-    };
-    marked.use({ renderer });
     return {
       id: messageRow.id,
       subject: messageRow.subject,
       to_user: await this.fetchById(messageRow.to_user_id),
       from_user: await this.fetchById(messageRow.from_user_id),
-      body: marked.parse(messageRow.body),
+      body: messageRow.body,
       date_time: messageRow.date_time.toLocaleString(),
     };
   }

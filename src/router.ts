@@ -118,7 +118,7 @@ authedRouter.get('/inbox', (req, res) => messagingController.inboxPage(req, res)
 authedRouter.get('/inbox/read/:msgId', (req, res) => messagingController.readPage(req, res))
 authedRouter.get('/inbox/compose/new/', (req, res) => messagingController.composePage(req, res));
 authedRouter.get('/inbox/compose/new/user/:id', (req, res) => messagingController.composePage(req, res));
-authedRouter.get('/inbox/compose/:msgId', (req, res) => messagingController.inboxPage(req, res));
+authedRouter.get('/inbox/reply/:msgId', (req, res) => messagingController.replyPage(req, res))
 
 authedRouter.post('/structure-upgrades/upgrade', (req, res) => {
   res.json({error: 'Not configured ' + req.body.type });

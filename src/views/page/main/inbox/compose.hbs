@@ -6,7 +6,11 @@
   <div class="card-body">
     <form id="composer">
         <div class="form-floating mb-2">
-            <textarea class="form-control form-control-dark" id="composeMessage" name="composeMessage" placeholder="Write your message" > </textarea>
+            <textarea class="form-control form-control-dark" 
+              id="composeMessage" 
+              name="composeMessage" 
+              placeholder="Write your message"
+            >{{message.body}}</textarea>
         </div>
         <div class="d-grid">
             <button class="btn btn-primary-dark btn-lg disabled" id="submitMessage" name="submitMessage" type="submit">Send</button>
