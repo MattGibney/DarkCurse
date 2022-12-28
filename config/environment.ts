@@ -1,5 +1,7 @@
-import { env } from 'process';
+import * as dotenv from 'dotenv';
 import * as pkg from '../package.json';
+
+dotenv.config();
 
 export interface Config {
   port: number;
@@ -27,7 +29,7 @@ const Config: Config = {
  * doing so would encourace maintainers to implement specific business logic
  * for different environments. This is something we want to avoid.
  */
-const environment = env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV || 'development';
 
 if (environment === 'development') {
   // Development environment

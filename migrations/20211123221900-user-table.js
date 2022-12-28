@@ -32,6 +32,7 @@ CREATE TABLE users (
   attack_turns bigint NOT NULL DEFAULT '100',
   created_date timestamptz NOT NULL DEFAULT NOW(),
   updated_date timestamptz NOT NULL DEFAULT NOW(),
+  last_active timestamptz NOT NULL DEFAULT NOW(),
   PRIMARY KEY (id),
   UNIQUE (display_name),
   UNIQUE (email)

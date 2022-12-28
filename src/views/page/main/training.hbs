@@ -1,17 +1,134 @@
-<div class="d-flex justify-content-around my-5">
-  <p class="mb-0">Untrained Citizens: {{citizens}}</p>
-  <p class="mb-0">Gold On Hand: {{gold}}</p>
-  <p class="mb-0">Banked Gold: {{goldInBank}}</p>
+<h2>Training</h2>
+<div class="d-flex justify-content-around my-5" id='alertMSG' name='alertMSG' style="display:none">
+  
 </div>
 
-<form action="/training" method="post" class="mb-5">
+<div class="d-flex justify-content-around my-5">
+  <p class="mb-0">Untrained Citizens: <span id="citizens">{{citizens}}</span></p>
+  <p class="mb-0">Gold On Hand: <span id="gold">{{gold}}</span></p>
+  <p class="mb-0">Banked Gold: <span id="goldInBank">{{goldInBank}}</span></p>
+</div>
+
+<form name="training" id="training" class="mb-5">
   {{> main/training/unitSection heading="Economy"     units=workerUnits}}
   {{> main/training/unitSection heading="Offense"     units=offensiveUnits}}
   {{> main/training/unitSection heading="Defense"     units=defensiveUnits}}
   {{> main/training/unitSection heading="Spy Offense" units=spyUnits}}
   {{> main/training/unitSection heading="Spy Defense" units=sentryUnits}}
   <div class="d-flex gap-2 justify-content-end">
-    <button class="btn btn-secondary" disabled>Untrain</button>
-    <button class="btn btn-primary">Train</button>
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
   </div>
 </form>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+  function serialize (data) {
+    let obj = {};
+    for (let [key, value] of data) {
+      if (obj[key] !== undefined) {
+        if (!Array.isArray(obj[key])) {
+          obj[key] = [obj[key]];
+        }
+        obj[key].push(value);
+      } else {
+        obj[key] = value;
+      }
+    }
+    return obj;
+  }
+  var notyf = new Notyf({duration: 2000});
+  document.querySelector('#untrainSubmit').onclick = function(e) {
+      e.preventDefault();
+      const form = document.querySelector('#training');
+      fetch('/training/untrain', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(serialize(new FormData(form)))
+      }).then((response) => 
+          response.json()
+      ).then((data) =>{
+        if(data.error){
+          console.log('Failed')
+          notyf.error(
+            data.error
+          );
+        }else if(data.success){
+          document.querySelectorAll("#training>table>tbody>tr>td>input").forEach((elem)=>elem.value = 0);
+          notyf.success(
+            data.success
+          );
+          document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
+          document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
+          document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
+          for(let i = 0; i < data.stats.workerUnits.length; i++){
+            document.querySelector('#'+data.stats.workerUnits[i].id+'_owned').innerHTML = data.stats.workerUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.defensiveUnits.length; i++){
+            document.querySelector('#'+data.stats.defensiveUnits[i].id+'_owned').innerHTML = data.stats.defensiveUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.offensiveUnits.length; i++){
+            document.querySelector('#'+data.stats.offensiveUnits[i].id+'_owned').innerHTML = data.stats.offensiveUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.spyUnits.length; i++){
+            document.querySelector('#'+data.stats.spyUnits[i].id+'_owned').innerHTML = data.stats.spyUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.sentryUnits.length; i++){
+            document.querySelector('#'+data.stats.sentryUnits[i].id+'_owned').innerHTML = data.stats.sentryUnits[i].ownedUnits
+          }
+        }
+      });
+      return false;
+    };
+    document.querySelector('#trainSubmit').onclick = function(e) {
+      e.preventDefault();
+      const form = document.querySelector('#training');
+      fetch('/training/train', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(serialize(new FormData(form)))
+      }).then((response) => 
+          response.json()
+      ).then((data) =>{
+        if(data.error){
+          console.log('Failed')
+          notyf.error(
+            data.error
+          );
+        }else if(data.success){
+          document.querySelectorAll("#training>table>tbody>tr>td>input").forEach((elem)=>elem.value = 0);
+          notyf.success(
+            data.success
+          );
+
+          document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
+          document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
+          document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
+          for(let i = 0; i < data.stats.workerUnits.length; i++){
+            document.querySelector('#'+data.stats.workerUnits[i].id+'_owned').innerHTML = data.stats.workerUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.defensiveUnits.length; i++){
+            document.querySelector('#'+data.stats.defensiveUnits[i].id+'_owned').innerHTML = data.stats.defensiveUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.offensiveUnits.length; i++){
+            document.querySelector('#'+data.stats.offensiveUnits[i].id+'_owned').innerHTML = data.stats.offensiveUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.spyUnits.length; i++){
+            document.querySelector('#'+data.stats.spyUnits[i].id+'_owned').innerHTML = data.stats.spyUnits[i].ownedUnits
+          }
+          for(let i = 0; i < data.stats.sentryUnits.length; i++){
+            document.querySelector('#'+data.stats.sentryUnits[i].id+'_owned').innerHTML = data.stats.sentryUnits[i].ownedUnits
+          }
+        }
+      });
+      return false;
+    };
+    window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='number'){e.preventDefault();return false;}}},true);
+});
+</script>

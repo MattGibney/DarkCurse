@@ -1,0 +1,22 @@
+<h2>Attack NAMEHERE</h2>
+
+{{#if alert}}
+  <div class="alert alert-{{alert.type}}">
+    {{alert.message}}
+  </div>
+{{/if}}
+
+<div class="d-flex justify-content-around">
+  <p>Turns: {{turns}}</p>
+</div>
+
+
+<form action="/attack/{{defender.id}}/status" method="post" class="form d-flex align-items-end gap-2">
+  <div class="flex-fill">
+    <label for="turnsAmount" class="form-control-label">Number of Turns</label>
+    <input type="number" name="turnsAmount" id="turnsAmount" class="form-control" min="0" max="10" value="0" />
+  </div>
+  <div>
+    <button type="submit" class="btn btn-primary">Attack</button>
+  </div>
+</form>

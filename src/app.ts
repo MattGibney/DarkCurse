@@ -1,6 +1,5 @@
 import * as express from 'express';
 import { create } from 'express-handlebars';
-import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino';
@@ -18,7 +17,7 @@ export default (
   daoFactory: DaoFactory
 ): express.Application => {
   const app = express();
-
+  app.use(express.static('public'));
   app.use((req, res, next) => {
     const requestId = uuidv4();
 
@@ -41,8 +40,8 @@ export default (
 
     next();
   });
-
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
 
   app.use(middleware.authenticate);
@@ -60,10 +59,37 @@ export default (
         attackTurns: new Intl.NumberFormat('en-GB').format(
           req.user.attackTurns
         ),
+        nextTurnTimestamp:
+          getTimeRemaining(getTimeToNextTurn()).minutes +
+          ':' +
+          getTimeRemaining(getTimeToNextTurn()).seconds,
       };
     }
     next();
   });
+
+  // https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
+  function getTimeRemaining(endtime) {
+    const total = Date.parse(endtime) - new Date().getTime();
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+    return {
+      total,
+      days,
+      hours,
+      minutes,
+      seconds,
+    };
+  }
+
+  function getTimeToNextTurn(date = new Date()) {
+    const ms = 1800000; // 30mins in ms
+    const nextTurn = new Date(Math.ceil(date.getTime() / ms) * ms);
+    return nextTurn;
+  }
 
   const hbs = create({
     extname: '.hbs',
@@ -71,6 +97,16 @@ export default (
     helpers: {
       eq(arg1, arg2) {
         return arg1 === arg2;
+      },
+      isSelected(v1, v2) {
+        if (v1 == v2) {
+          return 'current ';
+        }
+      },
+      isActive(v1, v2) {
+        if (v1 == v2) {
+          return 'active ';
+        }
       },
     },
   });

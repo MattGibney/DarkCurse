@@ -32,7 +32,7 @@ export default {
       return res.render('page/marketing/login', {
         layout: 'marketing',
         pageTitle: 'Login',
-        errorMessage: 'Email or password not recognised',
+        errorMessage: 'Email or password not recognized',
       });
     }
 

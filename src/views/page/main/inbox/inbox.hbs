@@ -1,0 +1,42 @@
+<h2>My Inbox</h2>
+<div class="table-responsive">
+  <table id="inbox" class="table table-responsive table-dark table-striped email-table no-wrap table-hover v-middle mb-0 font-14">
+      <tbody>
+          {{#each messages as |message|}}
+            <tr>
+                <!-- label -->
+                <td class="pl-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="cst1" />
+                        <label class="custom-control-label" for="cst1">&nbsp;</label>
+                    </div>
+                </td>
+                <!-- star -->
+                <td><i class="fa fa-star text-warning"></i></td>
+                <td>
+                    <span class="mb-0 text-muted">{{message.from_user.displayName}}</span>
+                </td>
+                <!-- Message -->
+                <td>
+                    <a class="link" href="/inbox/read/{{message.id}}">
+                        <!--<span class="badge rounded-pill text-white font-medium bg-danger mr-2">Work</span>-->
+                        <span class="{{#if message.is_unread}} {{else}}font-light {{/if}}text-light">{{{message.subject}}}</span>
+                    </a>
+                </td>
+                <!-- Time -->
+                <td class="text-muted">{{message.date_time}}</td>
+            </tr>
+          {{/each}}
+      </tbody>
+  </table>
+</div>
+<script>
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  const table = new simpleDatatables.DataTable("#inbox", {
+    searchable: false,
+    pageLength: 50,
+    lengthChange: false
+  })
+});
+</script>

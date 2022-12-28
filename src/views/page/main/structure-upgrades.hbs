@@ -1,0 +1,73 @@
+<h2>Battle Upgrades</h2>
+<div class="d-flex justify-content-around my-5" id='alertMSG' name='alertMSG' style="display:none">
+  
+</div>
+
+<div class="d-flex justify-content-around my-5">
+  <p class="mb-0">Untrained Citizens: <span id="citizens">{{citizens}}</span></p>
+  <p class="mb-0">Gold On Hand: <span id="gold">{{gold}}</span></p>
+  <p class="mb-0">Banked Gold: <span id="goldInBank">{{goldInBank}}</span></p>
+  <p class="mb-0">Offensive Units: <span id="offenseUnits">{{units.offense}}</span></p>
+  <p class="mb-0">Defensive Units: <span id="defenseUnits">{{units.defense}}</span></p>
+  <p class="mb-0">Spy Units: <span id="spyUnits">{{units.spies}}</span></p>
+  <p class="mb-0">Sentry Units: <span id="sentryUnits">{{units.sentries}}</span></p>
+  
+</div>
+
+<form name="training" id="training" class="mb-5">
+  <h3>Defense</h3>
+  {{> main/battle-upgrades/defense heading="Defensive Fortifications"   units=defensiveUpgrade}}
+</form>
+<form name="training" id="training" class="mb-5">
+  <h3>Offense</h3>
+  {{> main/battle-upgrades/offense heading="Offensive Training"   units=offensiveUpgrade}}
+</form>
+<form name="training" id="training" class="mb-5">
+  <h3>Spy</h3>
+  {{> main/battle-upgrades/spy heading="Spy Training"   units=spyUpgrade}}
+</form>
+<form name="training" id="training" class="mb-5">
+  <h3>Sentry</h3>
+  {{> main/battle-upgrades/sentry heading="Sentry Training"   units=sentryUpgrade}}
+</form>
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+  function serialize (data) {
+    let obj = {};
+    for (let [key, value] of data) {
+      if (obj[key] !== undefined) {
+        if (!Array.isArray(obj[key])) {
+          obj[key] = [obj[key]];
+        }
+        obj[key].push(value);
+      } else {
+        obj[key] = value;
+      }
+    }
+    return obj;
+  }
+var notyf = new Notyf({duration: 2000});
+document.querySelectorAll('#upgradeSubmit').forEach((elem)=>{
+  elem.onclick = function(e){
+    e.preventDefault();
+    fetch('/structure-upgrades/upgrade',{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({type: elem.parentNode.children[0].name})
+    }).then((response) => 
+      response.json()
+    ).then((data) => {
+      if(data.error){
+        console.log('Failed')
+        notyf.error(data.error);
+      }else if(data.success){
+        window.refresh();
+      }
+    })
+  }
+})
+});
+</script>

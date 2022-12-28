@@ -1,9 +1,5 @@
 import { Request, Response } from 'express';
-
-interface PageAlert {
-  type: 'SUCCESS' | 'DANGER';
-  message: string;
-}
+import { PageAlert } from '../../../types/typings';
 
 async function bankPage(req: Request, res: Response, alert?: PageAlert) {
   const availableBankDeposits = await req.user.fetchAvailableBankDeposits();
@@ -12,6 +8,9 @@ async function bankPage(req: Request, res: Response, alert?: PageAlert) {
     layout: 'main',
     pageTitle: 'Bank',
     sidebarData: req.sidebarData,
+    menu_category: 'structures',
+    menu_link: 'bank',
+    userDataFiltered: await req.user.formatUsersStats(req.user),
 
     gold: new Intl.NumberFormat('en-GB').format(req.user.gold),
     goldInBank: new Intl.NumberFormat('en-GB').format(req.user.goldInBank),
@@ -47,6 +46,9 @@ async function historyPage(req: Request, res: Response) {
     layout: 'main',
     pageTitle: 'Bank',
     sidebarData: req.sidebarData,
+    menu_category: 'structures',
+    menu_link: 'bank',
+    userDataFiltered: await req.user.formatUsersStats(req.user),
 
     history: await Promise.all(
       transactionHistory.map(async (transaction) => ({

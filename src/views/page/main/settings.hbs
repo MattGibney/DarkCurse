@@ -1,0 +1,71 @@
+<h2>Settings</h2>
+<p class="text-center">
+  {{> main/userTitle displayName=userDataFiltered.displayName race=userDataFiltered.race class=userDataFiltered.class}} <br />
+  Share this link to gain up to 200 citizens per day: {{recruitmentLink}}
+</p>
+
+<div class="card-dark">
+  <div class="card-header-dark"><b>Change Password</b>
+  </div>
+  <div class="card-body">
+    <form id="changePassword">
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="enterCurrentPassword" name="currentPassword" type="password" placeholder="Enter Current Password" />
+            <label for="enterCurrentPassword">Enter Current Password</label>
+            <div class="invalid-feedback">Enter Current Password is required.</div>
+        </div>
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="newPassword" type="password" name="newPassword" placeholder="New Password"/>
+            <label for="newPassword">New Password</label>
+            <div class="invalid-feedback">New Password is required.</div>
+        </div>
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password"/>
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="invalid-feedback" >Confirm Password is required.</div>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary-dark btn-lg disabled" id="submitPassword" name="submitPassword" type="submit">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="card-dark">
+  <div class="card-header-dark"><b>Change Email</b>
+  </div>
+  <div class="card-body">
+    <form id="changeEmail">
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="currentEmail" type="email" name="currentEmail" value="{{email}}" disabled/>
+            <label for="currentEmail">Current Email</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input class="form-control form-control-dark" id="newEmail" type="email" name="newEmail" placeholder="New Email"/>
+            <label for="newEmail">New Email</label>
+            <div class="invalid-feedback">New Email is required.</div>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary-dark btn-lg disabled" id="submitEmail" name="submitEmail" type="submit">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="card-dark">
+  <div class="card-header-dark"><b>Layout Options</b>
+  </div>
+  <div class="card-body">
+    <form id="changeColorScheme" method="post" action="#">
+        <div class="form-floating mb-3">
+            <select class="form-select form-select-dark" id="colorScheme" name="colorScheme" aria-label="Color Scheme" form="changeColorScheme">
+                <option value="ELF">Elf</option>
+                <option value="GOBLIN">Goblin</option>
+                <option value="HUMAN">Human</option>
+                <option value="UNDEAD">Undead</option>
+            </select>
+            <label for="colorScheme">Color Scheme</label>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary-dark btn-lg" id="submitColorScheme" name="submitColorScheme" type="submit">Save</button>
+        </div>
+    </form>
+</div>

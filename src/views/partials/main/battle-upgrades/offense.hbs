@@ -1,0 +1,25 @@
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th class="col-4">{{heading}}</th>
+      <th class="col-2">Bonus</th>
+      <th class="col-2">Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each units as |unit|}}
+        {{#if unit.enabled}}
+        <tr>
+          <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
+          <td class="align-middle">+{{unit.offenseBonusPercentage}} {{../heading}}</td>
+          <td class="align-middle">{{unit.cost}}</td>
+        </tr>
+        {{else}}
+        <tr>
+          <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
+          <td class="align-middle text-center" colspan="2">Unlock with {{unit.levelRequirementName.name}}</td>
+        </tr>
+        {{/if}}
+      {{/each}}
+  </tbody>
+</table>

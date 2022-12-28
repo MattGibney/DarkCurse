@@ -1,0 +1,45 @@
+.nav a {
+  color: rgb(253, 226, 101);
+}
+.nav a:active,
+.nav a:focus,
+.nav a:hover,
+.nav li.current,
+.nav a.active {
+  background-color: #c0532e;
+  color: rgb(253, 226, 101);
+}
+.nav li:hover ul {
+  background: #70301a;
+}
+.menu-container {
+  background-color: rgb(45, 12, 12);
+}
+.menu-second-tier {
+  background-color: #70301a;
+}
+.sidebar {
+  background-color: rgb(46, 12, 12);
+  color: yellow;
+}
+.heading {
+  background-color: #70301a;
+}
+.advisor {
+  background-color: #b5a565;
+  color: black;
+}
+.mainArea {
+  background-color: black;
+  color: rgb(255, 255, 92);
+}
+body {
+  background-color: rgb(45, 12, 12);
+}
+.footer {
+  background-color: rgb(45, 12, 12);;
+}
+h1 {
+  text-shadow: 3px 3px 3px #ababab;
+  color: rgb(221, 149, 63);
+}

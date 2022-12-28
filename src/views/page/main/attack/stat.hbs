@@ -1,0 +1,22 @@
+<h2>Attack {{defender.displayName}}</h2>
+
+{{#if alert}}
+  <div class="alert alert-{{alert.type}}">
+    {{alert.message}}
+  </div>
+{{/if}}
+
+<div class="justify-content-around">
+  <p>You attacked {{defender.displayName}} and {{#if won}}won!{{else}}lost!{{/if}}</p>
+  <p>Your forces had a combined total of {{attacker.offense}} Offense</p>
+  <p>{{defender.displayName}}'s forces had a combined total of {{defender.defense}} Defense.</p>
+  <p>You used a total of {{turns}} turns to attack</p>
+  {{#if won}}
+  <p>You pillaged {{stats.pillagedGold}} Gold</p>
+  <p>You earned {{stats.xpEarned}} XP</p>
+    {{#if earnedNewLevel}}
+      <p>You've grown to a new level: {{newLevel}}
+    {{/if}}
+  {{else}}
+  {{/if}}
+</div>

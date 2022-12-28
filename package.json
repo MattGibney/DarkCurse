@@ -49,13 +49,17 @@
     "typescript": "^4.5.3"
   },
   "dependencies": {
+    "@types/marked": "^4.0.7",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
+    "bootstrap-toaster": "^5.2.0-beta1.1",
     "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.1",
     "express-handlebars": "^6.0.1",
     "express-jwt": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.14",
+    "marked": "^4.1.1",
     "node-cron": "^3.0.0",
     "pg": "^8.7.1",
     "pino": "^7.4.0",

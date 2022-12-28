@@ -1,0 +1,221 @@
+<h2>Armory</h2>
+<div class="d-flex justify-content-around my-5" id='alertMSG' name='alertMSG' style="display:none">
+  
+</div>
+
+<div class="row d-flex justify-content-around my-5">
+  <div class="col"><p class="mb-0">Untrained Citizens: <span id="citizens">{{citizens}}</span></p></div>
+  <div class="col"><p class="mb-0">Gold On Hand: <span id="gold">{{gold}}</span></p></div>
+  <div class="col"><p class="mb-0">Banked Gold: <span id="goldInBank">{{goldInBank}}</span></p></div>
+</div>
+<div class="row d-flex justify-content-around my-5">
+  <div class="col"><p class="mb-0">Offensive Units: <span id="offenseUnits">{{units.offense}}</span></p></div>
+  <div class="col"><p class="mb-0">Defensive Units: <span id="defenseUnits">{{units.defense}}</span></p></div>
+  <div class="col"><p class="mb-0">Spy Units: <span id="spyUnits">{{units.spies}}</span></p></div>
+  <div class="col"><p class="mb-0">Sentry Units: <span id="sentryUnits">{{units.sentries}}</span></p></div>
+  
+</div>
+
+<form name="armory" id="armory" class="mb-5">
+  <h3>Offense</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=offensiveWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=offensiveHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=offensiveArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=offensiveBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=offensiveBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=offensiveShield}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+  <h3>Defense</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=defensiveWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=defensiveHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=defensiveArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=defensiveBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=defensiveBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=defensiveShield}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+  <h3>Spy</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=spyWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=spyHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=spyArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=spyBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=spyBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=spyShield}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+  <h3>Sentry</h3>
+  {{> main/armory/itemSection heading="Weapon"   units=sentryWeapons}}
+  {{> main/armory/itemSection heading="Helm"     units=sentryHelm}}
+  {{> main/armory/itemSection heading="Armor"     units=sentryArmor}}
+  {{> main/armory/itemSection heading="Boots"     units=sentryBoots}}
+  {{> main/armory/itemSection heading="Bracers"     units=sentryBracers}}
+  {{> main/armory/itemSection heading="Shield"     units=sentryShield}}
+  <div class="d-flex gap-2 justify-content-end">
+    <button class="btn btn-secondary" id="untrainSubmit">Untrain</button>
+    <button class="btn btn-primary" id="trainSubmit">Train</button>
+  </div>
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+	function serialize(data) {
+		let obj = {};
+		for (let [key, value] of data) {
+			if (obj[key] !== undefined) {
+				if (!Array.isArray(obj[key])) {
+					obj[key] = [obj[key]];
+				}
+				obj[key].push(value);
+			} else {
+				obj[key] = value;
+			}
+		}
+		return obj;
+	}
+	var notyf = new Notyf({
+		duration: 2000
+	});
+	const handleUnEquip = function(e) {
+		e.preventDefault();
+		const form = document.querySelector('#armory');
+		fetch('/armory/unequip',{
+			method: 'POST',
+			headers: {
+			  'Accept': 'application/json, text/plain, */*',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(serialize(new FormData(form)))
+			}).then((response) => 
+				response.json()
+			).then((data) =>{
+				if(data.error){
+					notyf.error(
+						data.error
+					);
+				 }else if(data.success){
+					document.querySelectorAll("#armory>table>tbody>tr>td>input").forEach((elem)=>elem.value = 0);
+					notyf.success(
+						data.success
+					);
+					document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
+					document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
+					document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
+					for (let i = 0; i < data.stats.defensiveUnits.length; i++) {
+						document.querySelector('#'+data.stats.defensiveUnits[i].id + '_owned').innerHTML = data.stats.defensiveUnits[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveUnits.length; i++) {
+						document.querySelector('#'+data.stats.offensiveUnits[i].id + '_owned').innerHTML = data.stats.offensiveUnits[i].owneditems
+					}
+					for (let i = 0; i < data.stats.spyUnits.length; i++) {
+						document.querySelector('#'+data.stats.spyUnits[i].id + '_owned').innerHTML = data.stats.spyUnits[i].owneditems
+					}
+					for (let i = 0; i < data.stats.sentryUnits.length; i++) {
+						document.querySelector('#'+data.stats.sentryUnits[i].id + '_owned').innerHTML = data.stats.sentryUnits[i].owneditems
+					}
+				}
+			});
+		};
+	const handleEquip = function(e) {
+		e.preventDefault();
+		const form = document.querySelector('#armory');
+		fetch('/armory/equip',{
+			method: 'POST',
+			headers: {
+			  'Accept': 'application/json, text/plain, */*',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(serialize(new FormData(form)))
+			}).then((response) => 
+				response.json()
+			).then((data) =>{
+				if(data.error){
+					notyf.error(
+						data.error
+					);
+				 }else if(data.success){
+					document.querySelectorAll("#armory>table>tbody>tr>td>input").forEach((elem)=>elem.value = 0);
+					notyf.success(
+						data.success
+					);
+					document.querySelectorAll('#gold').forEach((elem) => { elem.innerHTML = data.stats.gold });
+					document.querySelectorAll('#goldInBank').forEach((elem) => { elem.innerHTML = data.stats.goldInBank });
+					document.querySelectorAll('#citizens').forEach((elem) => { elem.innerHTML = data.stats.citizens});
+					console.log(data.stats);
+					for (let i = 0; i < data.stats.offensiveWeapons.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveWeapons[i].id + '_owned'))
+						console.log(data.stats.offensiveWeapons[i].id)
+						document.querySelector('#'+data.stats.offensiveWeapons[i].id + '_owned').innerHTML = data.stats.offensiveWeapons[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveHelm.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveHelm[i].id + '_owned'))
+						console.log(data.stats.offensiveHelm[i].id)
+						document.querySelector('#'+data.stats.offensiveHelm[i].id + '_owned').innerHTML = data.stats.offensiveHelm[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveArmor.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveArmor[i].id + '_owned'))
+						console.log(data.stats.offensiveArmor[i].id)
+						document.querySelector('#'+data.stats.offensiveArmor[i].id + '_owned').innerHTML = data.stats.offensiveArmor[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveBoots.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveBoots[i].id + '_owned'))
+						console.log(data.stats.offensiveBoots[i].id)
+						document.querySelector('#'+data.stats.offensiveBoots[i].id + '_owned').innerHTML = data.stats.offensiveBoots[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveBracers.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveBracers[i].id + '_owned'))
+						console.log(data.stats.offensiveBracers[i].id)
+						document.querySelector('#'+data.stats.offensiveBracers[i].id + '_owned').innerHTML = data.stats.offensiveBracers[i].owneditems
+					}
+					for (let i = 0; i < data.stats.offensiveShield.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.offensiveShield[i].id + '_owned'))
+						console.log(data.stats.offensiveShield[i].id)
+						document.querySelector('#'+data.stats.offensiveShield[i].id + '_owned').innerHTML = data.stats.offensiveShield[i].owneditems
+					}
+
+					for (let i = 0; i < data.stats.defensiveWeapons.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveWeapons[i].id + '_owned'))
+						console.log(data.stats.defensiveWeapons[i].id)
+						document.querySelector('#'+data.stats.defensiveWeapons[i].id + '_owned').innerHTML = data.stats.defensiveWeapons[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveHelm.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveHelm[i].id + '_owned'))
+						console.log(data.stats.defensiveHelm[i].id)
+						document.querySelector('#'+data.stats.defensiveHelm[i].id + '_owned').innerHTML = data.stats.defensiveHelm[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveArmor.length - 1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveArmor[i].id + '_owned'))
+						console.log(data.stats.defensiveArmor[i].id)
+						document.querySelector('#'+data.stats.defensiveArmor[i].id + '_owned').innerHTML = data.stats.defensiveArmor[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveBoots.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveBoots[i].id + '_owned'))
+						console.log(data.stats.defensiveBoots[i].id)
+						document.querySelector('#'+data.stats.defensiveBoots[i].id + '_owned').innerHTML = data.stats.defensiveBoots[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveBracers.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveBracers[i].id + '_owned'))
+						console.log(data.stats.defensiveBracers[i].id)
+						document.querySelector('#'+data.stats.defensiveBracers[i].id + '_owned').innerHTML = data.stats.defensiveBracers[i].owneditems
+					}
+					for (let i = 0; i < data.stats.defensiveShield.length -1; i++) {
+						console.log(document.querySelector('#'+data.stats.defensiveShield[i].id + '_owned'))
+						console.log(data.stats.defensiveShield[i].id)
+						document.querySelector('#'+data.stats.defensiveShield[i].id + '_owned').innerHTML = data.stats.defensiveShield[i].owneditems
+					}
+					
+				}
+			});
+		};
+  
+	document.querySelectorAll('#trainSubmit').forEach((elem)=>{elem.onclick = handleEquip;});
+  	document.querySelectorAll('#untrainSubmit').forEach((elem)=>{elem.onclick = handleUnEquip});
+	window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='number'){e.preventDefault();return false;}}},true);
+});
+</script>

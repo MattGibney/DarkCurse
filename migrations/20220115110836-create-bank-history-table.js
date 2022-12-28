@@ -35,12 +35,26 @@ CREATE TABLE bank_history (
 CREATE TRIGGER update_bank_history_updated_date
 BEFORE
 UPDATE ON bank_history
+FOR EACH ROW EXECUTE PROCEDURE auto_update();
+
+CREATE TABLE public.attack_log (
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	attacker_id int4 NOT NULL,
+	defender_id int4 NOT NULL,
+	"timestamp" timestamptz NULL DEFAULT now(),
+	winner int4 NOT NULL,
+	stats json NOT NULL
+);
+
+CREATE TRIGGER update_attack_log_updated_date
+BEFORE
+UPDATE ON attack_log
 FOR EACH ROW EXECUTE PROCEDURE auto_update();`;
   return db.runSql(query);
 };
 
 exports.down = function (db) {
-  const query = `DROP TABLE bank_history;`;
+  const query = `DROP TABLE bank_history;DROP TABLE attack_log;`;
   return db.runSql(query);
 };
 

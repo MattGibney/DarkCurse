@@ -1,4 +1,5 @@
-<table class="table">
+<h2>Attack List</h2>
+<table class="table table-responsive table-dark table-striped" id="attackList">
   <thead>
     <tr>
       <th>Rank</th>
@@ -11,8 +12,8 @@
   </thead>
   <tbody>
     {{#each players as |player|}}
-      <tr>
-        <td></td>
+      <tr {{#if player.is_player}} class="table-primary"{{/if}}>
+        <td>{{player.rank}}</td>
         <td><a href="/userprofile/{{player.id}}">{{player.displayName}}</a></td>
         <td>{{player.gold}}</td>
         <td>{{player.armySize}}</td>
@@ -22,3 +23,13 @@
     {{/each}}
   </tbody>
 </table>
+<script>
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  const table = new simpleDatatables.DataTable("#attackList", {
+    searchable: false,
+    pageLength: 50,
+    lengthChange: false
+  })
+});
+</script>

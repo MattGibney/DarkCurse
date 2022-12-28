@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+
+      {{#if errorMessage}}
+        <div class="alert alert-danger">
+          {{errorMessage}}
+        </div>
+      {{/if}}
+
+      <form action="/signup" method="post" class="mt-2">
+        <div class="mb-3">
+          <label for="display_name" class="form-label">Display Name:</label>
+          <input type="text" class="form-control" id="display_name" name="display_name">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <div class="mb-3">
+          <label for="race" class="form-label">Race</label>
+          <select class="form-select" id="race" name="race">
+            <option value="HUMAN" selected>HUMAN</option>
+            <option value="UNDEAD">UNDEAD</option>
+            <option value="GOBLIN">GOBLIN</option>
+            <option value="ELF">ELF</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="class" class="form-label">Class</label>
+          <select class="form-select" id="class" name="class">
+            <option value="FIGHTER" selected>FIGHTER</option>
+            <option value="CLERIC">CLERIC</option>
+            <option value="ASSASSIN">ASSASSIN</option>
+            <option value="THIEF">THIEF</option>
+          </select>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Signup Now</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

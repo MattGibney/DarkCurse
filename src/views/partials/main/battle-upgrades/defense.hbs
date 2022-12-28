@@ -1,0 +1,41 @@
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th class="col-3">{{heading}}</th>
+      <th class="col-1">Level Required</th>
+      <th class="col-2">Bonus</th>
+      <th class="col-1">Repair Cost</th>
+      <th class="col-1">Max Health</th>
+      <th class="col-2">Gold per Turn</th>
+      <th class="col-1">Cost</th>
+      <th class="col-2">Buy</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each units as |unit|}}
+        {{#if unit.enabled}}
+        <tr>
+          <td class="align-middle" id={{unit.id}}>{{unit.name}}</td>
+          <td class="align-middle">Level {{unit.levelRequirement}}</td>
+          <td class="align-middle">+{{unit.defenseBonusPercentage}}% Defense</td>
+          <td class="align-middle">{{unit.costPerRepairPoint}}</td>
+          <td class="align-middle">{{unit.hitpoints}}</td>
+          <td class="align-middle">{{unit.goldPerTurn}}</td>
+          <td class="align-middle">{{unit.cost}}</td>
+          <td class="align-middle">
+            {{#if unit.owned}}
+              <button class="btn btn-secondary disabled w-100" id="upgradeSubmit" disabled>Owned</button></td>
+            {{else}}
+              <button class="btn btn-secondary w-100" name="{{unit.id}}" data-upgrade-type="DEFENSE" id="upgradeSubmit">Buy</button></td>
+            {{/if}}
+        </tr>
+        {{else}}
+        <tr>
+          <td class="align-middle" colspan="3" id={{unit.id}}>{{unit.name}}</td>
+          <td></td>
+          <td class="align-middle text-center" colspan="4">Unlock with {{unit.levelRequirementName}}</td>
+        </tr>
+        {{/if}}
+      {{/each}}
+  </tbody>
+</table>
