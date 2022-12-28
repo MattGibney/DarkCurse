@@ -32,7 +32,7 @@ interface UserRow {
   last_active: Date;
   rank: number;
   bio: string;
-  colorScheme: string;
+  colour_scheme: string;
 }
 
 interface MessagesRow {
@@ -75,7 +75,7 @@ export interface UserData {
   last_active: Date;
   rank: number;
   bio: string;
-  colorScheme: string;
+  colourScheme: string;
 }
 
 class UserDao {
@@ -251,9 +251,9 @@ class UserDao {
       });
   }
 
-  async setColorScheme(userId: number, colorScheme: PlayerRace): Promise<void> {
+  async setColourScheme(userId: number, colour_scheme: PlayerRace): Promise<void> {
     await this.database<UserRow>('users').where({ id: userId }).update({
-      colorScheme: colorScheme,
+      colour_scheme: colour_scheme,
     });
   }
 
@@ -324,7 +324,7 @@ class UserDao {
       last_active: userRow.last_active,
       rank: userRow.rank,
       bio: userRow.bio,
-      colorScheme: userRow.colorScheme,
+      colourScheme: userRow.colour_scheme,
     };
   }
 }

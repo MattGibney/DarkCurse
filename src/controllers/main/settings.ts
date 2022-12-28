@@ -44,12 +44,12 @@ export default {
     }
     let errors = [] as PageAlert[];
     //console.log(req);
-    if (req.body?.submitColorScheme !== undefined) {
-      if (req.body?.colorScheme) {
+    if (req.body?.submitColourScheme !== undefined) {
+      if (req.body?.colourScheme) {
         console.log('in here');
         try {
-          const colorScheme = req.body.colorScheme as PlayerRace;
-          await user.setColorScheme(colorScheme);
+          const colourScheme = req.body.colourScheme as PlayerRace;
+          await user.setColourScheme(colourScheme);
         } catch (e) {
           errors.push({ type: 'DANGER', message: 'e.message' });
           throw e.message;

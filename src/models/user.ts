@@ -61,7 +61,7 @@ class UserModel {
   public last_active: Date;
   public rank: number;
   public bio: string;
-  public colorScheme: string;
+  public colourScheme: string;
   constructor(
     modelFactory: ModelFactory,
     daoFactory: DaoFactory,
@@ -92,7 +92,7 @@ class UserModel {
     this.items = userData.items;
     this.rank = userData.rank;
     this.bio = userData.bio;
-    this.colorScheme = userData.colorScheme;
+    this.colourScheme = userData.colourScheme;
   }
 
   get population() {
@@ -426,8 +426,8 @@ class UserModel {
     const armySize = new Intl.NumberFormat('en-GB').format(data.armySize);
     const experience = new Intl.NumberFormat('en-GB').format(data.experience);
     const level = new Intl.NumberFormat('en-GB').format(data.level);
-    const colorScheme =
-      data.colorScheme === null ? data.race : data.colorScheme;
+    const colourScheme =
+      data.colourScheme === null ? data.race : data.colourScheme;
     const xpToNextLevel = new Intl.NumberFormat('en-GB').format(
       data.xpToNextLevel
     );
@@ -461,7 +461,7 @@ class UserModel {
       defense: defense,
       spyOffense: spyOffense,
       spyDefense: spyDefense,
-      colorScheme: colorScheme,
+      colourScheme: colourScheme,
     };
   }
 
@@ -547,8 +547,8 @@ class UserModel {
     await this.daoFactory.user.setBankedGold(this.id, this.goldInBank);
   }
 
-  async setColorScheme(colorScheme: PlayerRace): Promise<void> {
-    await this.daoFactory.user.setColorScheme(this.id, colorScheme);
+  async setColourScheme(colourScheme: PlayerRace): Promise<void> {
+    await this.daoFactory.user.setColourScheme(this.id, colourScheme);
   }
 
   async updatePassword(newPassword: string): Promise<void> {
