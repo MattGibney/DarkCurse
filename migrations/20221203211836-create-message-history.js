@@ -25,7 +25,7 @@ CREATE TABLE messages (
   "date_time" timestamptz NOT NULL DEFAULT NOW(),
   "created_date" timestamptz NOT NULL DEFAULT NOW(),
   "updated_date" timestamptz NOT NULL DEFAULT NOW(),
-  "unread" integer default "1",
+  "unread" integer default '1',
   PRIMARY KEY ("id"),
   FOREIGN KEY ("from_user_id") REFERENCES users("id"),
   FOREIGN KEY ("to_user_id") REFERENCES users("id")
