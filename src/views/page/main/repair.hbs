@@ -11,20 +11,28 @@
   <p>Banked Gold: {{goldInBank}}</p>
 </div>
 
-<form name="#" id="repairForts" class="mb-5">
+<form action="/repair" method="post" name="#" id="repairForts" class="mb-5">
   
   <div class="gap-2 justify-content-center">
     <p>Current Fortification: {{fort.name}}</p>
-    <p>Fort Health: {{fort.health.current}} / {{fort.health.current}}</p>
+    <p>Fort Health: {{fort.health.current}} / {{fort.health.max}}</p>
     <p>Repair Cost: {{fort.costPerRepairPoint}} gold per point</p>
     <div>
       <div class="input-group">
         <input type="number" name="repairAmount" id="repairAmount" class="form-control" placeholder="{{fort.maxRepairPoints}}" min="0" max="{{fort.maxRepairPoints}}" value="0">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="repairSubmit">Repair</button>
-          <button class="btn btn-outline-primary" type="button" id="rapairAllSubmit">Repair Max</button>
+          <button class="btn btn-outline-secondary" type="submit" id="repairSubmit" {{#if (eq fort.health.current fort.health.max)}}disabled{{/if}}>Repair</button>
+          <button class="btn btn-outline-primary" type="submit" onClick="setMax(event)" id="rapairAllSubmit" {{#if (eq fort.health.current fort.health.max)}}disabled{{/if}}>Repair Max</button>
         </div>
       </div>
     </div>
   </div>
 </form>
+<script>
+function setMax(e) {
+  e.preventDefault();
+  console.log('clicked');
+  document.getElementById('repairAmount').value = document.getElementById('repairAmount').max;
+  document.getElementById('repairForts').submit();
+}
+</script>

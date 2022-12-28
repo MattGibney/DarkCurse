@@ -102,6 +102,9 @@ authedRouter.get('/bank/history', (req, res) =>
 authedRouter.get('/repair', (req, res) =>
   repairController.renderRepairPage(req, res)
 );
+authedRouter.post('/repair', (req, res) =>
+  repairController.handleRepair(req, res, repairController.renderRepairPage)
+);
 authedRouter.get('/overview', overviewController.overviewPage);
 authedRouter.get('/training', trainingController.trainingPage);
 authedRouter.get('/armory', armoryController.armoryPage);

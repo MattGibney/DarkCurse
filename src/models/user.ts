@@ -532,6 +532,11 @@ class UserModel {
     await this.daoFactory.user.setGold(this.id, this.gold);
   }
 
+  async addFortHP(amount: number): Promise<void> {
+    const newHP = this.fortHealth.current + amount;
+    await this.daoFactory.user.setFortHP(this.id, newHP);
+  }
+
   async addBankedGold(amount: number): Promise<void> {
     this.goldInBank += amount;
     await this.daoFactory.user.setBankedGold(this.id, this.goldInBank);

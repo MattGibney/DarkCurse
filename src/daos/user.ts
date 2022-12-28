@@ -207,6 +207,13 @@ class UserDao {
       .update({ gold: Math.round(gold).toString() });
   }
 
+  async setFortHP(userId: number, hp: number): Promise<void> {
+    console.log(hp);
+    await this.database<UserRow>('users')
+      .where({ id: userId })
+      .update({ fort_hitpoints: Math.round(hp) });
+  }
+
   async setTurns(userId: number, turns: number): Promise<void> {
     await this.database<UserRow>('users')
       .where({ id: userId })
