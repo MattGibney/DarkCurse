@@ -10,7 +10,7 @@ async function inboxPage(req: Request, res: Response, alert?: PageAlert) {
     pageTitle: 'Inbox',
     sidebarData: req.sidebarData,
     menu_category: 'home',
-    menu_link: 'Inbox',
+    menu_link: 'inbox',
     userDataFiltered: await req.user.formatUsersStats(req.user),
 
     messages: messagesDb,
@@ -32,7 +32,7 @@ async function composePage(req: Request, res: Response, alert?: PageAlert) {
     pageTitle: 'Compose',
     sidebarData: req.sidebarData,
     menu_category: 'home',
-    menu_link: 'Inbox',
+    menu_link: 'inbox',
     userDataFiltered: await req.user.formatUsersStats(req.user),
 
     ActionMessage: 'Compose New',
@@ -75,7 +75,7 @@ async function readPage(req: Request, res: Response, alert?: PageAlert) {
     pageTitle: 'Compose',
     sidebarData: req.sidebarData,
     menu_category: 'home',
-    menu_link: 'Inbox',
+    menu_link: 'inbox',
     userDataFiltered: await req.user.formatUsersStats(req.user),
 
     message: newMessage,
@@ -130,7 +130,7 @@ async function replyPage(req: Request, res: Response, alert?: PageAlert) {
     pageTitle: 'Compose',
     sidebarData: req.sidebarData,
     menu_category: 'home',
-    menu_link: 'Inbox',
+    menu_link: 'inbox',
     userDataFiltered: await req.user.formatUsersStats(req.user),
 
     message: reply,
