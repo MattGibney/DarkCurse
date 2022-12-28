@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,30 +26,33 @@
   <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
   <link href="/css/main.css" rel="stylesheet" />
 </head>
-<body>
+<body class="h-100">
   <div class="container d-flex justify-content-center align-items-center heading">
     <h1 class="my-5 pb-0">Dark Curse</h1>
   </div>
 
   {{> main/navigation}}
   
-  <div class="container">
-      <div class="row">
-        {{#if hideSidebar}}
-        <div class="col-sm-12 mainArea">
-          {{{body}}}
-        </div>
-        {{else}}
-        <div class="col-sm-3 sidebar">
-          {{> main/statsSidebar sidebarData=sidebarData}}
-        </div>
-        <div class="col-sm-9 mainArea">
-          {{{body}}}
-        </div>
-        {{/if}}
-        
+  <main class="container" style="padding-bottom: 50px;">
+    <div class="row">
+      {{#if hideSidebar}}
+      <div class="col-sm-12 mainArea">
+        {{{body}}}
       </div>
-  </div>
+      {{else}}
+      <div class="col-sm-3 sidebar">
+        {{> main/statsSidebar sidebarData=sidebarData}}
+      </div>
+      <div class="col-sm-9 mainArea">
+        {{{body}}}
+      </div>
+      {{/if}}
+      
+    </div>
+  </main>
+  <footer class="footer mt-auto">
+    <p class="text-center text-muted">DarkCurse - Originally by <a href="https://github.com/Moppler/DarkCurse">Moppler</a> <br/>Current Development version by DasTacoMann</p>
+  </footer>
 <script>
     //Credit: https://codepen.io/luci/pen/EEavVR
     //Author: Unknown
@@ -95,7 +98,7 @@
     }
     document.querySelector('.menu-container').onmouseleave = function(){
       console.log('left menu-container');
-      //hideAllandReset()
+      hideAllandReset()
     };
     function hideAllandReset(link="reset"){
       const allMenu = document.querySelectorAll('.nav > li > ul')
