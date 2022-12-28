@@ -44,7 +44,7 @@
     </div>    
     {{else}}
     <div class="list-group mb-4">
-      <a href="#" class="list-group-item list-group-item-action disabled">Message this Player</a>
+      <a href="/inbox/compose/new/user/{{id}}" class="list-group-item list-group-item-action">Message this Player</a>
       <a href="/attack/{{id}}" class="list-group-item list-group-item-action {{#if cantAttack }}disabled{{/if}}">Attack this Player</a>
       <a href="#" class="list-group-item list-group-item-action disabled">Spy Missions</a>
       <!--<a href="#" class="list-group-item list-group-item-action disabled">Transfer Gold</a>-->
