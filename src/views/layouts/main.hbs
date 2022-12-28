@@ -97,7 +97,8 @@
       allElems[i].onmouseover = allElems[i].onmouseleave = handler 
     }
     document.querySelector('.menu-container').onmouseleave = function(){
-      console.log('left menu-container');
+      //TODO: Remove line
+      //console.log('left menu-container');
       hideAllandReset()
     };
     function hideAllandReset(link="reset"){
@@ -112,11 +113,13 @@
     }
     function handler(event) {
       if (event.type == 'mouseover') {
-        console.log('hideAllandReset(%s)', this.children[0].id);
+        //TODO: Remove line
+        //console.log('hideAllandReset(%s)', this.children[0].id);
         hideAllandReset(this.children[0].id);
       }
       if (event.type == 'mouseout') {
-        console.log('hideAllandReset()')
+        //TODO: Remove line
+        //console.log('hideAllandReset()')
         hideAllandReset()
       }
     }
