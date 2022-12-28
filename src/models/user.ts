@@ -203,7 +203,7 @@ class UserModel {
   // TODO: refactor the below Off/Def/Spy/Sentry functions
   getArmyStat(type: UnitType) {
     const Units = this.units.filter((units) => units.type === type);
-    const Weapons = this.items.filter((weapon) => weapon.unitType === type);
+    const Weapons = this.items ? this.items.filter((weapon) => weapon.unitType === type) : [];
     const UnitCounts = Units.map((unit) => {
       return (
         UnitTypes.find(
