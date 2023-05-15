@@ -20,13 +20,19 @@ following:
 * NodeJs (v16.x)
 * NPM (v8.x)
 
-Follow the instructions below to download the code, install dependancies and run
-the server.
+Follow the instructions below to download the code, install dependancies, setup and update your database and run the server.
 
 ```bash
 git clone git@github.com:Moppler/DarkCurse.git
 cd DarkCurse
 npm install
+cat .env-sample > .env
+```
+setup your postgresql database and get the URI
+update the `.env` file with the database URI (and other values as necessary)
+
+```
+npm run migrate
 npm start
 ```
 
